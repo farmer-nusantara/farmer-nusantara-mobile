@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/farmlandFragment">
+
+    <fragment
+        android:id="@+id/farmlandFragment"
+        android:name="com.fahruaz.farmernusantara.FarmlandFragment"
+        android:label="fragment_farmland"
+        tools:layout="@layout/fragment_farmland" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.fahruaz.farmernusantara.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.fahruaz.farmernusantara.NewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.fahruaz.farmernusantara.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

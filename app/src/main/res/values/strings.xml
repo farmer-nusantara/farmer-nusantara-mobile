@@ -14,4 +14,15 @@
     <string name="repeat_password_hint">Ulangi kata sandi</string>
     <string name="login_text">masuk</string>
     <string name="has_account">Sudah punya akun?</string>
+
+    <string name="farmland">Farmland</string>
+    <string name="imageAddActionBar">Tambah Farmland</string>
+    <string name="imageFarmland">Gambar Farmland</string>
+    <string name="planted">Ditanam</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="farmland_fragment">Farmland</string>
+    <string name="map_fragment">Map</string>
+    <string name="news_fragment">Berita</string>
+    <string name="profile_fragment">Profil</string>
 </resources>

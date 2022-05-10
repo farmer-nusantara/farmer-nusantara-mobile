@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="10dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="8dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+
+        <ImageView
+            android:id="@+id/ivFarmland"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            tools:src="@tools:sample/avatars"
+            android:scaleType="centerCrop"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/imageFarmland" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipVegetarian"
+            style="@style/customChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/planted"
+            app:chipStrokeColor="@color/primary_color"
+            app:chipStrokeWidth="2dp"
+            card_view:layout_constraintBaseline_toBaselineOf="@+id/tvTitleFarmland"
+            card_view:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitleFarmland"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.0"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/ivFarmland"
+            tools:text="Nama Farmland" />
+
+        <TextView
+            android:id="@+id/tvPlantType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/tvTitleFarmland"
+            tools:text="Jenis Tanaman: Jagung"/>
+
+        <TextView
+            android:id="@+id/tvWidthArea"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/tvPlantType"
+            tools:text="Luas Lahan: 4 Km2"/>
+
+        <TextView
+            android:id="@+id/tvFarmlandColor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/tvWidthArea"
+            card_view:layout_constraintEnd_toStartOf="@id/ivFarmlandColor"
+            tools:text="Warna Farmland: "/>
+
+        <ImageView
+            android:id="@+id/ivFarmlandColor"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/circle_color_indicator"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="16dp"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/imageFarmland" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

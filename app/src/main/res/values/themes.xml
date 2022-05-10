@@ -13,4 +13,19 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="farmlandActivityStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/dark_primary_color</item>
+        <item name="colorAccent">@color/light_primary_color</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:statusBarColor">@color/dark_primary_color</item>
+    </style>
+
+    <style name="customChip" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="checkedIconTint">@color/primary_color</item>
+    </style>
+
 </resources>

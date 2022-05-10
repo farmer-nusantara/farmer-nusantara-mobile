@@ -14,6 +14,7 @@
     <color name="dark_primary_color">#2D7E2E</color>
     <color name="light_primary_color">#83BD75</color>
     <color name="more_light_primary_color">#B4E197</color>
-    <color name="background_color_activity">#F3F3F3</color>E35B30
+    <color name="background_color_activity">#F3F3F3</color>
     <color name="danger_color">#E35B30</color>
+    <color name="inactive_bottom_navigation">#BBBBBB</color>
 </resources>

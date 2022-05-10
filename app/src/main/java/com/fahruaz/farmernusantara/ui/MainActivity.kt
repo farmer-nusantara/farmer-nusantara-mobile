@@ -11,6 +11,7 @@ import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
     private var binding: ActivityMainBinding? = null
     private lateinit var navController: NavController
 
@@ -36,4 +37,5 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         binding = null
     }
+
 }

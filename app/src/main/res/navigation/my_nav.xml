@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/farmlandFragment"
-        android:name="com.fahruaz.farmernusantara.FarmlandFragment"
+        android:name="com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment"
         android:label="fragment_farmland"
         tools:layout="@layout/fragment_farmland" />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.fahruaz.farmernusantara.MapFragment"
+        android:name="com.fahruaz.farmernusantara.ui.fragment.map.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
     <fragment
@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_news" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.fahruaz.farmernusantara.ProfileFragment"
+        android:name="com.fahruaz.farmernusantara.ui.fragment.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

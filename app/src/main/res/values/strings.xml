@@ -26,4 +26,6 @@
     <string name="map_fragment">Map</string>
     <string name="news_fragment">Berita</string>
     <string name="profile_fragment">Profil</string>
+    <string name="detailFarmland">Detail Farmland</string>
+    <string name="imageHistory">History Penyakit</string>
 </resources>

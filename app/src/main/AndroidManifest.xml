@@ -14,13 +14,17 @@
         android:theme="@style/Theme.FarmerNusantara"
         tools:targetApi="31">
         <activity
+            android:name=".ui.ImageConfirmationActivity"
+            android:exported="false"
+            android:theme="@style/noActionBarStyle"/>
+        <activity
             android:name=".ui.EditProfileActivity"
             android:exported="false"
             android:theme="@style/noActionBarStyle" />
         <activity
             android:name=".ui.DetailDiseaseActivity"
-            android:theme="@style/noActionBarStyle"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/noActionBarStyle" />
         <activity
             android:name=".ui.DetailFarmlandActivity"
             android:exported="false"

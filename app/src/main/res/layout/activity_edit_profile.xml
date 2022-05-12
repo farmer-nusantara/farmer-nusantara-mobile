@@ -47,10 +47,10 @@
         android:layout_width="169dp"
         android:layout_height="166dp"
         android:layout_marginTop="36dp"
+        android:src="@drawable/ic_launcher_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBar"
-        android:src="@drawable/ic_launcher_background" />
+        app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/firstNameEditTextLayout"
@@ -189,28 +189,18 @@
         tools:layout_editor_absoluteX="28dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_edit_profile"
+        android:id="@+id/fab_change_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="0dp"
         android:backgroundTint="@color/primary_color"
         android:contentDescription="@string/edit_profile_data"
         android:foregroundGravity="bottom"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImage"
+        app:layout_constraintEnd_toEndOf="@+id/profileImage"
         app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24"
         app:tint="@color/white"
         tools:ignore="MissingConstraints" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="449dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,10 @@
             android:exported="false"
             android:theme="@style/noActionBarStyle" />
         <activity
+            android:name=".ui.DetailFarmlandActivity"
+            android:exported="false"
+            android:theme="@style/noActionBarStyle" />
+        <activity
             android:name=".ui.RegisterActivity"
             android:exported="false" />
         <activity

@@ -20,7 +20,7 @@
     <string name="imageAddActionBar">Tambah Farmland</string>
     <string name="imageFarmland">Gambar Farmland</string>
     <string name="planted">Ditanam</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="farmland_fragment">Farmland</string>
     <string name="map_fragment">Map</string>
@@ -32,4 +32,18 @@
     <string name="desc_disease">Deskipsi Penyakit</string>
     <string name="careRecommendation">Rekomendasi Perawatan</string>
     <string name="saveData">Simpan Data</string>
+    <string name="createFarmland">Buat Farmland</string>
+    <string name="imageDefault">Image Default</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Gallery</string>
+    <string name="farmlandHint">Nama Farmland</string>
+    <string name="farmlandWideHint">Luas Lahan</string>
+    <string name="plantType">Jenis Tanaman</string>
+    <string name="corn">Jagung</string>
+    <string-array name="plantType">
+        <item>Jagung</item>
+        <item>Tomat</item>
+        <item>Singkong</item>
+        <item>Padi</item>
+    </string-array>
 </resources>

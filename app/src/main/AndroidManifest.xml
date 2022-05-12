@@ -22,7 +22,7 @@
             android:exported="false"
             android:theme="@style/noActionBarStyle" />
         <activity
-            android:name=".ui.DetailFarmlandActivity"
+            android:name=".ui.CreateFarmlandActivity"
             android:exported="false"
             android:theme="@style/noActionBarStyle" />
         <activity

@@ -11,7 +11,6 @@ import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.FragmentFarmlandBinding
 import com.fahruaz.farmernusantara.ui.DetailDiseaseActivity
 
-
 class FarmlandFragment : Fragment() {
 
     private var binding: FragmentFarmlandBinding? = null

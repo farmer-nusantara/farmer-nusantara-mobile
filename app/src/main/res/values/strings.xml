@@ -48,6 +48,7 @@
     <string name="ganti_kata_sandi">Ganti kata sandi</string>
     <string name="simpan_perubahan">Simpan perubahan</string>
     <string name="imageCamera">Kamera</string>
+    <string name="image_confirmation">Konfirmasi</string>
     <string-array name="plantType">
         <item>Jagung</item>
         <item>Tomat</item>

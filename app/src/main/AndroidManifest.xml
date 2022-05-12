@@ -14,9 +14,12 @@
         android:theme="@style/Theme.FarmerNusantara"
         tools:targetApi="31">
         <activity
-            android:name=".ui.CreateFarmlandActivity"
-            android:theme="@style/noActionBarStyle"
+            android:name=".EditProfileActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.CreateFarmlandActivity"
+            android:exported="false"
+            android:theme="@style/noActionBarStyle" />
         <activity
             android:name=".ui.DetailFarmlandActivity"
             android:exported="false"

@@ -36,6 +36,10 @@
     <string name="farmlandWideHint">Luas Lahan</string>
     <string name="plantType">Jenis Tanaman</string>
     <string name="corn">Jagung</string>
+    <string name="profile">Profil</string>
+    <string name="name">Name</string>
+    <string name="phone_hint">Phone</string>
+    <string name="edit_profile_data">Edit profile data</string>
     <string-array name="plantType">
         <item>Jagung</item>
         <item>Tomat</item>

@@ -14,15 +14,18 @@
         android:id="@+id/mapFragment"
         android:name="com.fahruaz.farmernusantara.ui.fragment.map.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
-    <fragment
-        android:id="@+id/newsFragment"
-        android:name="com.fahruaz.farmernusantara.NewsFragment"
-        android:label="fragment_news"
-        tools:layout="@layout/fragment_news" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_farmlandFragment"
+            app:destination="@id/farmlandFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.fahruaz.farmernusantara.ui.fragment.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_farmlandFragment"
+            app:destination="@id/farmlandFragment" />
+    </fragment>
 </navigation>

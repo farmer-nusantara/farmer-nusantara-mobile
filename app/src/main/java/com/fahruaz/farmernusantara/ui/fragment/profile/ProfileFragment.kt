@@ -6,8 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.FragmentProfileBinding
 import com.fahruaz.farmernusantara.ui.EditProfileActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ProfileFragment : Fragment() {
 
@@ -24,6 +29,10 @@ class ProfileFragment : Fragment() {
         binding.fabEditProfile.setOnClickListener {
             val intent = Intent(requireContext(), EditProfileActivity::class.java)
             startActivity(intent)
+        }
+
+        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.findViewById<FloatingActionButton>(R.id.fabFarmland)?.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_farmlandFragment)
         }
     }
     

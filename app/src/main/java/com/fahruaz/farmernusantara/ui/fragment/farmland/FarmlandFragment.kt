@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.FragmentFarmlandBinding
-import com.fahruaz.farmernusantara.ui.CreateFarmlandActivity
+import com.fahruaz.farmernusantara.ui.DetailDiseaseActivity
+
 
 class FarmlandFragment : Fragment() {
 
@@ -21,8 +24,8 @@ class FarmlandFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.tbFarmland?.setOnClickListener {
-            val intent = Intent(requireContext(), CreateFarmlandActivity::class.java)
+        binding?.tbFarmland?.findViewById<ImageView>(R.id.addBtn)?.setOnClickListener {
+            val intent = Intent(requireContext(), DetailDiseaseActivity::class.java)
             startActivity(intent)
         }
     }

@@ -28,6 +28,10 @@
     <string name="profile_fragment">Profil</string>
     <string name="detailFarmland">Detail Farmland</string>
     <string name="imageHistory">History Penyakit</string>
+    <string name="detailDisease">Detail Penyakit</string>
+    <string name="desc_disease">Deskipsi Penyakit</string>
+    <string name="careRecommendation">Rekomendasi Perawatan</string>
+    <string name="saveData">Simpan Data</string>
     <string name="createFarmland">Buat Farmland</string>
     <string name="imageDefault">Image Default</string>
     <string name="camera">Kamera</string>

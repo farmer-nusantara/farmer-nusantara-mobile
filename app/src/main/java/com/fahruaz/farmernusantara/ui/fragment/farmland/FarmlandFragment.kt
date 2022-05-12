@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fahruaz.farmernusantara.databinding.FragmentFarmlandBinding
-import com.fahruaz.farmernusantara.ui.DetailFarmlandActivity
+import com.fahruaz.farmernusantara.ui.CreateFarmlandActivity
 
 class FarmlandFragment : Fragment() {
 
@@ -21,9 +21,8 @@ class FarmlandFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // delete this
         binding?.tbFarmland?.setOnClickListener {
-            val intent = Intent(requireContext(), DetailFarmlandActivity::class.java)
+            val intent = Intent(requireContext(), CreateFarmlandActivity::class.java)
             startActivity(intent)
         }
     }

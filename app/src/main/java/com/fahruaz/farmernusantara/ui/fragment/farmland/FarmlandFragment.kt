@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.navigation.fragment.findNavController
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.FragmentFarmlandBinding
 import com.fahruaz.farmernusantara.ui.ImageConfirmationActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class FarmlandFragment : Fragment() {
 
@@ -27,6 +30,8 @@ class FarmlandFragment : Fragment() {
             val intent = Intent(requireContext(), ImageConfirmationActivity::class.java)
             startActivity(intent)
         }
+
+        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.findViewById<FloatingActionButton>(R.id.fabFarmland)?.setOnClickListener { }
     }
 
 }

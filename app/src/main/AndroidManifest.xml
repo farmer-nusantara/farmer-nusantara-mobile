@@ -37,7 +37,8 @@
         <activity
             android:name=".ui.MapsActivity"
             android:exported="false"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ui.DetailFarmlandActivity"/>
         <activity
             android:name=".ui.ImageConfirmationActivity"
             android:exported="false"

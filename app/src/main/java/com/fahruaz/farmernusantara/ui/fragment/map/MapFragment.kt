@@ -2,6 +2,7 @@ package com.fahruaz.farmernusantara.ui.fragment.map
 
 import android.Manifest
 import android.content.ContentValues.TAG
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import androidx.fragment.app.Fragment
@@ -14,6 +15,10 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.fahruaz.farmernusantara.R
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.PendingResult
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.*
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -26,6 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 class MapFragment : Fragment() {
 
     private lateinit var mMap : GoogleMap
+    private var googleApiClient: GoogleApiClient? = null
 
     private val callback = OnMapReadyCallback { googleMap ->
         val sydney = LatLng(-34.0, 151.0)
@@ -39,7 +45,6 @@ class MapFragment : Fragment() {
 
         getMyLocation(googleMap)
         setMapStyle()
-
     }
 
     private val requestPermissionLauncher =
@@ -53,6 +58,7 @@ class MapFragment : Fragment() {
 
     private fun getMyLocation(googleMaps: GoogleMap) {
         mMap = googleMaps
+
         if (ContextCompat.checkSelfPermission(
                 this.requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -74,9 +80,10 @@ class MapFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment?
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+        enableLoc()
     }
 
     private fun setMapStyle() {
@@ -91,5 +98,49 @@ class MapFragment : Fragment() {
         }
     }
 
+    private fun enableLoc() {
+        if (googleApiClient == null) {
+            googleApiClient = GoogleApiClient.Builder(requireContext())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
+                    override fun onConnected(bundle: Bundle?) {}
+                    override fun onConnectionSuspended(i: Int) {
+                        googleApiClient?.connect()
+                    }
+                })
+                .addOnConnectionFailedListener { connectionResult ->
+                    Log.d(
+                        "Location error",
+                        "Location error " + connectionResult.errorCode
+                    )
+                }.build()
+            googleApiClient?.connect()
+            val locationRequest: LocationRequest = LocationRequest.create()
+            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            locationRequest.interval = 30 * 1000
+            locationRequest.fastestInterval = 5 * 1000
+            val builder = LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest)
+            builder.setAlwaysShow(true)
+            val result: PendingResult<LocationSettingsResult> =
+                LocationServices.SettingsApi.checkLocationSettings(googleApiClient!!, builder.build())
+            result.setResultCallback { result ->
+                val status: Status = result.status
+                when (status.statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+                        status.startResolutionForResult(requireActivity(), REQUEST_LOCATION)
+                    } catch (e: IntentSender.SendIntentException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+    }
+
+    companion object {
+        const val REQUEST_LOCATION = 199
+    }
 
 }

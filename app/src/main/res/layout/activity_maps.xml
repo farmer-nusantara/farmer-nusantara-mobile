@@ -39,7 +39,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Nama Farmland" />
+                tools:text="Nama Farmland"/>
 
             <TextView
                 android:id="@+id/tvTotalDisease"
@@ -78,7 +78,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/tvTitleFarmland"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/ivFarmlandColor"
-                android:text="@string/farmlandColor" />
+                android:text="@string/farmlandColor"/>
 
             <ImageView
                 android:id="@+id/ivFarmlandColor"
@@ -88,11 +88,10 @@
                 android:scaleType="centerCrop"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="4dp"
-                app:layout_constraintStart_toEndOf=""
                 app:layout_constraintTop_toTopOf="@id/tvFarmlandColor"
                 app:layout_constraintBottom_toBottomOf="@id/tvFarmlandColor"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/imageFarmland" />
+                android:contentDescription="@string/imageFarmland"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

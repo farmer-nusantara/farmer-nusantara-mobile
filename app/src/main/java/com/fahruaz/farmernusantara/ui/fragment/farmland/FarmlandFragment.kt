@@ -11,6 +11,7 @@ import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.FragmentFarmlandBinding
+import com.fahruaz.farmernusantara.ui.DetailFarmlandActivity
 import com.fahruaz.farmernusantara.ui.ImageConfirmationActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,7 +29,7 @@ class FarmlandFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.tbFarmland?.findViewById<ImageView>(R.id.addBtn)?.setOnClickListener {
-            val intent = Intent(requireContext(), ImageConfirmationActivity::class.java)
+            val intent = Intent(requireContext(), DetailFarmlandActivity::class.java)
             startActivity(intent)
         }
 

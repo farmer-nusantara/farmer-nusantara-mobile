@@ -1,20 +1,17 @@
-package com.fahruaz.farmernusantara.ui.fragment.map
+package com.fahruaz.farmernusantara.ui
 
 import android.Manifest
-import android.content.ContentValues.TAG
+import android.content.ContentValues
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import androidx.fragment.app.Fragment
-
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.fahruaz.farmernusantara.R
+import com.fahruaz.farmernusantara.databinding.ActivityMapsBinding
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
 import com.google.android.gms.common.api.Status
@@ -28,22 +25,41 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapFragment : Fragment() {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mMap : GoogleMap
+    private lateinit var mMap: GoogleMap
+    private lateinit var binding: ActivityMapsBinding
     private var googleApiClient: GoogleApiClient? = null
 
-    private val callback = OnMapReadyCallback { googleMap ->
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityMapsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+        enableLoc()
+
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+        // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
-        googleMap.uiSettings.isZoomControlsEnabled = true
-        googleMap.uiSettings.isIndoorLevelPickerEnabled = true
-        googleMap.uiSettings.isCompassEnabled = true
-        googleMap.uiSettings.isMapToolbarEnabled = true
+        mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.uiSettings.isIndoorLevelPickerEnabled = true
+        mMap.uiSettings.isCompassEnabled = true
+        mMap.uiSettings.isMapToolbarEnabled = true
 
-        getMyLocation(googleMap)
+        getMyLocation()
         setMapStyle()
     }
 
@@ -52,15 +68,13 @@ class MapFragment : Fragment() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                getMyLocation(mMap)
+                getMyLocation()
             }
         }
 
-    private fun getMyLocation(googleMaps: GoogleMap) {
-        mMap = googleMaps
-
+    private fun getMyLocation() {
         if (ContextCompat.checkSelfPermission(
-                this.requireContext(),
+                this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
@@ -70,37 +84,21 @@ class MapFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
-
-        enableLoc()
-    }
-
     private fun setMapStyle() {
         try {
             val success =
-                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this.requireContext(), R.raw.map_style))
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(applicationContext, R.raw.map_style))
             if (!success) {
-                Log.e(TAG, "Style parsing failed.")
+                Log.e(ContentValues.TAG, "Style parsing failed.")
             }
         } catch (exception: Resources.NotFoundException) {
-            Log.e(TAG, "Can't find style. Error: ", exception)
+            Log.e(ContentValues.TAG, "Can't find style. Error: ", exception)
         }
     }
 
     private fun enableLoc() {
         if (googleApiClient == null) {
-            googleApiClient = GoogleApiClient.Builder(requireContext())
+            googleApiClient = GoogleApiClient.Builder(applicationContext)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
                     override fun onConnected(bundle: Bundle?) {}
@@ -130,7 +128,7 @@ class MapFragment : Fragment() {
                     LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
                         // Show the dialog by calling startResolutionForResult(),
                         // and check the result in onActivityResult().
-                        status.startResolutionForResult(requireActivity(), REQUEST_LOCATION)
+                        status.startResolutionForResult(this, REQUEST_LOCATION)
                     } catch (e: IntentSender.SendIntentException) {
                         e.printStackTrace()
                     }
@@ -142,5 +140,4 @@ class MapFragment : Fragment() {
     companion object {
         const val REQUEST_LOCATION = 199
     }
-
 }

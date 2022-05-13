@@ -55,4 +55,6 @@
         <item>Singkong</item>
         <item>Padi</item>
     </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="farmlandColor">Warna Farmland:</string>
 </resources>

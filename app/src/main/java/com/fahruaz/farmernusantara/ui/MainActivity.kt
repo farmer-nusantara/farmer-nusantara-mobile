@@ -22,7 +22,9 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        binding?.bottomNavigationView?.menu?.findItem(R.id.farmlandFragment)?.isEnabled = false
+        binding?.bottomNavigationView?.background = null
+        binding?.bottomNavigationView?.menu?.getItem(1)?.isEnabled = false
+
         navController = findNavController(R.id.navHostFragment)
         val appBarConfiguration = AppBarConfiguration.Builder(
             R.id.farmlandFragment,

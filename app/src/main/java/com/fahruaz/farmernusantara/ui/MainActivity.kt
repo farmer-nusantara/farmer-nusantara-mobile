@@ -13,7 +13,7 @@ import com.fahruaz.farmernusantara.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
-    private lateinit var navController: NavController
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +21,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         supportActionBar?.hide()
+
+        binding?.bottomNavigationView?.background = null
+        binding?.bottomNavigationView?.menu?.getItem(1)?.isEnabled = false
 
         navController = findNavController(R.id.navHostFragment)
         val appBarConfiguration = AppBarConfiguration.Builder(

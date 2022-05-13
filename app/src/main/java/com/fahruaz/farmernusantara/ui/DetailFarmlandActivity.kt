@@ -1,5 +1,6 @@
 package com.fahruaz.farmernusantara.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -39,7 +40,8 @@ class DetailFarmlandActivity : AppCompatActivity() {
             onAddButtonCLicked()
         }
         binding?.fabMap?.setOnClickListener {
-            Toast.makeText(this, "Map", Toast.LENGTH_SHORT).show()
+            val intent = Intent(applicationContext, MapsActivity::class.java)
+            startActivity(intent)
         }
         binding?.fabScan?.setOnClickListener {
             Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()

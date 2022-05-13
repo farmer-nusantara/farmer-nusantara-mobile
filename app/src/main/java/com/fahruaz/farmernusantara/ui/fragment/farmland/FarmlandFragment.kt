@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.FragmentFarmlandBinding
+import com.fahruaz.farmernusantara.ui.DetailFarmlandActivity
 import com.fahruaz.farmernusantara.ui.ImageConfirmationActivity
 
 class FarmlandFragment : Fragment() {
@@ -24,7 +25,7 @@ class FarmlandFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.tbFarmland?.findViewById<ImageView>(R.id.addBtn)?.setOnClickListener {
-            val intent = Intent(requireContext(), ImageConfirmationActivity::class.java)
+            val intent = Intent(requireContext(), DetailFarmlandActivity::class.java)
             startActivity(intent)
         }
     }

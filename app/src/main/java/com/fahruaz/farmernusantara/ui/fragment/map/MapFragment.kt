@@ -5,22 +5,21 @@ import android.content.ContentValues.TAG
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.fahruaz.farmernusantara.R
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,6 +28,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class MapFragment : Fragment() {
 
@@ -58,25 +58,7 @@ class MapFragment : Fragment() {
             }
         }
 
-    private fun getMyLocation(googleMaps: GoogleMap) {
-        mMap = googleMaps
-
-        if (ContextCompat.checkSelfPermission(
-                this.requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            mMap.isMyLocationEnabled = true
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
@@ -90,6 +72,15 @@ class MapFragment : Fragment() {
         activity?.findViewById<FloatingActionButton>(R.id.fabFarmland)?.setOnClickListener {
             findNavController().navigate(R.id.action_mapFragment_to_farmlandFragment)
         }
+        
+        // get reference to zoom in/out icon
+        val locationButton = (mapFragment!!.view!!.findViewById<View>("1".toInt()).parent as View).findViewById<View>("1".toInt())
+        // and next place it, for example, on bottom right (as Google Maps app)
+        val rlp = locationButton.layoutParams as RelativeLayout.LayoutParams
+        // position on right bottom
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0)
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
+        rlp.setMargins(0, 0, 16, 186)
     }
 
     private fun setMapStyle() {
@@ -101,6 +92,19 @@ class MapFragment : Fragment() {
             }
         } catch (exception: Resources.NotFoundException) {
             Log.e(TAG, "Can't find style. Error: ", exception)
+        }
+    }
+
+    private fun getMyLocation(googleMaps: GoogleMap) {
+        mMap = googleMaps
+
+        if (ContextCompat.checkSelfPermission(this.requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            mMap.isMyLocationEnabled = true
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 
@@ -147,6 +151,7 @@ class MapFragment : Fragment() {
 
     companion object {
         const val REQUEST_LOCATION = 199
+        const val GOOGLEMAP_ZOOMIN_BUTTON = "GoogleMapZoomInButton"
     }
 
 }

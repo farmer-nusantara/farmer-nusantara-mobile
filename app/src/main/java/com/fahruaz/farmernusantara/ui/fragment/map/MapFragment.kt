@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.fahruaz.farmernusantara.R
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MapFragment : Fragment() {
 
@@ -84,6 +86,10 @@ class MapFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
 
         enableLoc()
+
+        activity?.findViewById<FloatingActionButton>(R.id.fabFarmland)?.setOnClickListener {
+            findNavController().navigate(R.id.action_mapFragment_to_farmlandFragment)
+        }
     }
 
     private fun setMapStyle() {

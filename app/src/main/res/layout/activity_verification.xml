@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.VerificationActivity">
 
-<!--    <androidx.compose.ui.platform.ComposeView-->
-<!--        android:id="@+id/otp_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
-
     <TextView
         android:id="@+id/verificationTitle"
         style="@style/TitleStyle"

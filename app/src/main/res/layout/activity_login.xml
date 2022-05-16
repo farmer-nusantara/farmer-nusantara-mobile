@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/subtitle"
         app:startIconDrawable="@drawable/ic_baseline_email_24">
 
-        <EditText
+        <com.fahruaz.farmernusantara.ui.customviews.EmailEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
         app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/ic_password">
 
-        <EditText
+        <com.fahruaz.farmernusantara.ui.customviews.PasswordEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,19 +125,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="116dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:text="@string/to_daftar"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/forgot_password" />
+        app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
 
     <TextView
         android:id="@+id/daftar_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:layout_marginStart="5dp"
         android:text="@string/daftar_text"
         android:textAlignment="center"
@@ -146,13 +146,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/to_daftar"
-        app:layout_constraintTop_toTopOf="@+id/forgot_password" />
+        app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
 
     <ProgressBar
         android:id="@+id/pbLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/daftar_text"/>

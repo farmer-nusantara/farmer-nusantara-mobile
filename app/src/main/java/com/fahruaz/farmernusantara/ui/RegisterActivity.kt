@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -102,8 +103,8 @@ class RegisterActivity : AppCompatActivity() {
                         showToast(it)
 
                         if(it == "Akun berhasil dibuat") {
+                            Log.e("Masuk", "SINI GAN")
                             val intent = Intent(this, VerificationActivity::class.java)
-                            intent.putExtra(EXTRA_USER, user)
                             startActivity(intent)
                             finish()
                         }
@@ -125,10 +126,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        const val EXTRA_USER = "EXTRA_USER"
     }
 
 }

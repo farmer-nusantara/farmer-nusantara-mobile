@@ -26,7 +26,8 @@ class LoginViewModel(private val pref: UserPreferences) : ViewModel() {
     private val _phone = MutableLiveData<String>()
     val phone: LiveData<String> = _phone
 
-
+    private val _status = MutableLiveData<String>()
+    val status: LiveData<String> = _status
 
     fun loginUser(user: UserModel) {
         _isLoading.value = true
@@ -43,6 +44,7 @@ class LoginViewModel(private val pref: UserPreferences) : ViewModel() {
                         _name.value = responseBody.user?.name!!
                         _token.value = responseBody.token!!
                         _phone.value = responseBody.user.phone!!
+                        _status.value = responseBody.user.status!!
                         signin(user)
                     }
                 }

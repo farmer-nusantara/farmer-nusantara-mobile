@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -41,6 +42,10 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.toast.observe(this) {
             showToast(it)
+        }
+
+        loginViewModel.status.observe(this) {
+            Log.e("Status", it)
         }
 
         setupView()
@@ -96,9 +101,11 @@ class LoginActivity : AppCompatActivity() {
                         user.token = it
                         token = it
                     }
-
                     loginViewModel.phone.observe(this) {
                         user.phone = it
+                    }
+                    loginViewModel.status.observe(this) {
+                        user.status = it
                     }
 
                     loginViewModel.loginUser(user)

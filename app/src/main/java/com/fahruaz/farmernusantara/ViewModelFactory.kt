@@ -26,7 +26,7 @@ class ViewModelFactory(private val pref: UserPreferences, private val context: C
                 RegisterViewModel(pref) as T
             }
             modelClass.isAssignableFrom(VerificationViewModel::class.java) -> {
-                VerificationViewModel() as T
+                VerificationViewModel(pref) as T
             }
 //            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
 //                AddStoryViewModel(pref) as T

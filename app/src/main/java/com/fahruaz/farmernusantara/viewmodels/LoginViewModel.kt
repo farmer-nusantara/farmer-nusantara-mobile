@@ -23,6 +23,11 @@ class LoginViewModel(private val pref: UserPreferences) : ViewModel() {
     private val _token = MutableLiveData<String>()
     val token: LiveData<String> = _token
 
+    private val _phone = MutableLiveData<String>()
+    val phone: LiveData<String> = _phone
+
+
+
     fun loginUser(user: UserModel) {
         _isLoading.value = true
         val service = ApiConfig().getApiService().loginUser(user.email!!, user.password!!)
@@ -37,6 +42,7 @@ class LoginViewModel(private val pref: UserPreferences) : ViewModel() {
                         _toast.value = "Berhasil masuk"
                         _name.value = responseBody.user?.name!!
                         _token.value = responseBody.token!!
+                        _phone.value = responseBody.user.phone!!
                         signin(user)
                     }
                 }

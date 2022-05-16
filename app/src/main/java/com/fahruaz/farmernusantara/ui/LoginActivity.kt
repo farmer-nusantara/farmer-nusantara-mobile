@@ -96,10 +96,15 @@ class LoginActivity : AppCompatActivity() {
                         user.token = it
                         token = it
                     }
+
+                    loginViewModel.phone.observe(this) {
+                        user.phone = it
+                    }
+
                     loginViewModel.loginUser(user)
 
                     loginViewModel.toast.observe(this) {
-                        if (it == "success") {
+                        if (it == "Login successfully") {
                             val intent = Intent(this, MainActivity::class.java)
                             intent.flags =
                                 Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK

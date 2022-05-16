@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.fahruaz.farmernusantara.R
+import com.fahruaz.farmernusantara.databinding.FragmentMapBinding
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
 import com.google.android.gms.common.api.Status
@@ -31,6 +32,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class MapFragment : Fragment() {
+
+    private var binding: FragmentMapBinding? = null
 
     private lateinit var mMap : GoogleMap
     private var googleApiClient: GoogleApiClient? = null
@@ -59,7 +62,8 @@ class MapFragment : Fragment() {
         }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        binding = FragmentMapBinding.inflate(inflater, container, false)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -149,9 +153,13 @@ class MapFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
+
     companion object {
         const val REQUEST_LOCATION = 199
-        const val GOOGLEMAP_ZOOMIN_BUTTON = "GoogleMapZoomInButton"
     }
 
 }

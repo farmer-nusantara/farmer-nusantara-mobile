@@ -66,4 +66,8 @@
     <string name="account_created">Akun berhasil dibuat</string>
     <string name="lanjut">Lanjutkan</string>
     <string name="logout">Keluar</string>
+    <string name="accountVerification">Verifikasi Akun</string>
+    <string name="verificationMessage">Kami telah mengirimkan kode verifikasi ke email anda. Mohon cek email anda sekarang</string>
+    <string name="verificationResendmessage">Belum menerima kode?</string>
+    <string name="verificationResend">Kirim ulang</string>
 </resources>

@@ -10,7 +10,7 @@
     <string name="to_daftar">Belum punya akun?</string>
     <string name="daftar_text">daftar</string>
     <string name="Daftar_text">Daftar</string>
-    <string name="first_name_hint">Nama depan</string>
+    <string name="first_name_hint">Nama</string>
     <string name="last_name_hint">Nama belakang</string>
     <string name="repeat_password_hint">Ulangi kata sandi</string>
     <string name="login_text">masuk</string>
@@ -62,6 +62,7 @@
     <string name="empty_password">password tidak boleh kosong</string>
     <string name="phone_email">Nomor telepon tidak boleh kosong</string>
     <string name="empty_repeat_password">Harap konfirmasi password</string>
+    <string name="different_repeat_password">Password tidak cocok</string>
     <string name="mantap">Mantap</string>
     <string name="account_created">Akun berhasil dibuat</string>
     <string name="lanjut">Lanjutkan</string>

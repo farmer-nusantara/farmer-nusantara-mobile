@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nameEditTextLayout"
         app:startIconDrawable="@drawable/ic_baseline_email_24">
 
-        <EditText
+        <com.fahruaz.farmernusantara.ui.customviews.EmailEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
         app:startIconDrawable="@drawable/ic_phone">
 
-        <EditText
+        <com.fahruaz.farmernusantara.ui.customviews.TelephoneNumberEditText
             android:id="@+id/phoneEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
         app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/ic_password">
 
-        <EditText
+        <com.fahruaz.farmernusantara.ui.customviews.PasswordEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
         app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/ic_password">
 
-        <EditText
+        <com.fahruaz.farmernusantara.ui.customviews.PasswordEditText
             android:id="@+id/repeatPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

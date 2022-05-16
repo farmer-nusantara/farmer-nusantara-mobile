@@ -86,6 +86,10 @@ class RegisterActivity : AppCompatActivity() {
                 passwordConfirm.isEmpty() -> {
                     binding.repeatPasswordEditText.error = resources.getString(R.string.empty_repeat_password)
                 }
+                passwordConfirm != password -> {
+                    binding.repeatPasswordEditTextLayout.error = resources.getString(R.string.different_repeat_password)
+                    binding.repeatPasswordEditText.text?.clear()
+                }
                 else -> {
                     val user = UserModel(email = email, name = name, phone = phone,
                         password = password, passwordConfirm = passwordConfirm)

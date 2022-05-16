@@ -45,8 +45,7 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             app:layout_constraintTop_toBottomOf="@+id/subtitle"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,8 +73,7 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             app:layout_constraintTop_toBottomOf="@+id/nameEditTextLayout"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,9 +98,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="phone"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="485dp" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,9 +125,7 @@
             android:ems="10"
             android:inputType="textPassword"
             app:passwordToggleEnabled="true"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="485dp" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -158,9 +152,7 @@
             android:ems="10"
             android:inputType="textPassword"
             app:passwordToggleEnabled="true"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="485dp" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

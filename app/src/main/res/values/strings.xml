@@ -57,6 +57,15 @@
     </string-array>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="farmlandColor">Warna Farmland:</string>
+    <string name="empty_name">Nama tidak boleh kosong</string>
+    <string name="empty_email">Email tidak boleh kosong</string>
+    <string name="empty_password">password tidak boleh kosong</string>
+    <string name="phone_email">Nomor telepon tidak boleh kosong</string>
+    <string name="empty_repeat_password">Harap konfirmasi password</string>
+    <string name="mantap">Mantap</string>
+    <string name="account_created">Akun berhasil dibuat</string>
+    <string name="lanjut">Lanjutkan</string>
+    <string name="logout">Keluar</string>
     <string name="accountVerification">Verifikasi Akun</string>
     <string name="verificationMessage">Kami telah mengirimkan kode verifikasi ke email anda. Mohon cek email anda sekarang</string>
     <string name="verificationResendmessage">Belum menerima kode?</string>

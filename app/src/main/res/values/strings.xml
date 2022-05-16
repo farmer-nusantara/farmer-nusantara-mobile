@@ -71,4 +71,5 @@
     <string name="verificationMessage">Kami telah mengirimkan kode verifikasi ke email anda. Mohon cek email anda sekarang</string>
     <string name="verificationResendmessage">Belum menerima kode?</string>
     <string name="verificationResend">Kirim ulang</string>
+    <string name="submit">Validasi</string>
 </resources>

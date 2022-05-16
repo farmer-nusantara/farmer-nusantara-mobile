@@ -1,6 +1,9 @@
 package com.fahruaz.farmernusantara.api
 
+import com.fahruaz.farmernusantara.response.auth.ChangeStatusAccountResponse
+import com.fahruaz.farmernusantara.response.auth.DataStatusAccount
 import com.fahruaz.farmernusantara.response.auth.RegisterMessageResponse
+import com.fahruaz.farmernusantara.response.auth.SendTokenResponse
 import com.fahruaz.farmernusantara.response.auth.SignInMessageResponse
 import retrofit2.Call
 import retrofit2.http.Field
@@ -19,9 +22,21 @@ interface ApiService {
     ): Call<RegisterMessageResponse>
 
     @FormUrlEncoded
+    @POST("auth/email-token-activation")
+    fun sendToken(
+        @Field(value = "email") email: String
+    ): Call<SendTokenResponse>
+
+    @FormUrlEncoded
+    @POST("auth/status-account")
+    fun changeStatusAccount(
+        @Field(value = "secretCode") secretCode: String
+    ): Call<ChangeStatusAccountResponse>
+
     @POST("auth/signin")
     fun loginUser(
         @Field(value = "email") email: String,
         @Field(value = "password") password: String
     ): Call<SignInMessageResponse>
+
 }

@@ -1,9 +1,11 @@
 package com.fahruaz.farmernusantara.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -32,9 +34,10 @@ class RegisterActivity : AppCompatActivity() {
 
         setupViewModel()
 
-//        registerViewModel.isLoading.observe(this) {
-//            showLoading(it)
-//        }
+        registerViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
         registerViewModel.toast.observe(this) {
             showToast(it)
         }
@@ -93,23 +96,39 @@ class RegisterActivity : AppCompatActivity() {
                 else -> {
                     val user = UserModel(email = email, name = name, phone = phone,
                         password = password, passwordConfirm = passwordConfirm)
-
                     registerViewModel.registerUser(user)
+
+                    registerViewModel.toast.observe(this) {
+                        showToast(it)
+
+                        if(it == "Akun berhasil dibuat") {
+                            val intent = Intent(this, VerificationActivity::class.java)
+                            intent.putExtra(EXTRA_USER, user)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+
                 }
             }
 
         }
     }
 
-//    private fun showLoading(isLoading: Boolean) {
-//        if (isLoading) {
-//            binding.progressBar.visibility = View.VISIBLE
-//        } else {
-//            binding.progressBar.visibility = View.GONE
-//        }
-//    }
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.pbRegister.visibility = View.VISIBLE
+        } else {
+            binding.pbRegister.visibility = View.GONE
+        }
+    }
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+    companion object {
+        const val EXTRA_USER = "EXTRA_USER"
+    }
+
 }

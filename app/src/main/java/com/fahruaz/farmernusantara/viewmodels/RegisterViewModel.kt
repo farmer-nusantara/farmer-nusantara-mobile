@@ -18,16 +18,18 @@ class RegisterViewModel(private val pref: UserPreferences): ViewModel() {
     private val _toast = MutableLiveData<String>()
     val toast: LiveData<String> = _toast
 
-    fun registerUser(user: UserModel) {
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
-        //_isLoading.value = true
+    fun registerUser(user: UserModel) {
+        _isLoading.value = true
 
         val service = ApiConfig().getApiService().registerUser(user.email!!, user.name!!,
             user.phone!!, user.password!!, user.passwordConfirm!!)
 
         service.enqueue(object : Callback<RegisterMessageResponse> {
             override fun onResponse(call: Call<RegisterMessageResponse>, response: Response<RegisterMessageResponse>) {
-                //_isLoading.value = false
+                _isLoading.value = false
 
                 if (response.isSuccessful) {
                     val responseBody = response.body()
@@ -40,7 +42,7 @@ class RegisterViewModel(private val pref: UserPreferences): ViewModel() {
                     _toast.value = response.message()
             }
             override fun onFailure(call: Call<RegisterMessageResponse>, t: Throwable) {
-               // _isLoading.value = false
+                _isLoading.value = false
                 _toast.value = "Gagal instance Retrofit"
             }
         })
@@ -51,4 +53,5 @@ class RegisterViewModel(private val pref: UserPreferences): ViewModel() {
             pref.saveUser(user)
         }
     }
+
 }

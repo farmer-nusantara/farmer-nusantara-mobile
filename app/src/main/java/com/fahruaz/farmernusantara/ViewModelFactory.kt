@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.preferences.UserPreferences
+import com.fahruaz.farmernusantara.viewmodels.LoginViewModel
+import com.fahruaz.farmernusantara.viewmodels.MainViewModel
 import com.fahruaz.farmernusantara.viewmodels.RegisterViewModel
 import com.fahruaz.farmernusantara.viewmodels.VerificationViewModel
 
@@ -16,6 +18,10 @@ class ViewModelFactory(private val pref: UserPreferences, private val context: C
 //                MainViewModel(pref, Injection.provideRepository(context),
 //                    Injection.provideDatabase(context), Injection.provideApiService()) as T
 //            }
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
+                MainViewModel(pref) as T
+            }
+
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(pref) as T
             }
@@ -25,9 +31,9 @@ class ViewModelFactory(private val pref: UserPreferences, private val context: C
 //            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
 //                AddStoryViewModel(pref) as T
 //            }
-//            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-//                LoginViewModel(pref) as T
-//            }
+            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
+                LoginViewModel(pref) as T
+            }
 //            modelClass.isAssignableFrom(MapStoryViewModel::class.java) -> {
 //                MapStoryViewModel(pref) as T
 //            }

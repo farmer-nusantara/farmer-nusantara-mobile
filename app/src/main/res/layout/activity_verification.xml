@@ -101,17 +101,26 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/verificationResendMessage"
         app:layout_constraintStart_toEndOf="@id/verificationResendMessage"/>
 
-    <Button
-        android:id="@+id/btSaveProfile"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btValidation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="72dp"
-        android:paddingVertical="12dp"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/verificationResend"
-        app:layout_constraintVertical_bias="0.901"
-        tools:layout_editor_absoluteX="30dp" />
+        app:layout_constraintBottom_toTopOf="@id/btSkipValidation" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btSkipValidation"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/white"
+        app:strokeColor="@color/primary_color"
+        android:textColor="@color/primary_color"
+        app:strokeWidth="1dp"
+        android:text="@string/skipValidation"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

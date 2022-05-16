@@ -1,5 +1,7 @@
 package com.fahruaz.farmernusantara.api
 
+import com.fahruaz.farmernusantara.response.auth.ChangeStatusAccountResponse
+import com.fahruaz.farmernusantara.response.auth.DataStatusAccount
 import com.fahruaz.farmernusantara.response.auth.RegisterMessageResponse
 import com.fahruaz.farmernusantara.response.auth.SendTokenResponse
 import retrofit2.Call
@@ -23,5 +25,11 @@ interface ApiService {
     fun sendToken(
         @Field(value = "email") email: String
     ): Call<SendTokenResponse>
+
+    @FormUrlEncoded
+    @POST("auth/status-account")
+    fun changeStatusAccount(
+        @Field(value = "secretCode") secretCode: String
+    ): Call<ChangeStatusAccountResponse>
 
 }

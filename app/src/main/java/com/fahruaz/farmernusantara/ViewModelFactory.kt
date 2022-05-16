@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.preferences.UserPreferences
 import com.fahruaz.farmernusantara.viewmodels.RegisterViewModel
+import com.fahruaz.farmernusantara.viewmodels.VerificationViewModel
 
 class ViewModelFactory(private val pref: UserPreferences, private val context: Context) : ViewModelProvider.NewInstanceFactory() {
 
@@ -17,6 +18,9 @@ class ViewModelFactory(private val pref: UserPreferences, private val context: C
 //            }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(VerificationViewModel::class.java) -> {
+                VerificationViewModel() as T
             }
 //            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
 //                AddStoryViewModel(pref) as T

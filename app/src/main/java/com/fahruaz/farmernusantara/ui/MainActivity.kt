@@ -16,6 +16,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.ViewModelFactory
 import com.fahruaz.farmernusantara.databinding.ActivityMainBinding
+import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
 import com.fahruaz.farmernusantara.viewmodels.MainViewModel
 
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
 
+            userModel = user
             LoginActivity.token = user.token!!
         }
 
@@ -65,6 +67,10 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    companion object {
+        var userModel: UserModel? = null
     }
 
 }

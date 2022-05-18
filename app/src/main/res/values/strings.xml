@@ -8,12 +8,12 @@
     <string name="login">Masuk</string>
     <string name="forgot_password">Lupa kata sandi</string>
     <string name="to_daftar">Belum punya akun?</string>
-    <string name="daftar_text">daftar</string>
+    <string name="daftar_text">Daftar</string>
     <string name="Daftar_text">Daftar</string>
     <string name="first_name_hint">Nama</string>
     <string name="last_name_hint">Nama belakang</string>
     <string name="repeat_password_hint">Ulangi kata sandi</string>
-    <string name="login_text">masuk</string>
+    <string name="login_text">Masuk</string>
     <string name="has_account">Sudah punya akun?</string>
 
     <string name="farmland">Farmland</string>

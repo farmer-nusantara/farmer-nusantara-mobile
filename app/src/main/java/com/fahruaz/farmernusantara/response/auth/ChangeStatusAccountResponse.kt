@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 data class ChangeStatusAccountResponse(
 
 	@field:SerializedName("secretCode")
-	val secretCode: Int? = null
+	val secretCode: String? = null
 )

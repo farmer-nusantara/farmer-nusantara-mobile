@@ -41,8 +41,8 @@ class VerificationActivity : AppCompatActivity() {
 
         verificationViewModel.toast.observe(this) {
             showToast(it)
-            if(it == "Successfully") {
-                val intent = Intent(this, LoginActivity::class.java)
+            if(it == "Berhasil verifikasi akun") {
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
@@ -69,7 +69,9 @@ class VerificationActivity : AppCompatActivity() {
         }
 
         binding?.btSkipValidation?.setOnClickListener {
-
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         binding?.verificationResend?.setOnClickListener {

@@ -20,9 +20,9 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("auth/email-token-activation")
-    fun sendToken(
+    fun sendTokenActivationAccount(
         @Field(value = "email") email: String
-    ): Call<SendTokenMessageResponse>
+    ): Call<SendTokenActivationMessageResponse>
 
     @FormUrlEncoded
     @PUT("auth/status-account")

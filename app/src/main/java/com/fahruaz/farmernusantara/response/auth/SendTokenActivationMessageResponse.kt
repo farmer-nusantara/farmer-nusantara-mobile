@@ -2,7 +2,7 @@ package com.fahruaz.farmernusantara.response.auth
 
 import com.google.gson.annotations.SerializedName
 
-data class TokenActivationResponse(
+data class SendTokenActivationMessageResponse(
 
 	@field:SerializedName("secretCode")
 	val secretCode: SecretCode? = null

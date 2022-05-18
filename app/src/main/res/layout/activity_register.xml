@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/firstNameEditTextLayout"
+        android:id="@+id/nameEditTextLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -38,45 +38,17 @@
         app:startIconDrawable="@drawable/ic_person">
 
         <EditText
-            android:id="@+id/firstNastNameEditText"
+            android:id="@+id/nameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:ems="10"
             android:inputType="textEmailAddress"
             app:layout_constraintTop_toBottomOf="@+id/subtitle"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/LastNameEditTextLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="32dp"
-        android:hint="@string/last_name_hint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstNameEditTextLayout"
-        app:startIconDrawable="@drawable/ic_person">
-
-        <EditText
-            android:id="@+id/LastNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            app:layout_constraintTop_toBottomOf="@+id/firstNameEditTextLayout"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailEditTextLayout"
@@ -90,10 +62,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LastNameEditTextLayout"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditTextLayout"
         app:startIconDrawable="@drawable/ic_baseline_email_24">
 
-        <EditText
+        <com.fahruaz.farmernusantara.ui.customviews.EmailEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,8 +73,7 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             app:layout_constraintTop_toBottomOf="@+id/nameEditTextLayout"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,15 +92,13 @@
         app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
         app:startIconDrawable="@drawable/ic_phone">
 
-        <EditText
+        <com.fahruaz.farmernusantara.ui.customviews.TelephoneNumberEditText
             android:id="@+id/phoneEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="phone"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="485dp" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -149,16 +118,14 @@
         app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/ic_password">
 
-        <EditText
+        <com.fahruaz.farmernusantara.ui.customviews.PasswordEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
             app:passwordToggleEnabled="true"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="485dp" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -178,16 +145,14 @@
         app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/ic_password">
 
-        <EditText
+        <com.fahruaz.farmernusantara.ui.customviews.PasswordEditText
             android:id="@+id/repeatPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
             app:passwordToggleEnabled="true"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="485dp" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -233,5 +198,14 @@
         app:layout_constraintStart_toEndOf="@+id/to_daftar"
         app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 
+    <ProgressBar
+        android:id="@+id/pbRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

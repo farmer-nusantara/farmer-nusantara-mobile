@@ -30,6 +30,7 @@ interface ApiService {
         @Field(value = "secretCode") secretCode: String
     ): Call<ChangeStatusAccountMessageResponse>
 
+    @FormUrlEncoded
     @POST("auth/signin")
     fun loginUser(
         @Field(value = "email") email: String,

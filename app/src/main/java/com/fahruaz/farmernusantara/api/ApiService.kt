@@ -27,7 +27,7 @@ interface ApiService {
     @FormUrlEncoded
     @PUT("auth/status-account")
     fun changeStatusAccount(
-        @Field(value = "secretCode") secretCode: String
+        @Field(value = "secretCode") secretCode: Int
     ): Call<ChangeStatusAccountMessageResponse>
 
     @FormUrlEncoded

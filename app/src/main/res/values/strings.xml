@@ -73,4 +73,5 @@
     <string name="verificationResend">Kirim ulang</string>
     <string name="submit">Validasi</string>
     <string name="skipValidation">Nanti Saja</string>
+    <string name="empty">-</string>
 </resources>

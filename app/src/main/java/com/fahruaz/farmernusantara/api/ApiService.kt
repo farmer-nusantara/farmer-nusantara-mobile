@@ -1,11 +1,11 @@
 package com.fahruaz.farmernusantara.api
 
 import com.fahruaz.farmernusantara.response.auth.*
+import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface ApiService {
     @FormUrlEncoded
@@ -36,5 +36,11 @@ interface ApiService {
         @Field(value = "email") email: String,
         @Field(value = "password") password: String
     ): Call<SignInMessageResponse>
+
+    @GET("auth/user/{id}")
+    fun getUserData(
+        @Header("Authorization") authHeader: String,
+        @Path("id") id: String
+    ): Call<GetProfileResponse>
 
 }

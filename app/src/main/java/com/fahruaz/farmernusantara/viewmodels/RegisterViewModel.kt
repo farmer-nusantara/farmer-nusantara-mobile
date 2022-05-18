@@ -35,6 +35,7 @@ class RegisterViewModel(private val pref: UserPreferences): ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null && responseBody.message == "Successfully") {
                        _toast.value = "Akun berhasil dibuat"
+                        user.id = responseBody.data?.userId
                         setUser(user)
                     }
                 }

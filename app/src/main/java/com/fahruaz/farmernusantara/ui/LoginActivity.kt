@@ -107,6 +107,9 @@ class LoginActivity : AppCompatActivity() {
                     loginViewModel.status.observe(this) {
                         user.status = it
                     }
+                    loginViewModel.id.observe(this) {
+                        user.id = it
+                    }
 
                     loginViewModel.loginUser(user)
 

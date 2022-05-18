@@ -53,7 +53,7 @@ class LoginViewModel(private val pref: UserPreferences) : ViewModel() {
                     }
                 }
                 else
-                    _toast.value = response.message()
+                    _toast.value = "Akun tidak ditemukan"
             }
             override fun onFailure(call: Call<SignInMessageResponse>, t: Throwable) {
                 _isLoading.value = false

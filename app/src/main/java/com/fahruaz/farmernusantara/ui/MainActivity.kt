@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
     lateinit var navController: NavController
+    //val mainViewModel = obtainViewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         supportActionBar?.hide()
-        val mainViewModel = obtainViewModel(this)
+        mainViewModel = obtainViewModel(this)
 
         mainViewModel.getUser().observe(this) { user ->
             if (user?.token?.isEmpty()!!) {
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var userModel: UserModel? = null
+        lateinit var mainViewModel: MainViewModel
     }
 
 }

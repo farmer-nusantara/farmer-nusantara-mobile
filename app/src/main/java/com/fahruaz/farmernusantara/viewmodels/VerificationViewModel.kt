@@ -49,7 +49,7 @@ class VerificationViewModel(private val pref: UserPreferences): ViewModel() {
         })
     }
 
-    fun changeStatusAccount(secretCode: String) {
+    fun changeStatusAccount(secretCode: Int) {
         _isLoading.value = true
 
         val service = ApiConfig().getApiService().changeStatusAccount(secretCode)

@@ -65,7 +65,7 @@ class VerificationActivity : AppCompatActivity() {
         binding?.btValidation?.setOnClickListener {
             val otp = "${binding?.otpET1?.text.toString()}${binding?.otpET2?.text.toString()}${binding?.otpET3?.text.toString()}" +
                     "${binding?.otpET4?.text.toString()}${binding?.otpET5?.text.toString()}"
-            verificationViewModel.changeStatusAccount(otp)
+            verificationViewModel.changeStatusAccount(otp.toInt())
         }
 
         binding?.btSkipValidation?.setOnClickListener {

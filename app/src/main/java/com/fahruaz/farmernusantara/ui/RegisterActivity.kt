@@ -28,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var registerViewModel: RegisterViewModel
-    private lateinit var loginViewModel: LoginViewModel
+//    private lateinit var loginViewModel: LoginViewModel
     private lateinit var userModel: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupRegisterViewModel()
-        setupLoginViewModel()
+//        setupLoginViewModel()
 
         registerViewModel.isLoading.observe(this) {
             showLoading(it)
@@ -65,12 +65,12 @@ class RegisterActivity : AppCompatActivity() {
         )[RegisterViewModel::class.java]
     }
 
-    private fun setupLoginViewModel() {
-        loginViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferences.getInstance(dataStore), this)
-        )[LoginViewModel::class.java]
-    }
+//    private fun setupLoginViewModel() {
+//        loginViewModel = ViewModelProvider(
+//            this,
+//            ViewModelFactory(UserPreferences.getInstance(dataStore), this)
+//        )[LoginViewModel::class.java]
+//    }
 
     private fun setupView() {
         @Suppress("DEPRECATION")
@@ -117,14 +117,14 @@ class RegisterActivity : AppCompatActivity() {
                         password = password, passwordConfirm = passwordConfirm)
                     registerViewModel.registerUser(userModel)
 
-                    loginViewModel.token.observe(this) { token ->
-                        userModel.token = token
-                        LoginActivity.token = token
-                    }
-                    loginViewModel.status.observe(this) { status ->
-                        userModel.status = status
-                    }
-                    loginViewModel.loginUser(userModel)
+//                    LoginActivity.loginViewModel.token.observe(this) { token ->
+//                        userModel.token = token
+//                        LoginActivity.token = token
+//                    }
+//                    LoginActivity.loginViewModel.status.observe(this) {
+//                        userModel.status = it
+//                    }
+                    LoginActivity.loginViewModel.loginUser(userModel)
                 }
             }
 

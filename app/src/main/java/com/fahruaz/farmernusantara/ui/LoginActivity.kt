@@ -25,7 +25,6 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
     private lateinit var user: UserModel
 
@@ -42,10 +41,6 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.toast.observe(this) {
             showToast(it)
-        }
-
-        loginViewModel.status.observe(this) {
-            Log.e("Status", it)
         }
 
         setupView()
@@ -94,19 +89,19 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else -> {
                     val user = UserModel(email = email, password = password)
-                    loginViewModel.name.observe(this) {
-                        user.name = it
-                    }
-                    loginViewModel.token.observe(this) {
-                        user.token = it
-                        token = it
-                    }
-                    loginViewModel.phone.observe(this) {
-                        user.phone = it
-                    }
-                    loginViewModel.status.observe(this) {
-                        user.status = it
-                    }
+//                    loginViewModel.name.observe(this) {
+//                        user.name = it
+//                    }
+//                    loginViewModel.token.observe(this) {
+//                        user.token = it
+//                        token = it
+//                    }
+//                    loginViewModel.phone.observe(this) {
+//                        user.phone = it
+//                    }
+//                    loginViewModel.status.observe(this) {
+//                        user.status = it
+//                    }
 
                     loginViewModel.loginUser(user)
 
@@ -144,5 +139,6 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         var token = ""
+        lateinit var loginViewModel: LoginViewModel
     }
 }

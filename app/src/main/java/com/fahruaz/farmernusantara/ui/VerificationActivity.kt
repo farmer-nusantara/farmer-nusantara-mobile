@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.datastore.core.DataStore
@@ -16,7 +15,7 @@ import com.fahruaz.farmernusantara.databinding.ActivityVerificationBinding
 import com.fahruaz.farmernusantara.preferences.UserPreferences
 import com.fahruaz.farmernusantara.ui.customviews.GenericKeyEvent
 import com.fahruaz.farmernusantara.ui.customviews.GenericTextWatcher
-import com.fahruaz.farmernusantara.viewmodels.MainViewModel
+import com.fahruaz.farmernusantara.viewmodels.LoginViewModel
 import com.fahruaz.farmernusantara.viewmodels.VerificationViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -30,7 +29,8 @@ class VerificationActivity : AppCompatActivity() {
         binding = ActivityVerificationBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        val verificationViewModel = obtainViewModel(this)
+        val verificationViewModel = obtainVerificationViewModel(this)
+
         verificationViewModel.getUser().observe(this) {
             verificationViewModel.sendToken(it.email!!)
         }
@@ -82,7 +82,7 @@ class VerificationActivity : AppCompatActivity() {
 
     }
 
-    private fun obtainViewModel(activity: AppCompatActivity): VerificationViewModel {
+    private fun obtainVerificationViewModel(activity: AppCompatActivity): VerificationViewModel {
         val pref = UserPreferences.getInstance(dataStore)
         return ViewModelProvider(activity, ViewModelFactory(pref, this))[VerificationViewModel::class.java]
     }

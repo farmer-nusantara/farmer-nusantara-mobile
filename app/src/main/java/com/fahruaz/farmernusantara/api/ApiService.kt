@@ -44,7 +44,7 @@ interface ApiService {
     ): Call<TokenResetPasswordResponse>
 
     @FormUrlEncoded
-    @PUT("auth/status-account")
+    @POST("auth/check-token-reset")
     fun checkingTokenResetPassword(
         @Field(value = "secretCode") secretCode: Int
     ): Call<CheckTokenResetMessageResponse>

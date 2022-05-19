@@ -81,4 +81,9 @@
     <string name="emailChangeMessage">Masukan email yang digunakan saat mendaftar. Kami akan mengirimkan kode otp untuk mengganti password ke email tersebut</string>
     <string name="send_otp">Kirim Kode OTP</string>
     <string name="invalid_email">Email tidak valid</string>
+    <string name="back">Kembali</string>
+    <string name="image">Image</string>
+    <string name="createNewPassword">Buat Password Baru</string>
+    <string name="passwordChangeMessage">Masukan password baru. Agar lebih aman, password baru sebaiknya berbeda dengan sebelumnya</string>
+    <string name="password_lacking">Password harus 8 karakter atau lebih</string>
 </resources>

@@ -66,6 +66,30 @@ class ChangePasswordViewModel(private val pref: UserPreferences): ViewModel() {
         })
     }
 
+    fun changePasswordAccount(email: String, newPassword: String, passwordConfirmation: String) {
+        _isLoading.value = true
+        val service = ApiConfig().getApiService().changePasswordAccount(email, newPassword, passwordConfirmation)
+
+        service.enqueue(object : Callback<ChangePasswordMessageResponse> {
+            override fun onResponse(call: Call<ChangePasswordMessageResponse>, response: Response<ChangePasswordMessageResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null && responseBody.message == "Changed password is successfully") {
+                        _toast.value = "Berhasil mengganti kata sandi"
+                        changePassword(newPassword)
+                    }
+                }
+                else
+                    _toast.value = response.message()
+            }
+            override fun onFailure(call: Call<ChangePasswordMessageResponse>, t: Throwable) {
+                _isLoading.value = false
+                _toast.value = "Gagal instance Retrofit"
+            }
+        })
+    }
+
     private fun changePassword(newPassword: String) {
         viewModelScope.launch {
             pref.changePassword(newPassword)

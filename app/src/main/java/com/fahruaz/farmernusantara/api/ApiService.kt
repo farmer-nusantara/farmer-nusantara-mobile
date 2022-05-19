@@ -49,4 +49,12 @@ interface ApiService {
         @Field(value = "secretCode") secretCode: Int
     ): Call<CheckTokenResetMessageResponse>
 
+    @FormUrlEncoded
+    @PUT("auth/change-password")
+    fun changePasswordAccount(
+        @Field(value = "email") email: String,
+        @Field(value = "newPassword") newPassword: String,
+        @Field(value = "passwordConfirmation") passwordConfirmation: String
+    ): Call<ChangePasswordMessageResponse>
+
 }

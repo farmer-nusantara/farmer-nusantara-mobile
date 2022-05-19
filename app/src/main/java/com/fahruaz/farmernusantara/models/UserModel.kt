@@ -11,5 +11,6 @@ data class UserModel(
     var password: String? = null,
     var passwordConfirm: String? = null,
     var token: String? = null,
-    var status: String? = null
+    var status: String? = null,
+    var id: String? = null
 ): Parcelable

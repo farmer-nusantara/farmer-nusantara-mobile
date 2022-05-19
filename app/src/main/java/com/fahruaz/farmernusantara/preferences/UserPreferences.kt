@@ -18,6 +18,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences[PASSWORD_KEY] = user.password!!
             preferences[TOKEN_KEY] = ""
             preferences[STATUS_KEY] = "pending"
+            preferences[ID_KEY] = user.id!!
         }
     }
 
@@ -29,7 +30,8 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
                 preferences[PHONE_KEY] ?: "",
                 preferences[PASSWORD_KEY] ?: "",
                 token = preferences[TOKEN_KEY] ?: "",
-                status = preferences[STATUS_KEY] ?: ""
+                status = preferences[STATUS_KEY] ?: "",
+                id = preferences[ID_KEY] ?: ""
             )
         }
     }
@@ -54,6 +56,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences[PASSWORD_KEY] = user.password!!
             preferences[TOKEN_KEY] = user.token!!
             preferences[STATUS_KEY] = user.status!!
+            preferences[ID_KEY] = user.id!!
         }
     }
 
@@ -64,18 +67,21 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences[PHONE_KEY] = ""
             preferences[PASSWORD_KEY] = ""
             preferences[TOKEN_KEY] = ""
+            preferences[ID_KEY] = ""
         }
     }
 
     companion object {
         @Volatile
         private var INSTANCE: UserPreferences? = null
+
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val NAME_KEY = stringPreferencesKey("name")
         private val PHONE_KEY = stringPreferencesKey("phone")
         private val PASSWORD_KEY = stringPreferencesKey("password")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val STATUS_KEY = stringPreferencesKey("status")
+        private val ID_KEY = stringPreferencesKey("id")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreferences {
             return INSTANCE ?: synchronized(this) {

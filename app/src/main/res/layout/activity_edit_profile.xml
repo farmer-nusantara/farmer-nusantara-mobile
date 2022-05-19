@@ -47,13 +47,15 @@
         android:layout_width="169dp"
         android:layout_height="166dp"
         android:layout_marginTop="36dp"
-        android:src="@drawable/ic_launcher_background"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/line_divider"
+        android:src="@drawable/profile_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/firstNameEditTextLayout"
+        android:id="@+id/nameEditTextLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -81,34 +83,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/LastNameEditTextLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="32dp"
-        android:hint="@string/last_name_hint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstNameEditTextLayout"
-        app:startIconDrawable="@drawable/ic_person">
-
-        <EditText
-            android:id="@+id/LastNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            app:layout_constraintTop_toBottomOf="@+id/firstNameEditTextLayout"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="32dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailEditTextLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
@@ -120,7 +94,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LastNameEditTextLayout"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditTextLayout"
         app:startIconDrawable="@drawable/ic_baseline_email_24">
 
         <EditText

@@ -16,6 +16,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.ViewModelFactory
 import com.fahruaz.farmernusantara.databinding.ActivityMainBinding
+import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
 import com.fahruaz.farmernusantara.viewmodels.MainViewModel
 
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
     lateinit var navController: NavController
+    //val mainViewModel = obtainViewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         supportActionBar?.hide()
-        val mainViewModel = obtainViewModel(this)
+        mainViewModel = obtainViewModel(this)
 
         mainViewModel.getUser().observe(this) { user ->
             if (user?.token?.isEmpty()!!) {
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
 
+            userModel = user
             LoginActivity.token = user.token!!
         }
 
@@ -65,6 +68,11 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    companion object {
+        var userModel: UserModel? = null
+        lateinit var mainViewModel: MainViewModel
     }
 
 }

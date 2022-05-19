@@ -3,6 +3,7 @@ package com.fahruaz.farmernusantara.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.fahruaz.farmernusantara.databinding.ActivityChangePasswordOtpBinding
@@ -56,6 +57,7 @@ class ChangePasswordOtpActivity : AppCompatActivity() {
         binding?.btVerifyCode?.setOnClickListener {
             val otp = "${binding?.otpET1?.text.toString()}${binding?.otpET2?.text.toString()}${binding?.otpET3?.text.toString()}" +
                     "${binding?.otpET4?.text.toString()}${binding?.otpET5?.text.toString()}"
+            Log.e("OTP", otp)
             ChangePasswordEmailActivity.changePasswordViewModel.checkingTokenResetPassword(otp.toInt())
         }
     }

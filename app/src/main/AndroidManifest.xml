@@ -28,7 +28,7 @@
         <activity
             android:name=".ui.ChangePasswordOtpActivity"
             android:exported="false"
-            android:theme="@style/noActionBarStyle" />
+            android:theme="@style/noActionBarStyle"/>
         <activity
             android:name=".ui.VerificationActivity"
             android:exported="false" />

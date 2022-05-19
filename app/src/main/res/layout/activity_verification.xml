@@ -37,47 +37,66 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/verificationMessage">
-        <EditText
-            android:id="@+id/otpET1"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:focusable="true"
-            android:maxLength="1"
-            android:gravity="center"
-            android:textSize="20sp"/>
-        <EditText
-            android:id="@+id/otpET2"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="1"
-            android:gravity="center"
-            android:textSize="20sp"/>
-        <EditText
-            android:id="@+id/otpET3"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="1"
-            android:gravity="center"
-            android:textSize="20sp"/>
-        <EditText
-            android:id="@+id/otpET4"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="1"
-            android:gravity="center"
-            android:textSize="20sp"/>
-        <EditText
-            android:id="@+id/otpET5"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="1"
-            android:gravity="center"
-            android:textSize="20sp"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otpET1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otpET2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otpET3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otpET4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="45dp"
+            android:layout_height="match_parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otpET5"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <TextView

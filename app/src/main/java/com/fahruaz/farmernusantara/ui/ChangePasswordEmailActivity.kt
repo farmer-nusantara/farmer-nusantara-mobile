@@ -58,6 +58,7 @@ class ChangePasswordEmailActivity : AppCompatActivity() {
                 email.isEmpty() -> binding?.emailEditTextLayout?.error = resources.getString(R.string.empty_email)
                 !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> binding?.emailEditTextLayout?.error = resources.getString(R.string.invalid_email)
                 else -> {
+                    emailForResetPassword = email
                     changePasswordViewModel.sendCode(email)
                 }
             }
@@ -88,6 +89,7 @@ class ChangePasswordEmailActivity : AppCompatActivity() {
 
     companion object {
         lateinit var changePasswordViewModel: ChangePasswordViewModel
+        var emailForResetPassword = ""
     }
 
 }

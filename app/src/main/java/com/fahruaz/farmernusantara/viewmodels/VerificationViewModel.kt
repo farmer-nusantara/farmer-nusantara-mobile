@@ -21,25 +21,19 @@ class VerificationViewModel(private val pref: UserPreferences): ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
 
     fun sendToken(email: String) {
-//        _isLoading.value = true
-
         val service = ApiConfig().getApiService().sendTokenActivationAccount(email)
         service.enqueue(object : Callback<SendTokenActivationMessageResponse> {
             override fun onResponse(call: Call<SendTokenActivationMessageResponse>, response: Response<SendTokenActivationMessageResponse>) {
-//                _isLoading.value = false
-                Log.e("VerificationViewModel", "YOI")
-
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _toast.value = "Token verifikasi berhasil dikirim"
+                        _toast.value = "Kode verifikasi berhasil dikirim"
                     }
                 }
                 else
                     _toast.value = response.message()
             }
             override fun onFailure(call: Call<SendTokenActivationMessageResponse>, t: Throwable) {
-//                _isLoading.value = false
                 _toast.value = "Gagal instance Retrofit"
             }
         })

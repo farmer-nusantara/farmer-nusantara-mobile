@@ -73,4 +73,11 @@
     <string name="verificationResend">Kirim ulang</string>
     <string name="submit">Validasi</string>
     <string name="skipValidation">Nanti Saja</string>
+    <string name="otp_change_password">OTP Ganti Password</string>
+    <string name="otpChangeMessage">Kami telah mengirimkan kode otp ke email anda. Mohon cek email anda sekarang</string>
+    <string name="next">Selanjutnya</string>
+    <string name="verifyCode">Verifikasi Kode</string>
+    <string name="change_password">Ganti Password</string>
+    <string name="emailChangeMessage">Masukan email yang digunakan saat mendaftar. Kami akan mengirimkan kode otp untuk mengganti password ke email tersebut</string>
+    <string name="send_otp">Kirim Kode OTP</string>
 </resources>

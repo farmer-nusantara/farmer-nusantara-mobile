@@ -37,4 +37,10 @@ interface ApiService {
         @Field(value = "password") password: String
     ): Call<SignInMessageResponse>
 
+    @FormUrlEncoded
+    @POST("auth/email-token-reset")
+    fun sendTokenResetPassword(
+        @Field(value = "email") email: String
+    ): Call<TokenResetPasswordResponse>
+
 }

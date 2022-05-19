@@ -40,6 +40,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun changePassword(newPassword: String) {
+        dataStore.edit { preferences ->
+            preferences[PASSWORD_KEY] = newPassword
+        }
+    }
+
     suspend fun login(user: UserModel) {
         dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = user.email!!

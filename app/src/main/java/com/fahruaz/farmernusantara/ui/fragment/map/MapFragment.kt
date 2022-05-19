@@ -76,9 +76,9 @@ class MapFragment : Fragment() {
         activity?.findViewById<FloatingActionButton>(R.id.fabFarmland)?.setOnClickListener {
             findNavController().navigate(R.id.action_mapFragment_to_farmlandFragment)
         }
-        
+
         // get reference to zoom in/out icon
-        val locationButton = (mapFragment!!.view!!.findViewById<View>("1".toInt()).parent as View).findViewById<View>("1".toInt())
+        val locationButton = (mapFragment!!.requireView().findViewById<View>("1".toInt()).parent as View).findViewById<View>("1".toInt())
         // and next place it, for example, on bottom right (as Google Maps app)
         val rlp = locationButton.layoutParams as RelativeLayout.LayoutParams
         // position on right bottom

@@ -118,9 +118,6 @@ class RegisterActivity : AppCompatActivity() {
                 password.isEmpty() -> {
                     binding.passwordEditTextLayout.error = resources.getString(R.string.empty_password)
                 }
-                password.isEmpty() -> {
-                    binding.passwordEditTextLayout.error = resources.getString(R.string.empty_password)
-                }
                 password.length < 8 -> {
                     binding.passwordEditTextLayout.error = resources.getString(R.string.password_lacking)
                 }

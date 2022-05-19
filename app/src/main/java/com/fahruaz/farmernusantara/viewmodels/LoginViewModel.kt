@@ -29,6 +29,9 @@ class LoginViewModel(private val pref: UserPreferences) : ViewModel() {
     private val _status = MutableLiveData<String>()
     val status: LiveData<String> = _status
 
+    private val _id = MutableLiveData<String>()
+    val id: LiveData<String> = _id
+
     fun loginUser(user: UserModel) {
         _isLoading.value = true
         val service = ApiConfig().getApiService().loginUser(user.email!!, user.password!!)
@@ -45,11 +48,12 @@ class LoginViewModel(private val pref: UserPreferences) : ViewModel() {
                         _token.value = responseBody.token!!
                         _phone.value = responseBody.user.phone!!
                         _status.value = responseBody.user.status!!
+                        _id.value = responseBody.user.id!!
                         signin(user)
                     }
                 }
                 else
-                    _toast.value = response.message()
+                    _toast.value = "Akun tidak ditemukan"
             }
             override fun onFailure(call: Call<SignInMessageResponse>, t: Throwable) {
                 _isLoading.value = false

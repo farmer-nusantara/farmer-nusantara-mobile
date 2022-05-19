@@ -26,7 +26,6 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
     private lateinit var user: UserModel
 
@@ -45,8 +44,9 @@ class LoginActivity : AppCompatActivity() {
             showToast(it)
         }
 
-        loginViewModel.status.observe(this) {
-            Log.e("Status", it)
+        binding.forgotPassword.setOnClickListener {
+            val intent = Intent(this, ChangePasswordEmailActivity::class.java)
+            startActivity(intent)
         }
 
         setupView()
@@ -103,22 +103,23 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else -> {
                     val user = UserModel(email = email, password = password)
-                    loginViewModel.name.observe(this) {
-                        user.name = it
-                    }
-                    loginViewModel.token.observe(this) {
-                        user.token = it
-                        token = it
-                    }
-                    loginViewModel.phone.observe(this) {
-                        user.phone = it
-                    }
-                    loginViewModel.status.observe(this) {
-                        user.status = it
-                    }
-                    loginViewModel.id.observe(this) {
-                        user.id = it
-                    }
+
+//                     loginViewModel.name.observe(this) {
+//                         user.name = it
+//                     }
+//                     loginViewModel.token.observe(this) {
+//                         user.token = it
+//                         token = it
+//                     }
+//                     loginViewModel.phone.observe(this) {
+//                         user.phone = it
+//                     }
+//                     loginViewModel.status.observe(this) {
+//                         user.status = it
+//                     }
+//                     loginViewModel.id.observe(this) {
+//                         user.id = it
+//                     }
 
                     loginViewModel.loginUser(user)
 
@@ -156,5 +157,6 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         var token = ""
+        lateinit var loginViewModel: LoginViewModel
     }
 }

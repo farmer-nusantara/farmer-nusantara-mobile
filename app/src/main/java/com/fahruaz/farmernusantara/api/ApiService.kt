@@ -20,9 +20,9 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("auth/email-token-activation")
-    fun sendToken(
+    fun sendTokenActivationAccount(
         @Field(value = "email") email: String
-    ): Call<SendTokenMessageResponse>
+    ): Call<SendTokenActivationMessageResponse>
 
     @FormUrlEncoded
     @PUT("auth/status-account")
@@ -37,10 +37,31 @@ interface ApiService {
         @Field(value = "password") password: String
     ): Call<SignInMessageResponse>
 
+    @FormUrlEncoded
+    @POST("auth/email-token-reset")
+    fun sendTokenResetPassword(
+        @Field(value = "email") email: String
+    ): Call<TokenResetPasswordResponse>
+
+    @FormUrlEncoded
+    @POST("auth/check-token-reset")
+    fun checkingTokenResetPassword(
+        @Field(value = "secretCode") secretCode: Int
+    ): Call<CheckTokenResetMessageResponse>
+
+    @FormUrlEncoded
+    @PUT("auth/change-password")
+    fun changePasswordAccount(
+        @Field(value = "email") email: String,
+        @Field(value = "newPassword") newPassword: String,
+        @Field(value = "passwordConfirmation") passwordConfirmation: String
+    ): Call<ChangePasswordMessageResponse>
+
     @GET("auth/user/{id}")
     fun getUserData(
         @Header("Authorization") authHeader: String,
         @Path("id") id: String
     ): Call<GetProfileResponse>
+
 
 }

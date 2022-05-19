@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.preferences.UserPreferences
-import com.fahruaz.farmernusantara.viewmodels.LoginViewModel
-import com.fahruaz.farmernusantara.viewmodels.MainViewModel
-import com.fahruaz.farmernusantara.viewmodels.RegisterViewModel
-import com.fahruaz.farmernusantara.viewmodels.VerificationViewModel
+import com.fahruaz.farmernusantara.viewmodels.*
 
 class ViewModelFactory(private val pref: UserPreferences, private val context: Context) : ViewModelProvider.NewInstanceFactory() {
 
@@ -33,6 +30,9 @@ class ViewModelFactory(private val pref: UserPreferences, private val context: C
 //            }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> {
+                ChangePasswordViewModel(pref) as T
             }
 //            modelClass.isAssignableFrom(MapStoryViewModel::class.java) -> {
 //                MapStoryViewModel(pref) as T

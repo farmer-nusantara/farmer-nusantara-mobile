@@ -1,50 +1,42 @@
 package com.fahruaz.farmernusantara.ui
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
-import com.fahruaz.farmernusantara.ViewModelFactory
-import com.fahruaz.farmernusantara.databinding.ActivityVerificationBinding
-import com.fahruaz.farmernusantara.preferences.UserPreferences
+import com.fahruaz.farmernusantara.databinding.ActivityChangePasswordOtpBinding
 import com.fahruaz.farmernusantara.ui.customviews.GenericKeyEvent
 import com.fahruaz.farmernusantara.ui.customviews.GenericTextWatcher
-import com.fahruaz.farmernusantara.viewmodels.LoginViewModel
-import com.fahruaz.farmernusantara.viewmodels.VerificationViewModel
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+class ChangePasswordOtpActivity : AppCompatActivity() {
 
-class VerificationActivity : AppCompatActivity() {
-
-    private var binding: ActivityVerificationBinding? = null
+    private var binding: ActivityChangePasswordOtpBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityVerificationBinding.inflate(layoutInflater)
+        binding = ActivityChangePasswordOtpBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        val verificationViewModel = obtainVerificationViewModel(this)
-
-        verificationViewModel.getUser().observe(this) {
-            verificationViewModel.sendToken(it.email!!)
+        // toolbar
+        setSupportActionBar(binding?.tbChangePasswordOtp)
+        if(supportActionBar != null) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+        binding?.tbChangePasswordOtp?.setNavigationOnClickListener {
+            onBackPressed()
         }
 
-        verificationViewModel.isLoading.observe(this) {
+        ChangePasswordEmailActivity.changePasswordViewModel.isLoading.observe(this) {
             showLoading(it)
         }
 
-        verificationViewModel.toast.observe(this) {
+        ChangePasswordEmailActivity.changePasswordViewModel.toast.observe(this) {
             showToast(it)
-            if(it == "Berhasil verifikasi akun") {
-                val intent = Intent(this, MainActivity::class.java)
+            if(it == "Kode OTP benar") {
+                val intent = Intent(this, ChangePasswordActivity::class.java)
                 startActivity(intent)
-                finish()
             }
         }
 
@@ -62,36 +54,19 @@ class VerificationActivity : AppCompatActivity() {
         binding?.otpET4?.setOnKeyListener(GenericKeyEvent(binding?.otpET4!!, binding?.otpET3!!))
         binding?.otpET5?.setOnKeyListener(GenericKeyEvent(binding?.otpET5!!, binding?.otpET4!!))
 
-        binding?.btValidation?.setOnClickListener {
+        binding?.btVerifyCode?.setOnClickListener {
             val otp = "${binding?.otpET1?.text.toString()}${binding?.otpET2?.text.toString()}${binding?.otpET3?.text.toString()}" +
                     "${binding?.otpET4?.text.toString()}${binding?.otpET5?.text.toString()}"
-            verificationViewModel.changeStatusAccount(otp.toInt())
+            Log.e("OTP", otp)
+            ChangePasswordEmailActivity.changePasswordViewModel.checkingTokenResetPassword(otp.toInt())
         }
-
-        binding?.btSkipValidation?.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        binding?.verificationResend?.setOnClickListener {
-            verificationViewModel.getUser().observe(this) {
-                verificationViewModel.sendToken(it.email!!)
-            }
-        }
-
-    }
-
-    private fun obtainVerificationViewModel(activity: AppCompatActivity): VerificationViewModel {
-        val pref = UserPreferences.getInstance(dataStore)
-        return ViewModelProvider(activity, ViewModelFactory(pref, this))[VerificationViewModel::class.java]
     }
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {
-            binding?.pbVerification?.visibility = View.VISIBLE
+            binding?.pbChangePasswordOtp?.visibility = View.VISIBLE
         } else {
-            binding?.pbVerification?.visibility = View.GONE
+            binding?.pbChangePasswordOtp?.visibility = View.GONE
         }
     }
 

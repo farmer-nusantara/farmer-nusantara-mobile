@@ -24,12 +24,17 @@
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/drawable/circle_color_indicator.xml" value="0.196" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/drawable/ruler_square_compass.xml" value="0.1855" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/drawable/sprout.xml" value="0.1855" />
+        <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_change_password.xml" value="0.25416666666666665" />
+        <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_change_password_email.xml" value="0.24010416666666667" />
+        <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_change_password_otp.xml" value="0.19384057971014493" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_create_farmland.xml" value="0.25416666666666665" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_detail_disease.xml" value="0.25416666666666665" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_detail_farmland.xml" value="0.25" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_register.xml" value="0.25416666666666665" />
+        <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_reset_password_otp.xml" value="0.25416666666666665" />
+        <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/activity_verification.xml" value="0.19384057971014493" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/farmland_item.xml" value="0.264" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/fragment_farmland.xml" value="0.25416666666666665" />
         <entry key="..\:/kotlin/kuliah/bangkit/Capstone Project/farmer-nusantara-mobile/app/src/main/res/layout/fragment_map.xml" value="0.25416666666666665" />

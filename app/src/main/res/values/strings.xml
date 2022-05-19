@@ -73,4 +73,7 @@
     <string name="verificationResend">Kirim ulang</string>
     <string name="submit">Validasi</string>
     <string name="skipValidation">Nanti Saja</string>
+    <string name="invalid_email">Email tidak valid</string>
+    <string name="password_lacking">Password harus 8 karakter atau lebih</string>
+    <string name="invalid_phone">Nomor telepone tidak valid</string>
 </resources>

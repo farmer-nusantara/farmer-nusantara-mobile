@@ -26,8 +26,8 @@ class PasswordEditText: AppCompatEditText {
                 // Do nothing.
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if(s.toString().isNotEmpty() && s.length < 6) {
-                    error = "Password harus 6 karakter atau lebih"
+                if(s.toString().isNotEmpty() && s.length < 8) {
+                    error = "Password harus 8 karakter atau lebih"
                 }
             }
             override fun afterTextChanged(s: Editable) {

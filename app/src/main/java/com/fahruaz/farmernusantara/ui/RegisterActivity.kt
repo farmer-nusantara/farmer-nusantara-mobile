@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -69,6 +70,12 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun action() {
         binding.registerButton.setOnClickListener {
+            binding.nameEditTextLayout.error = ""
+            binding.emailEditTextLayout.error = ""
+            binding.phoneEditTextLayout.error = ""
+            binding.passwordEditTextLayout.error = ""
+            binding.repeatPasswordEditTextLayout.error = ""
+
             val name = binding.nameEditText.text.toString()
             val email = binding.emailEditText.text.toString()
             val phone = binding.phoneEditText.text.toString()
@@ -81,11 +88,23 @@ class RegisterActivity : AppCompatActivity() {
                 email.isEmpty() -> {
                     binding.emailEditTextLayout.error = resources.getString(R.string.empty_email)
                 }
+                !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                    binding.emailEditTextLayout.error = resources.getString(R.string.invalid_email)
+                }
                 phone.isEmpty() -> {
-                    binding.phoneEditText.error = resources.getString(R.string.phone_email)
+                    binding.phoneEditTextLayout.error = resources.getString(R.string.phone_email)
+                }
+                phone.length < 10 -> {
+                    binding.phoneEditTextLayout.error = resources.getString(R.string.invalid_phone)
                 }
                 password.isEmpty() -> {
                     binding.passwordEditTextLayout.error = resources.getString(R.string.empty_password)
+                }
+                password.isEmpty() -> {
+                    binding.passwordEditTextLayout.error = resources.getString(R.string.empty_password)
+                }
+                password.length < 8 -> {
+                    binding.passwordEditTextLayout.error = resources.getString(R.string.password_lacking)
                 }
                 passwordConfirm.isEmpty() -> {
                     binding.repeatPasswordEditText.error = resources.getString(R.string.empty_repeat_password)

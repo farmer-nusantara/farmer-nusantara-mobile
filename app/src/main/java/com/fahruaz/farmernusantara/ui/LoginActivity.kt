@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -82,15 +83,23 @@ class LoginActivity : AppCompatActivity() {
 
     private fun action() {
         binding.loginButton.setOnClickListener {
+            binding.emailEditTextLayout.error = ""
+            binding.passwordEditTextLayout.error = ""
+
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             when {
                 email.isEmpty() -> {
                     binding.emailEditTextLayout.error = resources.getString(R.string.empty_email)
                 }
+                !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                    binding.emailEditTextLayout.error = resources.getString(R.string.invalid_email)
+                }
                 password.isEmpty() -> {
-                    binding.passwordEditTextLayout.error =
-                        resources.getString(R.string.empty_password)
+                    binding.passwordEditTextLayout.error = resources.getString(R.string.empty_password)
+                }
+                password.length < 8 -> {
+                    binding.passwordEditTextLayout.error = resources.getString(R.string.password_lacking)
                 }
                 else -> {
                     val user = UserModel(email = email, password = password)

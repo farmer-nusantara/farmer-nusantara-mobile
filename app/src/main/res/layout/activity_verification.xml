@@ -42,6 +42,7 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:focusable="true"
             android:maxLength="1"
             android:gravity="center"
             android:textSize="20sp"/>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.datastore.core.DataStore
@@ -51,9 +52,11 @@ class ChangePasswordEmailActivity : AppCompatActivity() {
         }
 
         binding?.btSendOtp?.setOnClickListener {
+            binding?.emailEditTextLayout?.error = ""
             val email = binding?.emailEditText?.text.toString()
             when {
                 email.isEmpty() -> binding?.emailEditTextLayout?.error = resources.getString(R.string.empty_email)
+                !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> binding?.emailEditTextLayout?.error = resources.getString(R.string.invalid_email)
                 else -> {
                     changePasswordViewModel.sendCode(email)
                 }

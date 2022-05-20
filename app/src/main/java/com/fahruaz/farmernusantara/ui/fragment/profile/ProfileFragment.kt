@@ -40,7 +40,6 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btLogout.setOnClickListener {
-
             AlertDialog.Builder(requireContext()).apply {
                 setTitle(resources.getString(R.string.logout))
                 setMessage(resources.getString(R.string.sure_to_logout))

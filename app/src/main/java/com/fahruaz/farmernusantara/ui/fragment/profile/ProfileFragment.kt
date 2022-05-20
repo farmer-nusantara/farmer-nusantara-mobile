@@ -76,9 +76,9 @@ class ProfileFragment : Fragment() {
                     if (responseBody != null) {
                         user = responseBody
 
-                        binding?.tvName?.text = user.name
-                        binding?.tvEmail?.text = user.email
-                        binding?.tvPhone?.text = user.phone
+                        binding.tvName.text = user.name
+                        binding.tvEmail.text = user.email
+                        binding.tvPhone.text = user.phone
                     }
                 } else {
                     showLoading(false)

@@ -1,15 +1,18 @@
 package com.fahruaz.farmernusantara.ui
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.ViewModelFactory
 import com.fahruaz.farmernusantara.api.ApiConfig
 import com.fahruaz.farmernusantara.databinding.ActivityEditProfileBinding
@@ -83,6 +86,18 @@ class EditProfileActivity : AppCompatActivity() {
                     if (responseBody != null) {
                         user = UserModel(email = email, name = name, phone = phone)
                         editProfileViewModel.setUser(user)
+
+                        //finish()
+                        AlertDialog.Builder(this@EditProfileActivity).apply {
+                            setTitle(resources.getString(R.string.success))
+                            setMessage(resources.getString(R.string.user_data_was_edited))
+                            setPositiveButton(resources.getString(R.string.ok)) { _, _ ->
+                                val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                            create()
+                            show()
+                        }
                     }
                 } else {
                     showLoading(false)

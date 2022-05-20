@@ -34,6 +34,12 @@ class ViewModelFactory(private val pref: UserPreferences, private val context: C
             modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> {
                 ChangePasswordViewModel(pref) as T
             }
+            modelClass.isAssignableFrom(ImageStorageViewModel::class.java) -> {
+                ImageStorageViewModel() as T
+            }
+            modelClass.isAssignableFrom(FarmlandViewModel::class.java) -> {
+                FarmlandViewModel() as T
+            }
 //            modelClass.isAssignableFrom(MapStoryViewModel::class.java) -> {
 //                MapStoryViewModel(pref) as T
 //            }

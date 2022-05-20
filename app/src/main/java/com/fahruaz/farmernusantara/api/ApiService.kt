@@ -1,6 +1,8 @@
 package com.fahruaz.farmernusantara.api
 
 import com.fahruaz.farmernusantara.response.auth.*
+import com.fahruaz.farmernusantara.response.farmland.CreateFarmlandResponse
+import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -63,5 +65,25 @@ interface ApiService {
         @Path("id") id: String
     ): Call<GetProfileResponse>
 
+    @FormUrlEncoded
+    @POST("farmland")
+    fun createFarmland(
+        @Header("Authorization") token: String,
+        @Field(value = "farmName") farmName: String,
+        @Field(value = "owner") owner: String,
+        @Field(value = "markColor") markColor: String,
+        @Field(value = "plantType") plantType: String,
+        @Field(value = "location") location: String,
+        @Field(value = "imageUrl") imageUrl: String
+    ): Call<CreateFarmlandResponse>
+
+    @Multipart
+    @FormUrlEncoded
+    @POST("file/uploads/{owner}")
+    fun uploadImageToStorage(
+        @Header("Authorization") token: String,
+        @Path("owner") owner: String,
+        @Part file: MultipartBody.Part
+    ): Call<UploadImageToStorageResponse>
 
 }

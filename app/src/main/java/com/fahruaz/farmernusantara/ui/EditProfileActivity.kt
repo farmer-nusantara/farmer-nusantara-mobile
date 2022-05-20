@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -14,15 +13,10 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.ViewModelFactory
-import com.fahruaz.farmernusantara.api.ApiConfig
 import com.fahruaz.farmernusantara.databinding.ActivityEditProfileBinding
 import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
-import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import com.fahruaz.farmernusantara.viewmodels.EditProfileViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -37,7 +31,6 @@ class EditProfileActivity : AppCompatActivity() {
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        // toolbar
         setSupportActionBar(binding?.tbEditProfile)
         if(supportActionBar != null) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -47,6 +40,14 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         setupViewModel()
+
+        editProfileViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
+        editProfileViewModel.toast.observe(this) {
+            showToast(it)
+        }
 
         binding?.nameEditText?.setText(MainActivity.userModel?.name!!)
         binding?.emailEditText?.setText(MainActivity.userModel?.email!!)
@@ -72,43 +73,24 @@ class EditProfileActivity : AppCompatActivity() {
         val phone = binding?.phoneEditText?.text.toString()
 
         showLoading(true)
-        val client = ApiConfig().getApiService().editProfile("Token ${MainActivity.userModel?.token}",
-            MainActivity.userModel?.id!!, email, name, phone)
 
-        client.enqueue(object : Callback<GetProfileResponse> {
-            override fun onResponse(
-                call: Call<GetProfileResponse>,
-                response: Response<GetProfileResponse>
-            ) {
-                if (response.isSuccessful) {
-                    showLoading(false)
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        user = UserModel(email = email, name = name, phone = phone)
-                        editProfileViewModel.setUser(user)
+        user = UserModel(email = email, name = name, phone = phone)
+        editProfileViewModel.editUserData(user)
 
-                        //finish()
-                        AlertDialog.Builder(this@EditProfileActivity).apply {
-                            setTitle(resources.getString(R.string.success))
-                            setMessage(resources.getString(R.string.user_data_was_edited))
-                            setPositiveButton(resources.getString(R.string.ok)) { _, _ ->
-                                val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
-                                startActivity(intent)
-                            }
-                            create()
-                            show()
-                        }
+        editProfileViewModel.toast.observe(this){
+            if (it == "Berhasil edit profil"){
+                AlertDialog.Builder(this@EditProfileActivity).apply {
+                    setTitle(resources.getString(R.string.success))
+                    setMessage(resources.getString(R.string.user_data_was_edited))
+                    setPositiveButton(resources.getString(R.string.ok)) { _, _ ->
+                        val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
+                        startActivity(intent)
                     }
-                } else {
-                    showLoading(false)
-                    Log.e("EditProfile", "onFailure: ${response.message()}")
+                    create()
+                    show()
                 }
             }
-            override fun onFailure(call: Call<GetProfileResponse>, t: Throwable) {
-                showLoading(false)
-                Log.e("EditProfile", "Terjadi Kesalahan: ${t.message}")
-            }
-        })
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -117,6 +99,10 @@ class EditProfileActivity : AppCompatActivity() {
         } else {
             binding?.progressBar?.visibility = View.GONE
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 }

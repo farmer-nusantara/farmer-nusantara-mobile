@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.ViewModelFactory
 import com.fahruaz.farmernusantara.api.ApiConfig
 import com.fahruaz.farmernusantara.databinding.ActivityEditProfileBinding
+import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import com.fahruaz.farmernusantara.viewmodels.EditProfileViewModel
@@ -25,7 +26,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class EditProfileActivity : AppCompatActivity() {
 
     private var binding: ActivityEditProfileBinding? = null
-    private lateinit var user: GetProfileResponse
+    private lateinit var user: UserModel
     private lateinit var editProfileViewModel: EditProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +45,12 @@ class EditProfileActivity : AppCompatActivity() {
 
         setupViewModel()
 
+        binding?.nameEditText?.setText(MainActivity.userModel?.name!!)
+        binding?.emailEditText?.setText(MainActivity.userModel?.email!!)
+        binding?.phoneEditText?.setText(MainActivity.userModel?.phone!!)
+
         binding?.btSaveProfile?.setOnClickListener{
-            getUser()
+            editUser()
         }
     }
 
@@ -57,12 +62,11 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun getUser() {
+    private fun editUser() {
 
         val name = binding?.nameEditText?.text.toString()
         val email = binding?.emailEditText?.text.toString()
         val phone = binding?.phoneEditText?.text.toString()
-
 
         showLoading(true)
         val client = ApiConfig().getApiService().editProfile("Token ${MainActivity.userModel?.token}",
@@ -77,8 +81,8 @@ class EditProfileActivity : AppCompatActivity() {
                     showLoading(false)
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        editProfileViewModel.getUser()
-
+                        user = UserModel(email = email, name = name, phone = phone)
+                        editProfileViewModel.setUser(user)
                     }
                 } else {
                     showLoading(false)

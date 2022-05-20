@@ -1,6 +1,7 @@
 package com.fahruaz.farmernusantara.api
 
 import com.fahruaz.farmernusantara.response.auth.*
+import com.fahruaz.farmernusantara.response.profile.EditProfileResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -61,6 +62,16 @@ interface ApiService {
     fun getUserData(
         @Header("Authorization") authHeader: String,
         @Path("id") id: String
+    ): Call<GetProfileResponse>
+
+    @FormUrlEncoded
+    @PUT("auth/user/{id}")
+    fun editProfile(
+        @Header("Authorization") authHeader: String,
+        @Path("id") id: String,
+        @Field(value = "email") email: String,
+        @Field(value = "name") name: String,
+        @Field(value = "phone") phone: String
     ): Call<GetProfileResponse>
 
 

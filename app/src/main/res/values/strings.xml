@@ -88,4 +88,9 @@
     <string name="password_lacking">Password harus 8 karakter atau lebih</string>
     <string name="invalid_phone">Nomor telepone tidak valid</string>
     <string name="empty">-</string>
+    <string name="sure_to_logout">Yakin ingin keluar dari akun ini?</string>
+    <string name="ya">Ya</string>
+    <string name="ok">OK</string>
+    <string name="user_data_was_edited">Data pengguna berhasil diperbarui</string>
+    <string name="success">Berhasil</string>
 </resources>

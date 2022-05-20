@@ -11,32 +11,24 @@ class ViewModelFactory(private val pref: UserPreferences, private val context: C
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-//            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-//                MainViewModel(pref, Injection.provideRepository(context),
-//                    Injection.provideDatabase(context), Injection.provideApiService()) as T
-//            }
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(pref) as T
             }
-
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(pref) as T
             }
             modelClass.isAssignableFrom(VerificationViewModel::class.java) -> {
                 VerificationViewModel(pref) as T
             }
-//            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
-//                AddStoryViewModel(pref) as T
-//            }
+            modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
+                EditProfileViewModel(pref) as T
+            }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(pref) as T
             }
             modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> {
                 ChangePasswordViewModel(pref) as T
             }
-//            modelClass.isAssignableFrom(MapStoryViewModel::class.java) -> {
-//                MapStoryViewModel(pref) as T
-//            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

@@ -35,8 +35,6 @@ class FarmlandFragment : Fragment() {
             startActivity(intent)
         }
 
-        Log.e("FarmlandFragment", "ada")
-
         activity?.findViewById<FloatingActionButton>(R.id.fabFarmland)?.setOnClickListener { }
     }
 

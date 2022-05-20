@@ -88,4 +88,6 @@
     <string name="password_lacking">Password harus 8 karakter atau lebih</string>
     <string name="invalid_phone">Nomor telepone tidak valid</string>
     <string name="empty">-</string>
+    <string name="farmlandLocationHint">Lokasi Farmland</string>
+    <string name="armland_color">Warna Farmland</string>
 </resources>

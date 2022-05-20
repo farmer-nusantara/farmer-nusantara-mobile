@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.api.ApiConfig
@@ -39,14 +40,23 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btLogout.setOnClickListener {
-            MainActivity.mainViewModel.logout()
+
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle(resources.getString(R.string.logout))
+                setMessage(resources.getString(R.string.sure_to_logout))
+                setPositiveButton(resources.getString(R.string.ya)) { _, _ ->
+                    MainActivity.mainViewModel.logout()
+                }
+                setNegativeButton(resources.getString(R.string.back)) { _, _ ->}
+                create()
+                show()
+            }
         }
+
 
         activity?.findViewById<FloatingActionButton>(R.id.fabFarmland)?.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_farmlandFragment)
         }
-
-        Log.e("ProfileFragment", "ada")
 
         getUser(MainActivity.userModel?.id!!)
     }

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.fahruaz.farmernusantara.api.ApiConfig
 import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
-import com.fahruaz.farmernusantara.response.auth.ChangePasswordMessageResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import com.fahruaz.farmernusantara.ui.MainActivity
 import kotlinx.coroutines.launch

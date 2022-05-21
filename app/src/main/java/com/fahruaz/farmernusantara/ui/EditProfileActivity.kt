@@ -39,10 +39,6 @@ class EditProfileActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        binding?.emailEditText?.setOnClickListener{
-            showToast("Tidak dapat mengubah email")
-        }
-
         setupViewModel()
 
         editProfileViewModel.isLoading.observe(this) {
@@ -73,11 +69,12 @@ class EditProfileActivity : AppCompatActivity() {
     private fun editUser() {
 
         val name = binding?.nameEditText?.text.toString()
+        val email = binding?.emailEditText?.text.toString()
         val phone = binding?.phoneEditText?.text.toString()
 
         showLoading(true)
 
-        user = UserModel(name = name, phone = phone)
+        user = UserModel(email = email, name = name, phone = phone)
         editProfileViewModel.editUserData(user)
 
         editProfileViewModel.toast.observe(this){

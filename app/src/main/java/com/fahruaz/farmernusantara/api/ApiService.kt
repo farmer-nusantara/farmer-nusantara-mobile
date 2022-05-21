@@ -1,10 +1,7 @@
 package com.fahruaz.farmernusantara.api
 
 import com.fahruaz.farmernusantara.response.auth.*
-import com.fahruaz.farmernusantara.response.profile.EditProfileResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 

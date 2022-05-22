@@ -71,6 +71,14 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun editUser(user: UserModel) {
+        dataStore.edit { preferences ->
+            preferences[EMAIL_KEY] = user.email!!
+            preferences[NAME_KEY] = user.name!!
+            preferences[PHONE_KEY] = user.phone!!
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserPreferences? = null

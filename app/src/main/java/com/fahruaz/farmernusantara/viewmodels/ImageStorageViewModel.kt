@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fahruaz.farmernusantara.api.ApiConfig
 import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
+import com.fahruaz.farmernusantara.ui.CreateFarmlandActivity
 import com.fahruaz.farmernusantara.ui.MainActivity
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -30,10 +31,11 @@ class ImageStorageViewModel : ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _toast.value = "Berhasil mengunggah foto"
+                        CreateFarmlandActivity.imageUrl = responseBody.imageUrl!!
                     }
                 }
                 else
-                    _toast.value = "Gagal mengunggah foto"
+                    _toast.value = response.message()
             }
             override fun onFailure(call: Call<UploadImageToStorageResponse>, t: Throwable) {
                 _isLoading.value = false

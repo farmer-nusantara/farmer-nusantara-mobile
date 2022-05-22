@@ -90,4 +90,6 @@
     <string name="empty">-</string>
     <string name="farmlandLocationHint">Lokasi Farmland</string>
     <string name="armland_color">Warna Farmland</string>
+    <string name="empty_farmland">Nama tidak boleh kosong</string>
+    <string name="empty_location">Lokasi tidak boleh kosong</string>
 </resources>

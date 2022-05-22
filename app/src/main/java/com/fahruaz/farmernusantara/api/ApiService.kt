@@ -8,6 +8,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.io.File
 
 interface ApiService {
     @FormUrlEncoded
@@ -78,12 +79,19 @@ interface ApiService {
     ): Call<CreateFarmlandResponse>
 
     @Multipart
-    @FormUrlEncoded
     @POST("file/uploads/{owner}")
     fun uploadImageToStorage(
         @Header("Authorization") token: String,
         @Path("owner") owner: String,
-        @Part file: MultipartBody.Part
+        @Part file: MultipartBody.Part,
     ): Call<UploadImageToStorageResponse>
+
+    @Multipart
+    @POST("file/uploads/{owner}")
+    suspend fun uploadImageToStorage2(
+        @Header("Authorization") token: String,
+        @Path("owner") owner: String,
+        @Part file: MultipartBody.Part,
+    ): UploadImageToStorageResponse
 
 }

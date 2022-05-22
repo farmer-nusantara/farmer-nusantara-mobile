@@ -82,10 +82,13 @@ class EditProfileActivity : AppCompatActivity() {
                 AlertDialog.Builder(this@EditProfileActivity).apply {
                     setTitle(resources.getString(R.string.success))
                     setMessage(resources.getString(R.string.user_data_was_edited))
-                    setPositiveButton(resources.getString(R.string.ok)) { _, _ ->
-                        val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
-                        startActivity(intent)
+                    setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
+//                        val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
+//                        startActivity(intent)
+                        dialog.dismiss()
+                        finish()
                     }
+                    setCancelable(false)
                     create()
                     show()
                 }

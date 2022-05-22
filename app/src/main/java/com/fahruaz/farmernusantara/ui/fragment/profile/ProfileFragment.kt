@@ -60,6 +60,12 @@ class ProfileFragment : Fragment() {
         getUser(MainActivity.userModel?.id!!)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        getUser(MainActivity.userModel?.id!!)
+    }
+
     private fun getUser(id: String) {
 
         showLoading(true)

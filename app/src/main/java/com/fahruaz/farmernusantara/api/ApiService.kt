@@ -92,6 +92,7 @@ interface ApiService {
         @Part file: MultipartBody.Part,
     ): UploadImageToStorageResponse
 
+    @FormUrlEncoded
     @PUT("auth/user/{id}")
     fun editProfile(
         @Header("Authorization") authHeader: String,

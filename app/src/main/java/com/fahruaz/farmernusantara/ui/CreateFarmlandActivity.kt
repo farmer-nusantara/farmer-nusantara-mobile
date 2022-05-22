@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -18,6 +19,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityCreateFarmlandBinding
+import com.fahruaz.farmernusantara.util.reduceFileImage
 import com.fahruaz.farmernusantara.util.uriToFile
 import com.fahruaz.farmernusantara.viewmodels.FarmlandViewModel
 import com.karumi.dexter.Dexter
@@ -26,6 +28,9 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import yuku.ambilwarna.AmbilWarnaDialog
 import java.io.File
 
@@ -37,6 +42,9 @@ class CreateFarmlandActivity : AppCompatActivity() {
     private var hexColor = "#E35B30"
     private lateinit var currentPhotoPath: String
     private var getFile: File? = null
+    private lateinit var farmlandName: String
+    private lateinit var farmlandLocation: String
+    private lateinit var farmlandPlantType: String
 
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -90,6 +98,14 @@ class CreateFarmlandActivity : AppCompatActivity() {
 
         MainActivity.imageStorageViewModel.toast.observe(this) {
             showToast(it)
+//            if(it == "Berhasil mengunggah foto") {
+//                createFarmland(farmlandName, farmlandLocation, farmlandPlantType, imageUrl, getFile)
+//            }
+        }
+
+        MainActivity.imageStorageViewModel.imageUrl.observe(this) {
+            Log.e("imageurl observe", it)
+            createFarmland(farmlandName, farmlandLocation, farmlandPlantType, it, getFile)
         }
 
         val plantTypes = resources.getStringArray(R.array.plantType)
@@ -105,12 +121,14 @@ class CreateFarmlandActivity : AppCompatActivity() {
         binding?.btCreateFarmland?.setOnClickListener {
             binding?.farmlandNameEditTextLayout?.error = ""
             binding?.farmlandLocationEditTextLayout?.error = ""
+            imageUrl = ""
 
-            val name = binding?.farmlandNameEditText?.text.toString()
-            val location = binding?.farmlandLocationEditText?.text.toString()
-            val plantType = binding?.plantTypeAutoComplete?.text.toString()
+            farmlandName = binding?.farmlandNameEditText?.text.toString()
+            farmlandLocation = binding?.farmlandLocationEditText?.text.toString()
+            farmlandPlantType = binding?.plantTypeAutoComplete?.text.toString()
 
-            createFarmland(name, location, plantType, imageUrl, getFile)
+            Log.e("button click", imageUrl)
+            uploadImage()
         }
     }
 
@@ -171,6 +189,17 @@ class CreateFarmlandActivity : AppCompatActivity() {
         launcherIntentGallery.launch(chooser)
     }
 
+    private fun uploadImage() {
+        if (getFile != null) {
+            val file = reduceFileImage(getFile as File)
+
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart = MultipartBody.Part.createFormData("file", file.name, requestImageFile)
+
+            MainActivity.imageStorageViewModel.uploadImageToStorage(MainActivity.userModel?.id!!, imageMultipart)
+        }
+    }
+
     private fun openColorPickerDialogue() {
         val colorPickerDialogue = AmbilWarnaDialog(this, mDefaultColor,
             object : AmbilWarnaDialog.OnAmbilWarnaListener {
@@ -186,10 +215,8 @@ class CreateFarmlandActivity : AppCompatActivity() {
         colorPickerDialogue.show()
     }
 
-    private fun createFarmland(name: String, location: String, plantTYpe: String, imageUrl: String, image: File?) {
-        if (image != null) {
-            farmlandViewModel.createFarmland(name, MainActivity.userModel?.id!!, hexColor, plantTYpe, location, image, imageUrl)
-        }
+    private fun createFarmland(name: String, location: String, plantTYpe: String, imageUrl2: String, image: File?) {
+        farmlandViewModel.createFarmland(name, MainActivity.userModel?.id!!, hexColor, plantTYpe, location, image, imageUrl2)
     }
 
     private fun showLoading(isLoading: Boolean) {

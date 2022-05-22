@@ -11,6 +11,7 @@ import com.fahruaz.farmernusantara.ui.CreateFarmlandActivity
 import com.fahruaz.farmernusantara.ui.MainActivity
 import com.fahruaz.farmernusantara.util.reduceFileImage
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -28,25 +29,23 @@ class FarmlandViewModel : ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
 
     private fun uploadImageToStorage(owner: String, image: MultipartBody.Part) {
-        viewModelScope.launch {
+        runBlocking {
             val responseData = ApiConfig().getApiService().uploadImageToStorage2("Token ${MainActivity.userModel?.token}", owner, image)
             CreateFarmlandActivity.imageUrl = responseData.imageUrl!!
-            Log.e("Image URL", responseData.imageUrl)
         }
     }
 
     fun createFarmland(farmName: String, owner: String, markColor: String, plantType: String, location: String, image: File?, imageUrl: String) {
         _isLoading.value = true
 
-        if(image != null) {
-            Log.e("Upload image", "Tidak null")
-            val file = reduceFileImage(image)
-            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart = MultipartBody.Part.createFormData("file", file.name, requestImageFile)
-            uploadImageToStorage(owner, imageMultipart)
-        }
+//        if(image != null) {
+//            val file = reduceFileImage(image)
+//            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+//            val imageMultipart = MultipartBody.Part.createFormData("file", file.name, requestImageFile)
+//            uploadImageToStorage(owner, imageMultipart)
+//        }
 
-        Log.e("create farmland", "asdawdqw")
+        Log.e("createFarmland", CreateFarmlandActivity.imageUrl)
         val service = ApiConfig().getApiService().createFarmland("Token ${MainActivity.userModel?.token}", farmName, owner,
             markColor, plantType, location, imageUrl)
 
@@ -59,8 +58,9 @@ class FarmlandViewModel : ViewModel() {
                         _toast.value = "Berhasil membuat farmland"
                     }
                 }
-                else
-                    _toast.value = "Gagal membuat farmland"
+                else {
+                    _toast.value = "Gagal membuat farmland. Coba ganti nama atau warna farmland."
+                }
             }
             override fun onFailure(call: Call<CreateFarmlandResponse>, t: Throwable) {
                 _isLoading.value = false

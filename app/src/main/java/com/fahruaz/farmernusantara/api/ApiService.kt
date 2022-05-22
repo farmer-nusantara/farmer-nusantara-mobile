@@ -4,9 +4,9 @@ import com.fahruaz.farmernusantara.response.auth.*
 import com.fahruaz.farmernusantara.response.farmland.CreateFarmlandResponse
 import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
-import java.io.File
 
 interface ApiService {
     @FormUrlEncoded

@@ -1,5 +1,6 @@
 package com.fahruaz.farmernusantara.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,9 @@ class ImageStorageViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _imageUrl = MutableLiveData<String>()
+    val imageUrl: LiveData<String> = _imageUrl
+
     fun uploadImageToStorage(id: String, image: MultipartBody.Part) {
         _isLoading.value = true
         val service = ApiConfig().getApiService().uploadImageToStorage("Token ${MainActivity.userModel?.token}", id, image)
@@ -31,7 +35,7 @@ class ImageStorageViewModel : ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _toast.value = "Berhasil mengunggah foto"
-                        CreateFarmlandActivity.imageUrl = responseBody.imageUrl!!
+                        _imageUrl.value = responseBody.imageUrl
                     }
                 }
                 else

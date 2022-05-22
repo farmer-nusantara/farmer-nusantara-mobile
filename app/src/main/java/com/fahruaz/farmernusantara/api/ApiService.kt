@@ -1,9 +1,12 @@
 package com.fahruaz.farmernusantara.api
 
 import com.fahruaz.farmernusantara.response.auth.*
+import com.fahruaz.farmernusantara.response.farmland.CreateFarmlandResponse
+import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import retrofit2.Call
 import retrofit2.http.*
+import java.io.File
 
 interface ApiService {
     @FormUrlEncoded
@@ -62,6 +65,33 @@ interface ApiService {
     ): Call<GetProfileResponse>
 
     @FormUrlEncoded
+    @POST("farmland")
+    fun createFarmland(
+        @Header("Authorization") token: String,
+        @Field(value = "farmName") farmName: String,
+        @Field(value = "owner") owner: String,
+        @Field(value = "markColor") markColor: String,
+        @Field(value = "plantType") plantType: String,
+        @Field(value = "location") location: String,
+        @Field(value = "imageUrl") imageUrl: String
+    ): Call<CreateFarmlandResponse>
+
+    @Multipart
+    @POST("file/uploads/{owner}")
+    fun uploadImageToStorage(
+        @Header("Authorization") token: String,
+        @Path("owner") owner: String,
+        @Part file: MultipartBody.Part,
+    ): Call<UploadImageToStorageResponse>
+
+    @Multipart
+    @POST("file/uploads/{owner}")
+    suspend fun uploadImageToStorage2(
+        @Header("Authorization") token: String,
+        @Path("owner") owner: String,
+        @Part file: MultipartBody.Part,
+    ): UploadImageToStorageResponse
+
     @PUT("auth/user/{id}")
     fun editProfile(
         @Header("Authorization") authHeader: String,
@@ -70,6 +100,5 @@ interface ApiService {
         @Field(value = "name") name: String,
         @Field(value = "phone") phone: String
     ): Call<GetProfileResponse>
-
 
 }

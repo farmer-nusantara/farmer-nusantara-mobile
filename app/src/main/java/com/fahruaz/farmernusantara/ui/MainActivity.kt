@@ -18,6 +18,8 @@ import com.fahruaz.farmernusantara.ViewModelFactory
 import com.fahruaz.farmernusantara.databinding.ActivityMainBinding
 import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
+import com.fahruaz.farmernusantara.viewmodels.FarmlandViewModel
+import com.fahruaz.farmernusantara.viewmodels.ImageStorageViewModel
 import com.fahruaz.farmernusantara.viewmodels.MainViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -26,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
     lateinit var navController: NavController
-    //val mainViewModel = obtainViewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
         mainViewModel = obtainViewModel(this)
+        imageStorageViewModel = ViewModelProvider(this)[ImageStorageViewModel::class.java]
 
         mainViewModel.getUser().observe(this) { user ->
             if (user?.token?.isEmpty()!!) {
@@ -73,6 +75,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var userModel: UserModel? = null
         lateinit var mainViewModel: MainViewModel
+        lateinit var imageStorageViewModel: ImageStorageViewModel
     }
 
 }

@@ -29,6 +29,9 @@ class ViewModelFactory(private val pref: UserPreferences, private val context: C
             modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> {
                 ChangePasswordViewModel(pref) as T
             }
+            modelClass.isAssignableFrom(FarmlandViewModel::class.java) -> {
+                FarmlandViewModel(pref) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

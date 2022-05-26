@@ -97,4 +97,6 @@
     <string name="ok">OK</string>
     <string name="user_data_was_edited">Data pengguna berhasil diperbarui</string>
     <string name="success">Berhasil</string>
+    <string name="plantTypeLabel">Jenis Tanaman:</string>
+    <string name="locationLabel">Lokasi:</string>
 </resources>

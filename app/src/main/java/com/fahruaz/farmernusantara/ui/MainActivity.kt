@@ -18,7 +18,6 @@ import com.fahruaz.farmernusantara.ViewModelFactory
 import com.fahruaz.farmernusantara.databinding.ActivityMainBinding
 import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
-import com.fahruaz.farmernusantara.viewmodels.FarmlandViewModel
 import com.fahruaz.farmernusantara.viewmodels.ImageStorageViewModel
 import com.fahruaz.farmernusantara.viewmodels.MainViewModel
 
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = obtainViewModel(this)
         imageStorageViewModel = ViewModelProvider(this)[ImageStorageViewModel::class.java]
 
-        mainViewModel.getUser().observe(this) { user ->
+        mainViewModel?.getUser()?.observe(this) { user ->
             if (user?.token?.isEmpty()!!) {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
@@ -74,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var userModel: UserModel? = null
-        lateinit var mainViewModel: MainViewModel
+        var mainViewModel: MainViewModel? = null
         lateinit var imageStorageViewModel: ImageStorageViewModel
     }
 

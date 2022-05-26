@@ -19,6 +19,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityCreateFarmlandBinding
+import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.util.reduceFileImage
 import com.fahruaz.farmernusantara.util.uriToFile
 import com.fahruaz.farmernusantara.viewmodels.FarmlandViewModel
@@ -90,6 +91,9 @@ class CreateFarmlandActivity : AppCompatActivity() {
 
         farmlandViewModel.toast.observe(this) {
             showToast(it)
+            if(it == "Berhasil membuat farmland") {
+                finish()
+            }
         }
 
         MainActivity.imageStorageViewModel.isLoading.observe(this) {
@@ -98,14 +102,10 @@ class CreateFarmlandActivity : AppCompatActivity() {
 
         MainActivity.imageStorageViewModel.toast.observe(this) {
             showToast(it)
-//            if(it == "Berhasil mengunggah foto") {
-//                createFarmland(farmlandName, farmlandLocation, farmlandPlantType, imageUrl, getFile)
-//            }
         }
 
         MainActivity.imageStorageViewModel.imageUrl.observe(this) {
-            Log.e("imageurl observe", it)
-            createFarmland(farmlandName, farmlandLocation, farmlandPlantType, it, getFile)
+            createFarmland(farmlandName, farmlandLocation, farmlandPlantType, it)
         }
 
         val plantTypes = resources.getStringArray(R.array.plantType)
@@ -127,7 +127,6 @@ class CreateFarmlandActivity : AppCompatActivity() {
             farmlandLocation = binding?.farmlandLocationEditText?.text.toString()
             farmlandPlantType = binding?.plantTypeAutoComplete?.text.toString()
 
-            Log.e("button click", imageUrl)
             uploadImage()
         }
     }
@@ -198,6 +197,9 @@ class CreateFarmlandActivity : AppCompatActivity() {
 
             MainActivity.imageStorageViewModel.uploadImageToStorage(MainActivity.userModel?.id!!, imageMultipart)
         }
+        else {
+            createFarmland(farmlandName, farmlandLocation, farmlandPlantType, "")
+        }
     }
 
     private fun openColorPickerDialogue() {
@@ -215,8 +217,9 @@ class CreateFarmlandActivity : AppCompatActivity() {
         colorPickerDialogue.show()
     }
 
-    private fun createFarmland(name: String, location: String, plantTYpe: String, imageUrl2: String, image: File?) {
-        farmlandViewModel.createFarmland(name, MainActivity.userModel?.id!!, hexColor, plantTYpe, location, image, imageUrl2)
+    private fun createFarmland(name: String, location: String, plantTYpe: String, imageUrl2: String) {
+        farmlandViewModel.createFarmland(name, MainActivity.userModel?.id!!, hexColor, plantTYpe, location, imageUrl2)
+        FarmlandFragment.requestApi = true
     }
 
     private fun showLoading(isLoading: Boolean) {

@@ -16,6 +16,7 @@ import com.fahruaz.farmernusantara.databinding.FragmentProfileBinding
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import com.fahruaz.farmernusantara.ui.EditProfileActivity
 import com.fahruaz.farmernusantara.ui.MainActivity
+import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,7 +45,7 @@ class ProfileFragment : Fragment() {
                 setTitle(resources.getString(R.string.logout))
                 setMessage(resources.getString(R.string.sure_to_logout))
                 setPositiveButton(resources.getString(R.string.ya)) { _, _ ->
-                    MainActivity.mainViewModel.logout()
+                    MainActivity.mainViewModel?.logout()
                 }
                 setNegativeButton(resources.getString(R.string.back)) { _, _ ->}
                 create()
@@ -58,6 +59,8 @@ class ProfileFragment : Fragment() {
         }
 
         getUser(MainActivity.userModel?.id!!)
+
+        FarmlandFragment.requestApi = false
     }
 
     override fun onResume() {

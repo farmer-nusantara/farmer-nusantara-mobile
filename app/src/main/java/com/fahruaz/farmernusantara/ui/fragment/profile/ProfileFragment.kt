@@ -46,6 +46,8 @@ class ProfileFragment : Fragment() {
                 setMessage(resources.getString(R.string.sure_to_logout))
                 setPositiveButton(resources.getString(R.string.ya)) { _, _ ->
                     MainActivity.mainViewModel?.logout()
+                    FarmlandFragment.requestApi = true
+                    FarmlandFragment.farmlands.clear()
                 }
                 setNegativeButton(resources.getString(R.string.back)) { _, _ ->}
                 create()
@@ -113,5 +115,5 @@ class ProfileFragment : Fragment() {
     companion object {
         private const val TAG = "DetailUser"
     }
-    
+
 }

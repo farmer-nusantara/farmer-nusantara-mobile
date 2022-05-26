@@ -88,7 +88,6 @@ class MapFragment : Fragment() {
         rlp.setMargins(0, 0, 16, 186)
 
         FarmlandFragment.requestApi = false
-        Log.e("LIST FARMLAND", FarmlandFragment.farmlands.toString())
     }
 
     private fun setMapStyle() {

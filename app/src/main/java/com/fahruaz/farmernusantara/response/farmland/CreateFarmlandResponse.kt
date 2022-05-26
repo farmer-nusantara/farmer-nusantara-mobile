@@ -1,7 +1,10 @@
 package com.fahruaz.farmernusantara.response.farmland
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class CreateFarmlandResponse(
 
 	@field:SerializedName("farmName")
@@ -27,4 +30,4 @@ data class CreateFarmlandResponse(
 
 	@field:SerializedName("plantType")
 	val plantType: String? = null
-)
+): Parcelable

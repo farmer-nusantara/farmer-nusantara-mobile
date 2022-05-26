@@ -11,7 +11,8 @@ import com.fahruaz.farmernusantara.databinding.FarmlandItemBinding
 import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponseItem
 
 class FarmlandsAdapter(
-    private var farmlands: List<GetAllFarmlandByOwnerResponseItem>): RecyclerView.Adapter<FarmlandsAdapter.MyViewHolder>() {
+    private var farmlands: List<GetAllFarmlandByOwnerResponseItem>
+): RecyclerView.Adapter<FarmlandsAdapter.MyViewHolder>() {
 
 //    private var farmlands = emptyList<GetAllFarmlandByOwnerResponseItem>()
 

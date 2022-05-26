@@ -1,6 +1,5 @@
 package com.fahruaz.farmernusantara.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,8 +16,11 @@ import retrofit2.Response
 
 class FarmlandViewModel(private val pref: UserPreferences) : ViewModel() {
 
-    private val _toast = MutableLiveData<String>()
-    val toast: LiveData<String> = _toast
+    private val _toastFarmland = MutableLiveData<String>()
+    val toastFarmland: LiveData<String> = _toastFarmland
+
+    //    private val _toastCreateFarmland = MutableLiveData<String>()
+    val toastCreateFarmland: MutableLiveData<String> = MutableLiveData<String>()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -41,18 +43,17 @@ class FarmlandViewModel(private val pref: UserPreferences) : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _toast.value = "Berhasil mengambil data farmland"
+                        _toastFarmland.value = "Berhasil mengambil data farmland"
                         _listFarmland.value = responseBody.asReversed()
-                        Log.e("getAllFarmlandByOwner", _listFarmland.toString())
                     }
                 }
                 else {
-                    _toast.value = "Gagal  mengambil data farmland"
+                    _toastFarmland.value = "Gagal  mengambil data farmland"
                 }
             }
             override fun onFailure(call: Call<List<GetAllFarmlandByOwnerResponseItem>>, t: Throwable) {
                 _isLoading.value = false
-                _toast.value = "Gagal instance Retrofit aja kan"
+                _toastFarmland.value = "Gagal instance Retrofit aja kan"
             }
         })
     }
@@ -69,16 +70,17 @@ class FarmlandViewModel(private val pref: UserPreferences) : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _toast.value = "Berhasil membuat farmland"
+                        toastCreateFarmland.value = "Berhasil membuat farmland"
+                        toastCreateFarmland.value = ""
                     }
                 }
                 else {
-                    _toast.value = "Gagal membuat farmland. Coba ganti nama atau warna farmland."
+                    toastCreateFarmland.value = "Gagal membuat farmland. Coba ganti nama atau warna farmland"
                 }
             }
             override fun onFailure(call: Call<CreateFarmlandResponse>, t: Throwable) {
                 _isLoading.value = false
-                _toast.value = "Gagal instance Retrofit"
+                toastCreateFarmland.value = "Gagal instance Retrofit"
             }
         })
     }

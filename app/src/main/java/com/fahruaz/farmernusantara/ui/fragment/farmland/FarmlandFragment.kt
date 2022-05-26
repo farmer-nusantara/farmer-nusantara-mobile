@@ -20,6 +20,7 @@ import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.ViewModelFactory
 import com.fahruaz.farmernusantara.adapters.FarmlandsAdapter
 import com.fahruaz.farmernusantara.databinding.FragmentFarmlandBinding
+import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
 import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponseItem
 import com.fahruaz.farmernusantara.ui.CreateFarmlandActivity
@@ -31,8 +32,8 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class FarmlandFragment : Fragment() {
 
     private var binding: FragmentFarmlandBinding? = null
-    private var farmlandViewModel: FarmlandViewModel? = null
     private val farmlandsAdapter by lazy { FarmlandsAdapter(farmlands) }
+    private var userModel: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,7 @@ class FarmlandFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        farmlandViewModel?.toast?.observe(requireActivity()) {
+        farmlandViewModel?.toastFarmland?.observe(requireActivity()) {
             showToast(it)
         }
 
@@ -61,16 +62,33 @@ class FarmlandFragment : Fragment() {
         }
 
         binding?.tbFarmland?.findViewById<ImageView>(R.id.addBtn)?.setOnClickListener {
-            val intent = Intent(requireContext(), CreateFarmlandActivity::class.java)
+            val intent = Intent(requireActivity(), CreateFarmlandActivity::class.java)
             startActivity(intent)
         }
         activity?.findViewById<FloatingActionButton>(R.id.fabFarmland)?.setOnClickListener { }
 
         if(requestApi) {
             farmlandViewModel?.getUser()?.observe(requireActivity()) {
-                requestApiData(it.id!!, it.token!!)
+                userModel = it
+                requestApiData(userModel?.id!!, userModel?.token!!)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if(requestApi) {
+            if(userModel != null) {
+                val size = farmlands.size
+                farmlands.clear()
+                binding?.rvFarmland?.adapter?.notifyItemRangeRemoved(0, size)
+//                farmlands.add(0, )
+//                binding?.rvFarmland?.adapter?.notifyItemInserted(0)
+                requestApiData(userModel?.id!!, userModel?.token!!)
+            }
+        }
+        requestApi = false
     }
 
     private fun setFarmland(farmlands2: List<GetAllFarmlandByOwnerResponseItem>) {
@@ -86,7 +104,6 @@ class FarmlandFragment : Fragment() {
     }
 
     private fun requestApiData(id: String, token: String) {
-        // TODO: mendapatkan id dan token dari datastore
         farmlandViewModel?.getAllFarmlandByOwner(id, token)
         farmlandViewModel?.listFarmland?.observe(requireActivity()) {
             setFarmland(it)
@@ -121,8 +138,9 @@ class FarmlandFragment : Fragment() {
     }
 
     companion object {
+        var farmlandViewModel: FarmlandViewModel? = null
+        val farmlands: ArrayList<GetAllFarmlandByOwnerResponseItem> = ArrayList()
         var requestApi = true
-        var farmlands: ArrayList<GetAllFarmlandByOwnerResponseItem> = ArrayList()
     }
 
 }

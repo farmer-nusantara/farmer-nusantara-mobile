@@ -10,19 +10,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityCreateFarmlandBinding
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.util.reduceFileImage
 import com.fahruaz.farmernusantara.util.uriToFile
-import com.fahruaz.farmernusantara.viewmodels.FarmlandViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -38,7 +35,7 @@ import java.io.File
 class CreateFarmlandActivity : AppCompatActivity() {
 
     private var binding: ActivityCreateFarmlandBinding? = null
-    private lateinit var farmlandViewModel: FarmlandViewModel
+    //    private lateinit var farmlandViewModel: FarmlandViewModel
     private var mDefaultColor = Color.parseColor("#E35B30")
     private var hexColor = "#E35B30"
     private lateinit var currentPhotoPath: String
@@ -83,17 +80,10 @@ class CreateFarmlandActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        farmlandViewModel = ViewModelProvider(this)[FarmlandViewModel::class.java]
+//        farmlandViewModel = ViewModelProvider(this)[FarmlandViewModel::class.java]
 
-        farmlandViewModel.isLoading.observe(this) {
+        FarmlandFragment.farmlandViewModel?.isLoading?.observe(this) {
             showLoading(it)
-        }
-
-        farmlandViewModel.toast.observe(this) {
-            showToast(it)
-            if(it == "Berhasil membuat farmland") {
-                finish()
-            }
         }
 
         MainActivity.imageStorageViewModel.isLoading.observe(this) {
@@ -106,6 +96,15 @@ class CreateFarmlandActivity : AppCompatActivity() {
 
         MainActivity.imageStorageViewModel.imageUrl.observe(this) {
             createFarmland(farmlandName, farmlandLocation, farmlandPlantType, it)
+        }
+
+        FarmlandFragment.farmlandViewModel?.toastCreateFarmland?.observe(this) {
+            if(it.isNotEmpty())
+                showToast(it)
+            if(it == "Berhasil membuat farmland") {
+                finish()
+                FarmlandFragment.farmlandViewModel?.toastCreateFarmland?.value = ""
+            }
         }
 
         val plantTypes = resources.getStringArray(R.array.plantType)
@@ -127,7 +126,18 @@ class CreateFarmlandActivity : AppCompatActivity() {
             farmlandLocation = binding?.farmlandLocationEditText?.text.toString()
             farmlandPlantType = binding?.plantTypeAutoComplete?.text.toString()
 
-            uploadImage()
+            when {
+                farmlandName.isEmpty() -> {
+                    binding?.farmlandNameEditTextLayout?.error = resources.getString(R.string.empty_farmland)
+                }
+                farmlandLocation.isEmpty() -> {
+                    binding?.farmlandLocationEditTextLayout?.error = resources.getString(R.string.empty_location)
+                }
+                else -> {
+                    FarmlandFragment.requestApi = true
+                    uploadImage()
+                }
+            }
         }
     }
 
@@ -218,7 +228,7 @@ class CreateFarmlandActivity : AppCompatActivity() {
     }
 
     private fun createFarmland(name: String, location: String, plantTYpe: String, imageUrl2: String) {
-        farmlandViewModel.createFarmland(name, MainActivity.userModel?.id!!, hexColor, plantTYpe, location, imageUrl2)
+        FarmlandFragment.farmlandViewModel?.createFarmland(name, MainActivity.userModel?.id!!, hexColor, plantTYpe, location, imageUrl2)
         FarmlandFragment.requestApi = true
     }
 

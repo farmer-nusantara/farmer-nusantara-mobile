@@ -10,9 +10,8 @@
         android:id="@+id/navHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:navGraph="@navigation/my_nav" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -28,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             android:background="@android:color/transparent"
             app:menu="@menu/bottom_nav_menu"/>
     </com.google.android.material.bottomappbar.BottomAppBar>
@@ -37,7 +37,6 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         app:layout_anchor="@id/bottomAppBar"
-        android:layout_marginBottom="28dp"
         android:backgroundTint="@color/primary_color"
         android:src="@drawable/ic_baseline_eco_24"
         app:tint="@color/white" />

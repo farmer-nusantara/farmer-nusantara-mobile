@@ -1,5 +1,6 @@
 package com.fahruaz.farmernusantara.ui.fragment.farmland
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,34 +9,120 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.navigation.fragment.findNavController
+import android.widget.Toast
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fahruaz.farmernusantara.R
+import com.fahruaz.farmernusantara.ViewModelFactory
+import com.fahruaz.farmernusantara.adapters.FarmlandsAdapter
 import com.fahruaz.farmernusantara.databinding.FragmentFarmlandBinding
+import com.fahruaz.farmernusantara.preferences.UserPreferences
+import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponseItem
 import com.fahruaz.farmernusantara.ui.CreateFarmlandActivity
-import com.fahruaz.farmernusantara.ui.DetailFarmlandActivity
-import com.fahruaz.farmernusantara.ui.ImageConfirmationActivity
-import com.fahruaz.farmernusantara.ui.VerificationActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.fahruaz.farmernusantara.viewmodels.FarmlandViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class FarmlandFragment : Fragment() {
 
     private var binding: FragmentFarmlandBinding? = null
+    private var farmlandViewModel: FarmlandViewModel? = null
+    private val farmlandsAdapter by lazy { FarmlandsAdapter(farmlands) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        farmlandViewModel = obtainViewModel(requireActivity())
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentFarmlandBinding.inflate(inflater, container, false)
+        binding?.lifecycleOwner = requireActivity()
+        binding?.farmlandViewModel = farmlandViewModel
+
+        setUpRecyclerView()
+
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        farmlandViewModel?.toast?.observe(requireActivity()) {
+            showToast(it)
+        }
+
+        farmlandViewModel?.isLoading?.observe(requireActivity()) {
+            showLoading(it)
+        }
+
         binding?.tbFarmland?.findViewById<ImageView>(R.id.addBtn)?.setOnClickListener {
             val intent = Intent(requireContext(), CreateFarmlandActivity::class.java)
             startActivity(intent)
         }
-
         activity?.findViewById<FloatingActionButton>(R.id.fabFarmland)?.setOnClickListener { }
+
+        if(requestApi) {
+            farmlandViewModel?.getUser()?.observe(requireActivity()) {
+                requestApiData(it.id!!, it.token!!)
+            }
+        }
+    }
+
+    private fun setFarmland(farmlands2: List<GetAllFarmlandByOwnerResponseItem>) {
+        for(farmland in farmlands2) {
+
+            val newFarmland = GetAllFarmlandByOwnerResponseItem(farmName = farmland.farmName, markColor = farmland.markColor,
+                location = farmland.location, id = farmland.id, plantType = farmland.plantType, imageUrl = farmland.imageUrl)
+            farmlands.add(newFarmland)
+        }
+
+        binding?.rvFarmland?.layoutManager = LinearLayoutManager(requireContext())
+        binding?.rvFarmland?.adapter = FarmlandsAdapter(farmlands)
+    }
+
+    private fun requestApiData(id: String, token: String) {
+        // TODO: mendapatkan id dan token dari datastore
+        farmlandViewModel?.getAllFarmlandByOwner(id, token)
+        farmlandViewModel?.listFarmland?.observe(requireActivity()) {
+            setFarmland(it)
+        }
+    }
+
+    private fun setUpRecyclerView() {
+        binding?.rvFarmland?.adapter = farmlandsAdapter
+        binding?.rvFarmland?.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun obtainViewModel(activity: FragmentActivity): FarmlandViewModel {
+        val pref = UserPreferences.getInstance(requireContext().dataStore)
+        return ViewModelProvider(activity, ViewModelFactory(pref, requireContext()))[FarmlandViewModel::class.java]
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading)
+            binding?.pbFarmland?.visibility = View.VISIBLE
+        else
+            binding?.pbFarmland?.visibility = View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+        farmlandViewModel = null
+    }
+
+    companion object {
+        var requestApi = true
+        var farmlands: ArrayList<GetAllFarmlandByOwnerResponseItem> = ArrayList()
     }
 
 }

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.FragmentMapBinding
+import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
 import com.google.android.gms.common.api.Status
@@ -85,6 +86,9 @@ class MapFragment : Fragment() {
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0)
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
         rlp.setMargins(0, 0, 16, 186)
+
+        FarmlandFragment.requestApi = false
+        Log.e("LIST FARMLAND", FarmlandFragment.farmlands.toString())
     }
 
     private fun setMapStyle() {

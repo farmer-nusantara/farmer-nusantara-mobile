@@ -4,6 +4,7 @@ import com.fahruaz.farmernusantara.response.auth.*
 import com.fahruaz.farmernusantara.response.farmland.CreateFarmlandResponse
 import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponse
 import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponseItem
+import com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse
 import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import okhttp3.MultipartBody
@@ -109,5 +110,11 @@ interface ApiService {
         @Header("Authorization") authHeader: String,
         @Query("owner") owner: String
     ): Call<List<GetAllFarmlandByOwnerResponseItem>>
+
+    @GET("farmland/{id}")
+    fun showFarmlandDetail(
+        @Header("Authorization") authHeader: String,
+        @Path("id") id: String
+    ): Call<ShowFarmlandDetailResponse>
 
 }

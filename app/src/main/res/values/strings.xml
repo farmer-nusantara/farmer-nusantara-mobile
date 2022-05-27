@@ -100,4 +100,5 @@
     <string name="plantTypeLabel">Jenis Tanaman:</string>
     <string name="locationLabel">Lokasi:</string>
     <string name="no_internet">Tidak ada Internet</string>
+    <string name="pleaseWait">Tunggu sebentar...</string>
 </resources>

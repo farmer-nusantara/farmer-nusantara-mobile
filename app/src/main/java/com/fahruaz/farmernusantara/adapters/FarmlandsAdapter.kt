@@ -1,6 +1,7 @@
 package com.fahruaz.farmernusantara.adapters
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -13,6 +14,7 @@ import com.fahruaz.farmernusantara.util.FarmlandsDiffUtil
 
 class FarmlandsAdapter(
 //    private var farmlands: List<GetAllFarmlandByOwnerResponseItem>
+    private val detailListener: (id: String) -> Unit
 ): RecyclerView.Adapter<FarmlandsAdapter.MyViewHolder>() {
 
     private var farmlands = emptyList<GetAllFarmlandByOwnerResponseItem>()
@@ -24,6 +26,9 @@ class FarmlandsAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentResult = farmlands[position]
         holder.bind(currentResult)
+        holder.cvContainer.setOnClickListener {
+            detailListener.invoke(currentResult.id!!)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -48,6 +53,8 @@ class FarmlandsAdapter(
                 .placeholder(R.drawable.image_default)
                 .into(binding.ivFarmland)
         }
+
+        var cvContainer = binding.cardView
 
         companion object {
             fun from(parent: ViewGroup): MyViewHolder {

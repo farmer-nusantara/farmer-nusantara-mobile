@@ -47,7 +47,7 @@ class ProfileFragment : Fragment() {
                 setPositiveButton(resources.getString(R.string.ya)) { _, _ ->
                     MainActivity.mainViewModel?.logout()
                     FarmlandFragment.requestApi = true
-                    FarmlandFragment.farmlands.clear()
+//                    FarmlandFragment.farmlands.clear()
                 }
                 setNegativeButton(resources.getString(R.string.back)) { _, _ ->}
                 create()

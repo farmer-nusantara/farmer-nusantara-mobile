@@ -1,6 +1,8 @@
 package com.fahruaz.farmernusantara.response.farmland
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 data class GetAllFarmlandByOwnerResponse(
 
@@ -8,6 +10,7 @@ data class GetAllFarmlandByOwnerResponse(
 	val getAllFarmlandByOwnerResponse: List<GetAllFarmlandByOwnerResponseItem?>? = null
 )
 
+@Parcelize
 data class GetAllFarmlandByOwnerResponseItem(
 
 	@field:SerializedName("farmName")
@@ -27,4 +30,4 @@ data class GetAllFarmlandByOwnerResponseItem(
 
 	@field:SerializedName("imageUrl")
 	val imageUrl: String? = null
-)
+): Parcelable

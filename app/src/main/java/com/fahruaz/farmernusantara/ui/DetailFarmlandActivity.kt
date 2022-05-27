@@ -1,18 +1,26 @@
 package com.fahruaz.farmernusantara.ui
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityDetailFarmlandBinding
+import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
+import com.fahruaz.farmernusantara.viewmodels.DetailFarmlandViewModel
 
 class DetailFarmlandActivity : AppCompatActivity() {
 
     private var binding: ActivityDetailFarmlandBinding? = null
+    private var customProgressDialog: Dialog? = null
 
     // fab expandable
     private val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim) }
@@ -33,6 +41,27 @@ class DetailFarmlandActivity : AppCompatActivity() {
         }
         binding?.tbDetailFarmland?.setNavigationOnClickListener {
             onBackPressed()
+        }
+
+        val farmlandId = intent.getStringExtra(FarmlandFragment.EXTRA_FARMLAND_ID)
+
+        val detailFarmlandViewModel = ViewModelProvider(this)[DetailFarmlandViewModel::class.java]
+
+        if(farmlandId != null) {
+            detailFarmlandViewModel.getAllFarmlandByOwner(farmlandId, MainActivity.userModel?.token!!)
+            detailFarmlandViewModel.farmland.observe(this) {
+                binding?.result = it
+                val hexColorToInt = Color.parseColor(it.markColor)
+                binding?.ivFarmlandColor?.setColorFilter(hexColorToInt)
+                Glide.with(this)
+                    .load(it.imageUrl)
+                    .placeholder(R.drawable.image_default)
+                    .into(binding?.ivFarmland!!)
+            }
+        }
+
+        detailFarmlandViewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
         // fab
@@ -97,6 +126,30 @@ class DetailFarmlandActivity : AppCompatActivity() {
             binding?.fabMap?.isClickable = false
             binding?.fabScan?.isClickable = false
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading)
+            showProgressDialog()
+        else
+            cancelProgressDialog()
+    }
+
+    private fun showProgressDialog() {
+        customProgressDialog = Dialog(this)
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

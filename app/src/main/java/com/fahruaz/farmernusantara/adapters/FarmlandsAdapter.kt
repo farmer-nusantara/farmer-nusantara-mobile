@@ -9,12 +9,13 @@ import com.bumptech.glide.Glide
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.FarmlandItemBinding
 import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponseItem
+import com.fahruaz.farmernusantara.util.FarmlandsDiffUtil
 
 class FarmlandsAdapter(
-    private var farmlands: List<GetAllFarmlandByOwnerResponseItem>
+//    private var farmlands: List<GetAllFarmlandByOwnerResponseItem>
 ): RecyclerView.Adapter<FarmlandsAdapter.MyViewHolder>() {
 
-//    private var farmlands = emptyList<GetAllFarmlandByOwnerResponseItem>()
+    private var farmlands = emptyList<GetAllFarmlandByOwnerResponseItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder.from(parent)
@@ -29,12 +30,12 @@ class FarmlandsAdapter(
         return farmlands.size
     }
 
-//    fun setData(newData: List<GetAllFarmlandByOwnerResponseItem>) {
-//        val farmlandsDiffUtil = FarmlandsDiffUtil(farmlands, newData)
-//        val diffUtilResult = DiffUtil.calculateDiff(farmlandsDiffUtil)
-//        farmlands = newData
-//        diffUtilResult.dispatchUpdatesTo(this)
-//    }
+    fun setData(newData: List<GetAllFarmlandByOwnerResponseItem>) {
+        val farmlandsDiffUtil = FarmlandsDiffUtil(farmlands, newData)
+        val diffUtilResult = DiffUtil.calculateDiff(farmlandsDiffUtil)
+        farmlands = newData
+        diffUtilResult.dispatchUpdatesTo(this)
+    }
 
     class MyViewHolder(private val binding: FarmlandItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(result: GetAllFarmlandByOwnerResponseItem) {

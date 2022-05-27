@@ -99,4 +99,5 @@
     <string name="success">Berhasil</string>
     <string name="plantTypeLabel">Jenis Tanaman:</string>
     <string name="locationLabel">Lokasi:</string>
+    <string name="no_internet">Tidak ada Internet</string>
 </resources>

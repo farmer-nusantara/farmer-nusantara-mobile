@@ -2,6 +2,8 @@ package com.fahruaz.farmernusantara.ui.fragment.farmland
 
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -26,14 +28,16 @@ import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerRespon
 import com.fahruaz.farmernusantara.ui.CreateFarmlandActivity
 import com.fahruaz.farmernusantara.viewmodels.FarmlandViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.lang.Exception
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class FarmlandFragment : Fragment() {
 
     private var binding: FragmentFarmlandBinding? = null
-    private val farmlandsAdapter by lazy { FarmlandsAdapter(farmlands) }
+    private val farmlandsAdapter by lazy { FarmlandsAdapter() }
     private var userModel: UserModel? = null
+    private var isHasConnection: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +58,13 @@ class FarmlandFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         farmlandViewModel?.toastFarmland?.observe(requireActivity()) {
-            showToast(it)
+            try {
+                if(it == "Berhasil mengambil data farmland")
+                    showToast(it)
+            }
+            catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
         farmlandViewModel?.isLoading?.observe(requireActivity()) {
@@ -67,46 +77,64 @@ class FarmlandFragment : Fragment() {
         }
         activity?.findViewById<FloatingActionButton>(R.id.fabFarmland)?.setOnClickListener { }
 
-        if(requestApi) {
-            farmlandViewModel?.getUser()?.observe(requireActivity()) {
-                userModel = it
+        farmlandViewModel?.getUser()?.observe(requireActivity()) {
+            userModel = it
+
+            if(hasInternetConnection()) {
                 requestApiData(userModel?.id!!, userModel?.token!!)
+                isHasConnection = true
+            }
+            else {
+                isHasConnection = false
+                showNoInternet(isHasConnection!!)
             }
         }
+
     }
 
     override fun onResume() {
         super.onResume()
 
-        if(requestApi) {
-            if(userModel != null) {
-                val size = farmlands.size
-                farmlands.clear()
-                binding?.rvFarmland?.adapter?.notifyItemRangeRemoved(0, size)
-//                farmlands.add(0, )
-//                binding?.rvFarmland?.adapter?.notifyItemInserted(0)
+        if(hasInternetConnection()) {
+            if(requestApi && userModel != null) {
                 requestApiData(userModel?.id!!, userModel?.token!!)
             }
+            isHasConnection = true
         }
-        requestApi = false
+        else {
+            isHasConnection = false
+            showNoInternet(isHasConnection!!)
+        }
     }
 
-    private fun setFarmland(farmlands2: List<GetAllFarmlandByOwnerResponseItem>) {
-        for(farmland in farmlands2) {
-
-            val newFarmland = GetAllFarmlandByOwnerResponseItem(farmName = farmland.farmName, markColor = farmland.markColor,
-                location = farmland.location, id = farmland.id, plantType = farmland.plantType, imageUrl = farmland.imageUrl)
-            farmlands.add(newFarmland)
-        }
-
-        binding?.rvFarmland?.layoutManager = LinearLayoutManager(requireContext())
-        binding?.rvFarmland?.adapter = FarmlandsAdapter(farmlands)
-    }
+//    private fun setFarmland(farmlands2: List<GetAllFarmlandByOwnerResponseItem>) {
+//        for(farmland in farmlands2) {
+//
+//            val newFarmland = GetAllFarmlandByOwnerResponseItem(farmName = farmland.farmName, markColor = farmland.markColor,
+//                location = farmland.location, id = farmland.id, plantType = farmland.plantType, imageUrl = farmland.imageUrl)
+//            farmlands.add(newFarmland)
+//        }
+//
+//        binding?.rvFarmland?.layoutManager = LinearLayoutManager(requireContext())
+//        binding?.rvFarmland?.adapter = FarmlandsAdapter(farmlands)
+//    }
 
     private fun requestApiData(id: String, token: String) {
         farmlandViewModel?.getAllFarmlandByOwner(id, token)
         farmlandViewModel?.listFarmland?.observe(requireActivity()) {
-            setFarmland(it)
+            farmlandsAdapter.setData(it)
+        }
+    }
+
+    private fun hasInternetConnection(): Boolean {
+        val connectivityManager = activity?.applicationContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = connectivityManager.activeNetwork ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+        return when {
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
         }
     }
 
@@ -118,6 +146,17 @@ class FarmlandFragment : Fragment() {
     private fun obtainViewModel(activity: FragmentActivity): FarmlandViewModel {
         val pref = UserPreferences.getInstance(requireContext().dataStore)
         return ViewModelProvider(activity, ViewModelFactory(pref, requireContext()))[FarmlandViewModel::class.java]
+    }
+
+    private fun showNoInternet(connection: Boolean) {
+        if(!connection) {
+            binding?.ivError?.visibility = View.VISIBLE
+            binding?.tvError?.visibility = View.VISIBLE
+        }
+        else {
+            binding?.ivError?.visibility = View.GONE
+            binding?.tvError?.visibility = View.GONE
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

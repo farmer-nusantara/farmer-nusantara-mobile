@@ -70,6 +70,34 @@
             tools:listitem="@layout/farmland_item"
             android:paddingBottom="100dp"/>
 
+        <ImageView
+            android:id="@+id/ivError"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:alpha="0.5"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_sad"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBar"
+            app:layout_constraintVertical_bias="0.45" />
+
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/no_internet"
+            android:alpha="0.5"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/ivError"
+            app:layout_constraintStart_toStartOf="@+id/ivError"
+            app:layout_constraintTop_toBottomOf="@+id/ivError" />
+
         <ProgressBar
             android:id="@+id/pbFarmland"
             android:layout_width="wrap_content"

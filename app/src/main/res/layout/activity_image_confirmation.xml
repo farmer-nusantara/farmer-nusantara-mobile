@@ -5,8 +5,13 @@
     android:id="@+id/ivDiseaseImage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/deletethis"
     tools:context=".ui.ImageConfirmationActivity">
+
+    <ImageView
+        android:id="@+id/ivDisease"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:src="@tools:sample/avatars"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"

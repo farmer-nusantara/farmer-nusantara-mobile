@@ -2,6 +2,8 @@ package com.fahruaz.farmernusantara.ui
 
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,12 +12,15 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityDetailFarmlandBinding
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.viewmodels.DetailFarmlandViewModel
+import kotlinx.android.synthetic.main.activity_login.*
 
 class DetailFarmlandActivity : AppCompatActivity() {
 
@@ -73,7 +78,9 @@ class DetailFarmlandActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding?.fabScan?.setOnClickListener {
-            Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()
+            startActivityForResult(Intent(this, CameraActivity::class.java), CODE_CAMERA)
+//            val intent = Intent(applicationContext, CameraActivity::class.java)
+//            startActivity(intent)
         }
 
     }
@@ -155,6 +162,10 @@ class DetailFarmlandActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    companion object{
+        const val CODE_CAMERA = 1
     }
 
 }

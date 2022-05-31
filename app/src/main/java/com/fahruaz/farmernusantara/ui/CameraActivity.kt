@@ -2,12 +2,20 @@ package com.fahruaz.farmernusantara.ui
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -18,8 +26,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityCameraBinding
+import com.fahruaz.farmernusantara.util.RealPathUtil
 import kotlinx.android.synthetic.main.activity_camera.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -52,6 +65,75 @@ class CameraActivity : AppCompatActivity() {
         outputDirectory = getOutputDirectory()
 
         cameraExecutor = Executors.newSingleThreadExecutor()
+    }
+
+    private fun getBitmapFromView(view: View): Bitmap {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val bgCanvas = view.background
+        if(bgCanvas != null)
+            bgCanvas.draw(canvas)
+        else
+            canvas.drawColor(Color.WHITE)
+
+        view.draw(canvas)
+        return bitmap
+    }
+
+    private suspend fun saveBitmapFile(bitmap: Bitmap?): String {
+        var result = ""
+        var uriString = ""
+
+        withContext(Dispatchers.IO) {
+            if(bitmap != null) {
+                try {
+                    val filename = "${System.currentTimeMillis()/1000}.png"
+                    val mimeType =  "image/png"
+                    val directory = Environment.DIRECTORY_PICTURES
+                    val mediaContentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+
+                    val imageOutStream: OutputStream
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        val values = ContentValues().apply {
+                            put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+                            put(MediaStore.Images.Media.MIME_TYPE, mimeType)
+                            put(MediaStore.Images.Media.RELATIVE_PATH, directory)
+                        }
+
+                        contentResolver.run {
+                            val uri = contentResolver.insert(mediaContentUri, values)!!
+                            imageOutStream = openOutputStream(uri)!!
+                            result = uri.toString()
+                            uriString =
+                                RealPathUtil.getRealPath(this@CameraActivity, Uri.parse(result)).toString()
+                        }
+                    }
+                    else {
+                        val imagePath = Environment.getExternalStoragePublicDirectory(directory).absolutePath
+                        val image = File(imagePath, filename)
+                        imageOutStream = FileOutputStream(image)
+                        uriString = image.absolutePath
+                    }
+
+                    imageOutStream.use { bitmap.compress(Bitmap.CompressFormat.JPEG, 85, it) }
+
+                    runOnUiThread {
+                        if(result.isNotEmpty())
+                            Toast.makeText(this@CameraActivity, "File saved succesfully: $uriString", Toast.LENGTH_LONG).show()
+                        else
+                            Toast.makeText(this@CameraActivity, "Something went wrong while saving", Toast.LENGTH_LONG).show()
+                    }
+
+                }
+                catch (e: java.lang.Exception) {
+                    result = ""
+                    e.printStackTrace()
+                }
+            }
+        }
+
+        return result
     }
 
     private fun takePhoto() {

@@ -7,12 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.ImageConfirmationActivity">
 
-    <ImageView
-        android:id="@+id/ivDisease"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:src="@tools:sample/avatars"/>
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
@@ -46,6 +40,13 @@
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/ivDisease"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/deletethis"/>
 
     <ImageView
         android:id="@+id/buttonContainer"

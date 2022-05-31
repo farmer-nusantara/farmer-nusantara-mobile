@@ -1,5 +1,6 @@
 package com.fahruaz.farmernusantara.ui
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -31,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var registerViewModel: RegisterViewModel
 //    private lateinit var loginViewModel: LoginViewModel
     private lateinit var userModel: UserModel
+    private var customProgressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +50,7 @@ class RegisterActivity : AppCompatActivity() {
             if(it !== "Berhasil masuk") {
                 showToast(it)
                 if(it == "Akun berhasil dibuat") {
-                    val intent = Intent(this, VerificationActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -148,10 +150,22 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.pbRegister.visibility = View.VISIBLE
-        } else {
-            binding.pbRegister.visibility = View.GONE
+        if (isLoading)
+            showProgressDialog()
+        else
+            cancelProgressDialog()
+    }
+
+    private fun showProgressDialog() {
+        customProgressDialog = Dialog(this)
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
         }
     }
 

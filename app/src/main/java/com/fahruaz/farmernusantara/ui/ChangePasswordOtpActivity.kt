@@ -1,11 +1,13 @@
 package com.fahruaz.farmernusantara.ui
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityChangePasswordOtpBinding
 import com.fahruaz.farmernusantara.ui.customviews.GenericKeyEvent
 import com.fahruaz.farmernusantara.ui.customviews.GenericTextWatcher
@@ -13,6 +15,7 @@ import com.fahruaz.farmernusantara.ui.customviews.GenericTextWatcher
 class ChangePasswordOtpActivity : AppCompatActivity() {
 
     private var binding: ActivityChangePasswordOtpBinding? = null
+    private var customProgressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,10 +66,22 @@ class ChangePasswordOtpActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding?.pbChangePasswordOtp?.visibility = View.VISIBLE
-        } else {
-            binding?.pbChangePasswordOtp?.visibility = View.GONE
+        if (isLoading)
+            showProgressDialog()
+        else
+            cancelProgressDialog()
+    }
+
+    private fun showProgressDialog() {
+        customProgressDialog = Dialog(this)
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
         }
     }
 

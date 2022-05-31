@@ -69,6 +69,8 @@ class DetailFarmlandActivity : AppCompatActivity() {
             val result = BitmapFactory.decodeFile(myFile.path)
             lifecycleScope.launch {
                 saveBitmapFile(result)
+                val intent = Intent(this@DetailFarmlandActivity, DetailDiseaseActivity::class.java)
+                startActivity(intent)
             }
         }
     }
@@ -224,7 +226,6 @@ class DetailFarmlandActivity : AppCompatActivity() {
 
     private suspend fun saveBitmapFile(bitmap: Bitmap?): String {
         var result = ""
-        var uriString = ""
 
         withContext(Dispatchers.IO) {
             if(bitmap != null) {
@@ -310,6 +311,8 @@ class DetailFarmlandActivity : AppCompatActivity() {
 
     companion object{
         const val CODE_CAMERA = 1
+        var uriString = ""
+
     }
 
 }

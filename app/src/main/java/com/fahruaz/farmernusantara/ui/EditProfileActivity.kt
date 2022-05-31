@@ -1,5 +1,6 @@
 package com.fahruaz.farmernusantara.ui
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class EditProfileActivity : AppCompatActivity() {
 
     private var binding: ActivityEditProfileBinding? = null
+    private var customProgressDialog: Dialog? = null
     private lateinit var user: UserModel
     private lateinit var editProfileViewModel: EditProfileViewModel
 
@@ -97,10 +99,22 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding?.progressBar?.visibility = View.VISIBLE
-        } else {
-            binding?.progressBar?.visibility = View.GONE
+        if (isLoading)
+            showProgressDialog()
+        else
+            cancelProgressDialog()
+    }
+
+    private fun showProgressDialog() {
+        customProgressDialog = Dialog(this)
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
         }
     }
 

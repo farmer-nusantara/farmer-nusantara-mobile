@@ -1,5 +1,6 @@
 package com.fahruaz.farmernusantara.ui
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class ChangePasswordEmailActivity : AppCompatActivity() {
 
     private var binding: ActivityChangePasswordEmailBinding? = null
+    private var customProgressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,10 +73,22 @@ class ChangePasswordEmailActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding?.pbChangePasswordEmail?.visibility = View.VISIBLE
-        } else {
-            binding?.pbChangePasswordEmail?.visibility = View.GONE
+        if (isLoading)
+            showProgressDialog()
+        else
+            cancelProgressDialog()
+    }
+
+    private fun showProgressDialog() {
+        customProgressDialog = Dialog(this)
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
         }
     }
 

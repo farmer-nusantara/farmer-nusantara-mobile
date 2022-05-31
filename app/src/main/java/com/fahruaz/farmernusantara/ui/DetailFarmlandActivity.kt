@@ -96,6 +96,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
         if(farmlandId != null) {
             detailFarmlandViewModel.getAllFarmlandByOwner(farmlandId, MainActivity.userModel?.token!!)
             detailFarmlandViewModel.farmland.observe(this) {
+                plan = it.plantType!!
                 binding?.result = it
                 val hexColorToInt = Color.parseColor(it.markColor)
                 binding?.ivFarmlandColor?.setColorFilter(hexColorToInt)
@@ -312,6 +313,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
     companion object{
         const val CODE_CAMERA = 1
         var uriString = ""
+        var plan = ""
 
     }
 

@@ -65,21 +65,39 @@ class DetailDiseaseActivity : AppCompatActivity() {
     }
 
     private fun imageProcess(){
-        val list = getFileName("cornclasses_v1_d1.txt")
-        val model = CornmodelV1D1.newInstance(this)
+        if (DetailFarmlandActivity.plan == "Jagung"){
+            val list = getFileName("cornclasses_v1_d1.txt")
+            val model = CornmodelV1D1.newInstance(this)
 
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
-        inputFeature0.loadBuffer(getImageData(150))
+            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
+            inputFeature0.loadBuffer(getImageData(150))
 
-        val outputs = model.process(inputFeature0)
-        val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+            val outputs = model.process(inputFeature0)
+            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
 
-        val max = getMax(outputFeature0.floatArray, 3)
-        val name = list[max]
+            val max = getMax(outputFeature0.floatArray, 3)
+            val name = list[max]
 
-        model.close()
+            model.close()
 
-        binding?.tvTitleDisease?.text = name
+            binding?.tvTitleDisease?.text = name
+        }else if(DetailFarmlandActivity.plan == "Singkong"){
+            val list = getFileName("cassavaclasses_v1_d2.txt")
+            val model = CassavamodelV1D2.newInstance(this)
+
+            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
+            inputFeature0.loadBuffer(getImageData(150))
+
+            val outputs = model.process(inputFeature0)
+            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+
+            val max = getMax(outputFeature0.floatArray, 3)
+            val name = list[max]
+
+            model.close()
+
+            binding?.tvTitleDisease?.text = name
+        }
     }
 
     private fun getFileName(name: String): List<String>{

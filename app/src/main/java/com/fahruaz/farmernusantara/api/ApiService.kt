@@ -1,10 +1,8 @@
 package com.fahruaz.farmernusantara.api
 
 import com.fahruaz.farmernusantara.response.auth.*
-import com.fahruaz.farmernusantara.response.farmland.CreateFarmlandResponse
-import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponse
-import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponseItem
-import com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse
+import com.fahruaz.farmernusantara.response.farmland.*
+import com.fahruaz.farmernusantara.response.file.DeleteImageFromStorageResponse
 import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import okhttp3.MultipartBody
@@ -116,5 +114,18 @@ interface ApiService {
         @Header("Authorization") authHeader: String,
         @Path("id") id: String
     ): Call<ShowFarmlandDetailResponse>
+
+    @DELETE("farmland/{id}")
+    fun deleteFarmland(
+        @Header("Authorization") authHeader: String,
+        @Path("id") id: String
+    ): Call<DeleteFarmlandResponse>
+
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "file/uploads", hasBody = true)
+    fun deleteImageFromStorage(
+        @Header("Authorization") authHeader: String,
+        @Field(value = "imageUrl") imageUrl: String
+    ): Call<DeleteImageFromStorageResponse>
 
 }

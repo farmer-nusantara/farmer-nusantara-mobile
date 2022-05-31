@@ -27,6 +27,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityDetailFarmlandBinding
+import com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.util.RealPathUtil
 import com.fahruaz.farmernusantara.viewmodels.DetailFarmlandViewModel
@@ -49,6 +50,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
 
     private var binding: ActivityDetailFarmlandBinding? = null
     private var customProgressDialog: Dialog? = null
+    private lateinit var farmlandDetail: ShowFarmlandDetailResponse
 
     private lateinit var currentPhotoPath: String
     private var getFile: File? = null
@@ -96,6 +98,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
         if(farmlandId != null) {
             detailFarmlandViewModel.getAllFarmlandByOwner(farmlandId, MainActivity.userModel?.token!!)
             detailFarmlandViewModel.farmland.observe(this) {
+                farmlandDetail = it
                 plan = it.plantType!!
                 binding?.result = it
                 val hexColorToInt = Color.parseColor(it.markColor)
@@ -123,6 +126,11 @@ class DetailFarmlandActivity : AppCompatActivity() {
 //            startActivityForResult(Intent(this, CameraActivity::class.java), CODE_CAMERA)
             requestCameraPermission()
         }
+        binding?.fabEdit?.setOnClickListener {
+            val intent = Intent(this, EditFarmlandActivity::class.java)
+            intent.putExtra(FarmlandFragment.EXTRA_FARMLAND, farmlandDetail)
+            startActivity(intent)
+        }
 
     }
 
@@ -137,14 +145,18 @@ class DetailFarmlandActivity : AppCompatActivity() {
         if(!clicked) {
             binding?.fabMap?.visibility = View.VISIBLE
             binding?.fabScan?.visibility = View.VISIBLE
+            binding?.fabEdit?.visibility = View.VISIBLE
             binding?.tvLabelFabMap?.visibility = View.VISIBLE
             binding?.tvLabelFabScan?.visibility = View.VISIBLE
+            binding?.tvLabelFabEdit?.visibility = View.VISIBLE
         }
         else {
             binding?.fabMap?.visibility = View.INVISIBLE
             binding?.fabScan?.visibility = View.INVISIBLE
+            binding?.fabEdit?.visibility = View.INVISIBLE
             binding?.tvLabelFabMap?.visibility = View.INVISIBLE
             binding?.tvLabelFabScan?.visibility = View.INVISIBLE
+            binding?.tvLabelFabEdit?.visibility = View.INVISIBLE
         }
     }
 
@@ -152,15 +164,19 @@ class DetailFarmlandActivity : AppCompatActivity() {
         if(!clicked) {
             binding?.fabMap?.startAnimation(fromBottom)
             binding?.fabScan?.startAnimation(fromBottom)
+            binding?.fabEdit?.startAnimation(fromBottom)
             binding?.tvLabelFabMap?.startAnimation(fromBottom)
             binding?.tvLabelFabScan?.startAnimation(fromBottom)
+            binding?.tvLabelFabEdit?.startAnimation(fromBottom)
             binding?.fabCollapse?.startAnimation(rotateOpen)
         }
         else {
             binding?.fabMap?.startAnimation(toBottom)
             binding?.fabScan?.startAnimation(toBottom)
+            binding?.fabEdit?.startAnimation(toBottom)
             binding?.tvLabelFabMap?.startAnimation(toBottom)
             binding?.tvLabelFabScan?.startAnimation(toBottom)
+            binding?.tvLabelFabEdit?.startAnimation(toBottom)
             binding?.fabCollapse?.startAnimation(rotateClose)
         }
     }
@@ -169,10 +185,12 @@ class DetailFarmlandActivity : AppCompatActivity() {
         if(!clicked) {
             binding?.fabMap?.isClickable = true
             binding?.fabScan?.isClickable = true
+            binding?.fabEdit?.isClickable = true
         }
         else {
             binding?.fabMap?.isClickable = false
             binding?.fabScan?.isClickable = false
+            binding?.fabEdit?.isClickable = false
         }
     }
 

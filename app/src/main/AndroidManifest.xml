@@ -20,6 +20,7 @@
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+          
             <category android:name="android.intent.category.BROWSABLE" />
 
             <data android:scheme="https" />
@@ -36,6 +37,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FarmerNusantara"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.EditFarmlandActivity"
+            android:exported="false"
+            android:theme="@style/noActionBarStyle"/>
         <activity
             android:name=".ui.CameraActivity"
             android:theme="@style/noActionBarStyle"

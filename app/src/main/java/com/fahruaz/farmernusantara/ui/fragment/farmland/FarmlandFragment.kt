@@ -186,6 +186,7 @@ class FarmlandFragment : Fragment() {
 //        val farmlands: ArrayList<GetAllFarmlandByOwnerResponseItem> = ArrayList()
         var requestApi = true
         const val EXTRA_FARMLAND_ID = "EXTRA_FARMLAND_ID"
+        const val EXTRA_FARMLAND = "EXTRA_FARMLAND"
     }
 
 }

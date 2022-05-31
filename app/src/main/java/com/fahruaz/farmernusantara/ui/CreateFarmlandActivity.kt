@@ -93,7 +93,9 @@ class CreateFarmlandActivity : AppCompatActivity() {
         }
 
         MainActivity.imageStorageViewModel.toast.observe(this) {
-            showToast(it)
+            if(it.isNotEmpty()) {
+                showToast(it)
+            }
         }
 
         MainActivity.imageStorageViewModel.imageUrl.observe(this) {

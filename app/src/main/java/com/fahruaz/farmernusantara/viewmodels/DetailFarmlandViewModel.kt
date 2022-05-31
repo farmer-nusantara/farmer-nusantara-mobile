@@ -34,15 +34,18 @@ class DetailFarmlandViewModel: ViewModel() {
                     if (responseBody != null) {
                         _farmland.value = responseBody
                         _toast.value = "Berhasil mendapatkan detail farmland"
+                        _toast.value = ""
                     }
                 }
                 else {
                     _toast.value = "Gagal mendapatkan detail farmland"
+                    _toast.value = ""
                 }
             }
             override fun onFailure(call: Call<ShowFarmlandDetailResponse>, t: Throwable) {
                 _isLoading.value = false
-                _toast.value = "Gagal instance Retrofit aja kan"
+                _toast.value = "Gagal instance Retrofit"
+                _toast.value = ""
             }
         })
     }

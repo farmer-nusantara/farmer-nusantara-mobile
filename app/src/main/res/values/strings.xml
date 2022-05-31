@@ -101,4 +101,8 @@
     <string name="locationLabel">Lokasi:</string>
     <string name="no_internet">Tidak ada Internet</string>
     <string name="pleaseWait">Tunggu sebentar...</string>
+    <string name="see_the_map">Lihat map</string>
+    <string name="scan_disease">Pindai penyakit</string>
+    <string name="delete_farmland">Hapus Farmland</string>
+    <string name="edit_farmland">Perbarui Farmland</string>
 </resources>

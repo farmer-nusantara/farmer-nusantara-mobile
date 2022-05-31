@@ -1,5 +1,6 @@
 package com.fahruaz.farmernusantara.ui.fragment.profile
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -26,6 +27,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var user: GetProfileResponse
+    private var customProgressDialog: Dialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -104,13 +106,24 @@ class ProfileFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        if (isLoading)
+            showProgressDialog()
+        else
+            cancelProgressDialog()
     }
 
+    private fun showProgressDialog() {
+        customProgressDialog = Dialog(requireContext())
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
+        }
+    }
 
     companion object {
         private const val TAG = "DetailUser"

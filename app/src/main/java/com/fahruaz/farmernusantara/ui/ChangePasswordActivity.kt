@@ -1,5 +1,6 @@
 package com.fahruaz.farmernusantara.ui
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.fahruaz.farmernusantara.databinding.ActivityChangePasswordBinding
 class ChangePasswordActivity : AppCompatActivity() {
 
     private var binding: ActivityChangePasswordBinding? = null
+    private var customProgressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,10 @@ class ChangePasswordActivity : AppCompatActivity() {
                 startActivity(intent)
                 finishAffinity()
             }
+        }
+
+        ChangePasswordEmailActivity.changePasswordViewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
         binding?.btChangePassword?.setOnClickListener {
@@ -61,10 +67,22 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding?.pbChangePassword?.visibility = View.VISIBLE
-        } else {
-            binding?.pbChangePassword?.visibility = View.GONE
+        if (isLoading)
+            showProgressDialog()
+        else
+            cancelProgressDialog()
+    }
+
+    private fun showProgressDialog() {
+        customProgressDialog = Dialog(this)
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
         }
     }
 

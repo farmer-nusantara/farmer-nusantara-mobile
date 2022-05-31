@@ -185,16 +185,6 @@
             android:text="@string/createFarmland"
             app:layout_constraintTop_toBottomOf="@id/previewSelectedColor" />
 
-        <ProgressBar
-            android:id="@+id/pbCreateFarmland"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/btCreateFarmland"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btCamera" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

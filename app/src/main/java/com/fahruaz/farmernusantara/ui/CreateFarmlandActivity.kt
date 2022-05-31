@@ -2,6 +2,7 @@ package com.fahruaz.farmernusantara.ui
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -35,6 +36,7 @@ import java.io.File
 class CreateFarmlandActivity : AppCompatActivity() {
 
     private var binding: ActivityCreateFarmlandBinding? = null
+    private var customProgressDialog: Dialog? = null
     //    private lateinit var farmlandViewModel: FarmlandViewModel
     private var mDefaultColor = Color.parseColor("#E35B30")
     private var hexColor = "#E35B30"
@@ -234,9 +236,22 @@ class CreateFarmlandActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading)
-            binding?.pbCreateFarmland?.visibility = View.VISIBLE
+            showProgressDialog()
         else
-            binding?.pbCreateFarmland?.visibility = View.GONE
+            cancelProgressDialog()
+    }
+
+    private fun showProgressDialog() {
+        customProgressDialog = Dialog(this)
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
+        }
     }
 
     private fun showToast(message: String) {

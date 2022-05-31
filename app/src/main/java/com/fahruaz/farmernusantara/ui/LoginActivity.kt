@@ -1,5 +1,6 @@
 package com.fahruaz.farmernusantara.ui
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -27,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var user: UserModel
+    private var customProgressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,10 +145,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.pbLogin.visibility = View.VISIBLE
-        } else {
-            binding.pbLogin.visibility = View.GONE
+        if (isLoading)
+            showProgressDialog()
+        else
+            cancelProgressDialog()
+    }
+
+    private fun showProgressDialog() {
+        customProgressDialog = Dialog(this)
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
         }
     }
 

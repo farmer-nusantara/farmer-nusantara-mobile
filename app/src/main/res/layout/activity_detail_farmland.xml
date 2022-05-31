@@ -150,7 +150,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewHistory"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/cardViewDetailFarmland">
 
@@ -213,11 +213,12 @@
             android:background="@color/secondary_text"
             android:textColor="@color/white"
             android:padding="6dp"
+            android:translationZ="90dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@id/fabMap"
             app:layout_constraintTop_toTopOf="@id/fabMap"
             app:layout_constraintBottom_toBottomOf="@id/fabMap"
-            android:text="Lihat map" />
+            android:text="@string/see_the_map" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabScan"
@@ -226,7 +227,7 @@
             android:focusable="true"
             app:tint="@color/white"
             android:backgroundTint="@color/light_primary_color"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:clickable="true"
             android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@id/fabMap"
@@ -239,20 +240,39 @@
             android:background="@color/secondary_text"
             android:textColor="@color/white"
             android:padding="6dp"
+            android:translationZ="90dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@id/fabScan"
             app:layout_constraintTop_toTopOf="@id/fabScan"
             app:layout_constraintBottom_toBottomOf="@id/fabScan"
-            android:text="Pindai penyakit" />
+            android:text="@string/scan_disease" />
 
-        <ProgressBar
-            android:id="@+id/pbDetailFarmland"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBar"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:focusable="true"
+            app:tint="@color/white"
+            android:backgroundTint="@color/light_primary_color"
+            android:layout_marginBottom="4dp"
+            android:clickable="true"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/fabScan"
+            app:layout_constraintEnd_toEndOf="@id/fabMap"
+            app:srcCompat="@drawable/ic_baseline_edit_24" />
+
+        <TextView
+            android:id="@+id/tvLabelFabEdit"
+            style="@style/TextNormalSizeBold"
+            android:background="@color/secondary_text"
+            android:textColor="@color/white"
+            android:padding="6dp"
+            android:translationZ="90dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toStartOf="@id/fabEdit"
+            app:layout_constraintTop_toTopOf="@id/fabEdit"
+            app:layout_constraintBottom_toBottomOf="@id/fabEdit"
+            android:text="@string/edit_farmland" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="result"
+            type="com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ui.EditFarmlandActivity">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/tbEditFarmland"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:background="@color/primary_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/rlContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp">
+
+                        <TextView
+                            android:id="@+id/tvTBTitle"
+                            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:text="@string/edit_farmland"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <ImageView
+                android:id="@+id/ivFarmland"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/imageDefault"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_baseline_image_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/appBar" />
+
+            <Button
+                android:id="@+id/btCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/camera"
+                app:layout_constraintEnd_toStartOf="@id/btGallery"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivFarmland" />
+
+            <Button
+                android:id="@+id/btGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/gallery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btCamera"
+                app:layout_constraintTop_toBottomOf="@id/ivFarmland" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/farmlandNameEditTextLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/farmlandHint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btCamera"
+                app:startIconDrawable="@drawable/barn">
+
+                <EditText
+                    android:id="@+id/farmlandNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:ems="10"
+                    android:text="@{result.farmName}"
+                    android:inputType="text"
+                    app:layout_constraintTop_toBottomOf="@+id/subtitle"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/farmlandLocationEditTextLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/farmlandLocationHint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/farmlandNameEditTextLayout"
+                app:startIconDrawable="@drawable/ic_baseline_location_on_24">
+
+                <EditText
+                    android:id="@+id/farmlandLocationEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:ems="10"
+                    android:text="@{result.location}"
+                    android:inputType="text"
+                    app:layout_constraintTop_toBottomOf="@+id/subtitle"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/plantTypeEditTextLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/plantType"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/farmlandLocationEditTextLayout"
+                app:startIconDrawable="@drawable/sprout">
+
+                <AutoCompleteTextView
+                    android:id="@+id/plantTypeAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="@{result.plantType}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvFarmlandColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/armland_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plantTypeEditTextLayout" />
+
+            <ImageView
+                android:id="@+id/previewSelectedColor"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/circle_color_indicator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvFarmlandColor"
+                app:tint="@color/danger_color" />
+
+            <Button
+                android:id="@+id/btEditFarmland"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:paddingVertical="12dp"
+                android:text="@string/edit_farmland"
+                app:layout_constraintTop_toBottomOf="@id/previewSelectedColor" />
+
+            <Button
+                android:id="@+id/btDeleteFarmland"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/danger_color"
+                android:paddingVertical="12dp"
+                android:text="@string/delete_farmland"
+                app:layout_constraintTop_toBottomOf="@id/btEditFarmland" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

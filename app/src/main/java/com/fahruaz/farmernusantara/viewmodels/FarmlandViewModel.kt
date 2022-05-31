@@ -12,6 +12,7 @@ import com.fahruaz.farmernusantara.api.ApiConfig
 import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
 import com.fahruaz.farmernusantara.response.farmland.CreateFarmlandResponse
+import com.fahruaz.farmernusantara.response.farmland.DeleteFarmlandResponse
 import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponseItem
 import com.fahruaz.farmernusantara.ui.MainActivity
 import retrofit2.Call
@@ -25,6 +26,9 @@ class FarmlandViewModel(private val pref: UserPreferences) : ViewModel() {
 
     //    private val _toastCreateFarmland = MutableLiveData<String>()
     val toastCreateFarmland: MutableLiveData<String> = MutableLiveData<String>()
+
+    private val _toastDeleteFarmland = MutableLiveData<String>()
+    val toastDeleteFarmland: LiveData<String> = _toastDeleteFarmland
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -54,11 +58,13 @@ class FarmlandViewModel(private val pref: UserPreferences) : ViewModel() {
                 }
                 else {
                     _toastFarmland.value = "Gagal  mengambil data farmland"
+                    _toastFarmland.value = ""
                 }
             }
             override fun onFailure(call: Call<List<GetAllFarmlandByOwnerResponseItem>>, t: Throwable) {
                 _isLoading.value = false
                 _toastFarmland.value = "Gagal instance Retrofit aja kan"
+                _toastFarmland.value = ""
             }
         })
     }
@@ -81,11 +87,41 @@ class FarmlandViewModel(private val pref: UserPreferences) : ViewModel() {
                 }
                 else {
                     toastCreateFarmland.value = "Gagal membuat farmland. Coba ganti nama atau warna farmland"
+                    toastCreateFarmland.value = ""
                 }
             }
             override fun onFailure(call: Call<CreateFarmlandResponse>, t: Throwable) {
                 _isLoading.value = false
                 toastCreateFarmland.value = "Gagal instance Retrofit"
+                toastCreateFarmland.value = ""
+            }
+        })
+    }
+
+    fun deleteFarmland(idFarmland: String) {
+        _isLoading.value = true
+
+        val service = ApiConfig().getApiService().deleteFarmland("Token ${MainActivity.userModel?.token}", idFarmland)
+
+        service.enqueue(object : Callback<DeleteFarmlandResponse> {
+            override fun onResponse(call: Call<DeleteFarmlandResponse>, response: Response<DeleteFarmlandResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _toastDeleteFarmland.value = "Berhasil menghapus farmland"
+                        _toastDeleteFarmland.value = ""
+                    }
+                }
+                else {
+                    _toastDeleteFarmland.value = "Gagal menghapus farmland"
+                    _toastDeleteFarmland.value = ""
+                }
+            }
+            override fun onFailure(call: Call<DeleteFarmlandResponse>, t: Throwable) {
+                _isLoading.value = false
+                _toastDeleteFarmland.value = "Gagal instance Retrofit"
+                _toastDeleteFarmland.value = ""
             }
         })
     }

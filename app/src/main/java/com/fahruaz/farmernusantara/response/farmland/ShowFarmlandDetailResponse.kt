@@ -1,14 +1,19 @@
 package com.fahruaz.farmernusantara.response.farmland
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
+import java.io.Serializable
 
+@Parcelize
 data class ShowFarmlandDetailResponse(
 
 	@field:SerializedName("farmName")
 	val farmName: String? = null,
 
 	@field:SerializedName("owner")
-	val owner: Owner? = null,
+	val owner: @RawValue Owner? = null,
 
 	@field:SerializedName("markColor")
 	val markColor: String? = null,
@@ -17,7 +22,7 @@ data class ShowFarmlandDetailResponse(
 	val imageUrl: String? = null,
 
 	@field:SerializedName("sickPlants")
-	val sickPlants: List<SickPlantsItem?>? = null,
+	val sickPlants: @RawValue List<SickPlantsItem?>? = null,
 
 	@field:SerializedName("__v")
 	val V: Int? = null,
@@ -30,7 +35,7 @@ data class ShowFarmlandDetailResponse(
 
 	@field:SerializedName("plantType")
 	val plantType: String? = null
-)
+): Parcelable
 
 data class SickPlantsItem(
 
@@ -45,7 +50,7 @@ data class SickPlantsItem(
 
 	@field:SerializedName("diseasePlant")
 	val diseasePlant: String? = null
-)
+) : Serializable
 
 data class Owner(
 
@@ -57,4 +62,4 @@ data class Owner(
 
 	@field:SerializedName("email")
 	val email: String? = null
-)
+) : Serializable

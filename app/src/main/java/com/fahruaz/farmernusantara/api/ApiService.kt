@@ -128,4 +128,16 @@ interface ApiService {
         @Field(value = "imageUrl") imageUrl: String
     ): Call<DeleteImageFromStorageResponse>
 
+    @FormUrlEncoded
+    @PUT("farmland/{id}")
+    fun updateFarmland(
+        @Header("Authorization") authHeader: String,
+        @Path("id") id: String,
+        @Field(value = "farmName") farmName: String,
+        @Field(value = "owner") owner: String,
+        @Field(value = "markColor") markColor: String,
+        @Field(value = "plantType") plantType: String,
+        @Field(value = "location") location: String,
+        @Field(value = "imageUrl") imageUrl: String
+    ): Call<UpdateFarmlandResponse>
 }

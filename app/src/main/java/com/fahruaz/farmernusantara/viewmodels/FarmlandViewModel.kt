@@ -14,6 +14,7 @@ import com.fahruaz.farmernusantara.preferences.UserPreferences
 import com.fahruaz.farmernusantara.response.farmland.CreateFarmlandResponse
 import com.fahruaz.farmernusantara.response.farmland.DeleteFarmlandResponse
 import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponseItem
+import com.fahruaz.farmernusantara.response.farmland.UpdateFarmlandResponse
 import com.fahruaz.farmernusantara.ui.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +30,9 @@ class FarmlandViewModel(private val pref: UserPreferences) : ViewModel() {
 
     private val _toastDeleteFarmland = MutableLiveData<String>()
     val toastDeleteFarmland: LiveData<String> = _toastDeleteFarmland
+
+    private val _toastUpdateFarmland = MutableLiveData<String>()
+    val toastUpdateFarmland: LiveData<String> = _toastUpdateFarmland
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -122,6 +126,36 @@ class FarmlandViewModel(private val pref: UserPreferences) : ViewModel() {
                 _isLoading.value = false
                 _toastDeleteFarmland.value = "Gagal instance Retrofit"
                 _toastDeleteFarmland.value = ""
+            }
+        })
+    }
+
+    fun updateFarmland(idFarmland: String, farmName: String, owner: String, markColor: String, plantType: String,
+                       location: String, imageUrl: String) {
+        _isLoading.value = true
+
+        val service = ApiConfig().getApiService().updateFarmland("Token ${MainActivity.userModel?.token}", idFarmland,
+            farmName, owner, markColor, plantType, location, imageUrl)
+
+        service.enqueue(object : Callback<UpdateFarmlandResponse> {
+            override fun onResponse(call: Call<UpdateFarmlandResponse>, response: Response<UpdateFarmlandResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _toastUpdateFarmland.value = "Berhasil memperbarui farmland"
+                        _toastUpdateFarmland.value = ""
+                    }
+                }
+                else {
+                    _toastUpdateFarmland.value = "Gagal memperbarui farmland"
+                    _toastUpdateFarmland.value = ""
+                }
+            }
+            override fun onFailure(call: Call<UpdateFarmlandResponse>, t: Throwable) {
+                _isLoading.value = false
+                _toastUpdateFarmland.value = "Gagal instance Retrofit"
+                _toastUpdateFarmland.value = ""
             }
         })
     }

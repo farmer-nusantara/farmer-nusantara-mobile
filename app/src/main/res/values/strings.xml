@@ -51,7 +51,6 @@
     <string name="image_confirmation">Konfirmasi</string>
     <string-array name="plantType">
         <item>Jagung</item>
-        <item>Tomat</item>
         <item>Singkong</item>
         <item>Padi</item>
     </string-array>

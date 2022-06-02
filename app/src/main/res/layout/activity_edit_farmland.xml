@@ -58,6 +58,7 @@
                 android:id="@+id/ivFarmland"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                loadImageFromUrl="@{result.imageUrl}"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/imageDefault"
@@ -111,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
                     android:ems="10"
-                    android:text="@{result.farmName}"
+                    setFarmlandName="@{result.farmName}"
                     android:inputType="text"
                     app:layout_constraintTop_toBottomOf="@+id/subtitle"
                     tools:ignore="SpeakableTextPresentCheck" />
@@ -136,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
                     android:ems="10"
-                    android:text="@{result.location}"
+                    setFarmlandLocation="@{result.location}"
                     android:inputType="text"
                     app:layout_constraintTop_toBottomOf="@+id/subtitle"
                     tools:ignore="SpeakableTextPresentCheck" />
@@ -160,8 +161,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="none"
-                    android:text="@{result.plantType}" />
+                    setPlantType="@{result.plantType}"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -180,6 +181,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="6dp"
+                loadFarmlandColor="@{result.markColor}"
                 android:src="@drawable/circle_color_indicator"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvFarmlandColor"

@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import com.fahruaz.farmernusantara.databinding.ActivityDetailDiseaseBinding
 import com.fahruaz.farmernusantara.ml.CassavamodelV1D2
 import com.fahruaz.farmernusantara.ml.CornmodelV1D1
+import com.fahruaz.farmernusantara.ml.PaddymodelV1D3
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.nio.ByteBuffer
@@ -81,11 +82,30 @@ class DetailDiseaseActivity : AppCompatActivity() {
             model.close()
 
             binding?.tvTitleDisease?.text = name
+
         }else if(DetailFarmlandActivity.plan == "Singkong"){
             val list = getFileName("cassavaclasses_v1_d2.txt")
             val model = CassavamodelV1D2.newInstance(this)
 
             val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
+            inputFeature0.loadBuffer(getImageData(150))
+
+            val outputs = model.process(inputFeature0)
+            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+
+            val max = getMax(outputFeature0.floatArray, 3)
+            val name = list[max]
+
+            model.close()
+
+            binding?.tvTitleDisease?.text = name
+
+        }else if(DetailFarmlandActivity.plan == "Padi") {
+            val list = getFileName("paddyclasses_v1_d1.txt")
+            val model = PaddymodelV1D3.newInstance(this)
+
+            val inputFeature0 =
+                TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
             inputFeature0.loadBuffer(getImageData(150))
 
             val outputs = model.process(inputFeature0)

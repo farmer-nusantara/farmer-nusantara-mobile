@@ -31,10 +31,12 @@ import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.util.RealPathUtil
 import com.fahruaz.farmernusantara.viewmodels.DetailFarmlandViewModel
 import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.Dispatchers
@@ -124,7 +126,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
         }
         binding?.fabScan?.setOnClickListener {
 //            startActivityForResult(Intent(this, CameraActivity::class.java), CODE_CAMERA)
-            requestCameraPermission()
+            requestStorageAndCameraPermission()
         }
         binding?.fabEdit?.setOnClickListener {
             val intent = Intent(this, EditFarmlandActivity::class.java)
@@ -194,6 +196,40 @@ class DetailFarmlandActivity : AppCompatActivity() {
         }
     }
 
+    private fun requestStorageAndCameraPermission() {
+        Dexter.withContext(this)
+            .withPermissions(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            )
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    // check if all permissions are granted
+                    if (report!!.areAllPermissionsGranted()) {
+                        startTakePhoto()
+                    }
+
+                    // check for permanent denial of any permission
+                    if (report.isAnyPermissionPermanentlyDenied) {
+                        // show alert dialog navigating to Settings
+                        showSettingsDialog()
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: List<PermissionRequest?>?,
+                    token: PermissionToken
+                ) {
+                    token.continuePermissionRequest()
+                }
+            }).withErrorListener {
+                Toast.makeText(applicationContext, "Terjadi kesalahan!", Toast.LENGTH_SHORT).show()
+            }
+            .onSameThread()
+            .check()
+    }
+
     private fun requestCameraPermission() {
         Dexter.withContext(this)
             .withPermission(Manifest.permission.CAMERA)
@@ -215,8 +251,8 @@ class DetailFarmlandActivity : AppCompatActivity() {
 
     private fun showSettingsDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Butuh izin kamera")
-        builder.setMessage("Untuk mengambil foto, butuh izin kamera.")
+        builder.setTitle("Butuh izin kamera dan penyimpanan")
+        builder.setMessage("Untuk mengambil foto, butuh izin kamera dan penyimpanan.")
         builder.setPositiveButton("Pengaturan") { dialog, _ ->
             dialog.cancel()
             openSettings()

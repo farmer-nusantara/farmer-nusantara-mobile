@@ -132,7 +132,7 @@ class EditFarmlandActivity : AppCompatActivity() {
             showLoading(it)
         }
 
-        MainActivity.imageStorageViewModel.imageUrl.observe(this) {
+        MainActivity.imageStorageViewModel.imageEditUrl.observe(this) {
             if(it.isEmpty()) {
                 if(isDeleteFarmland) {
                     isDeleteFarmland = false

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
+import android.content.IntentSender
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -20,14 +21,20 @@ import com.fahruaz.farmernusantara.ml.CassavamodelV1D2
 import com.fahruaz.farmernusantara.ml.CornmodelV1D1
 import com.fahruaz.farmernusantara.ml.PaddymodelV1D3
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
+import com.fahruaz.farmernusantara.ui.fragment.map.MapFragment
 import com.fahruaz.farmernusantara.util.reduceFileImage
 import com.fahruaz.farmernusantara.viewmodels.DetailDiseaseViewModel
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.PendingResult
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -36,6 +43,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
+import java.lang.Exception
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.text.SimpleDateFormat
@@ -49,8 +57,10 @@ class DetailDiseaseActivity : AppCompatActivity() {
     private lateinit var detailDiseaseViewModel: DetailDiseaseViewModel
 
     private var getFile: File? = null
+    private lateinit var uri: Uri
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var googleApiClient: GoogleApiClient? = null
     private var latitude = 0.0
     private var longitude = 0.0
     private var diseasePlant = ""
@@ -86,12 +96,19 @@ class DetailDiseaseActivity : AppCompatActivity() {
         }
 
         MainActivity.imageStorageViewModel.imageUrl.observe(this) {
-            saveDiseasePlant(farmlandId!!, latitude, longitude, diseasePlant, it, MainActivity.userModel?.id!!)
+            if(it.isNotEmpty()) {
+                saveDiseasePlant(farmlandId!!, latitude, longitude, diseasePlant, it, MainActivity.userModel?.id!!)
+            }
+        }
+
+        detailDiseaseViewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
         detailDiseaseViewModel.toast.observe(this) {
-            if(it.isNotEmpty())
+            if(it.isNotEmpty()) {
                 showToast(it)
+            }
             if(it == "Berhasil menyimpan penyakit") {
                 finish()
             }
@@ -100,7 +117,7 @@ class DetailDiseaseActivity : AppCompatActivity() {
         binding?.ivDisease?.setImageURI(Uri.parse(DetailFarmlandActivity.uriString))
         getFile = File(DetailFarmlandActivity.uriString)
 
-        val uri = Uri.parse("file://${DetailFarmlandActivity.uriString}")
+        uri = Uri.parse("file://${DetailFarmlandActivity.uriString}")
 
         bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
 
@@ -249,6 +266,7 @@ class DetailDiseaseActivity : AppCompatActivity() {
             .withListener(object : PermissionListener {
                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                     runBlocking {
+                        enableLoc()
                         getMyLocation()
                         uploadImage()
                     }
@@ -256,7 +274,7 @@ class DetailDiseaseActivity : AppCompatActivity() {
                 override fun onPermissionDenied(response: PermissionDeniedResponse?) {
                     // check for permanent denial of permission
                     if (response!!.isPermanentlyDenied) {
-                        showSettingsDialog()
+                        showSettingsDialogLoc()
                     }
                 }
                 override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken) {
@@ -292,10 +310,22 @@ class DetailDiseaseActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSettingsDialog() {
+    private fun showSettingsDialogLoc() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle("Butuh izin lokasi")
         builder.setMessage("Aktifkan lokasi untuk menyimpan penyakit.")
+        builder.setPositiveButton("Pengaturan") { dialog, _ ->
+            dialog.cancel()
+            openSettings()
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun showSettingsDialogFile() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Butuh izin penyimpanan")
+        builder.setMessage("Aktifkan izin penyimpanan untuk memproses penyakit.")
         builder.setPositiveButton("Pengaturan") { dialog, _ ->
             dialog.cancel()
             openSettings()
@@ -309,6 +339,48 @@ class DetailDiseaseActivity : AppCompatActivity() {
         val uri: Uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivityForResult(intent, 101)
+    }
+
+    private fun enableLoc() {
+        if (googleApiClient == null) {
+            googleApiClient = GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
+                    override fun onConnected(bundle: Bundle?) {}
+                    override fun onConnectionSuspended(i: Int) {
+                        googleApiClient?.connect()
+                    }
+                })
+                .addOnConnectionFailedListener { connectionResult ->
+                    Log.d(
+                        "Location error",
+                        "Location error " + connectionResult.errorCode
+                    )
+                }.build()
+            googleApiClient?.connect()
+            val locationRequest: LocationRequest = LocationRequest.create()
+            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            locationRequest.interval = 30 * 1000
+            locationRequest.fastestInterval = 5 * 1000
+            val builder = LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest)
+            builder.setAlwaysShow(true)
+            val result: PendingResult<LocationSettingsResult> =
+                LocationServices.SettingsApi.checkLocationSettings(googleApiClient!!, builder.build())
+            result.setResultCallback { result ->
+                val status: Status = result.status
+                when (status.statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+//                        status.startResolutionForResult(this, MapFragment.REQUEST_LOCATION)
+                        // do nothing
+                    } catch (e: IntentSender.SendIntentException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

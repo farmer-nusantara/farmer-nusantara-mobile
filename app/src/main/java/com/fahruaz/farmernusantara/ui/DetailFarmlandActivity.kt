@@ -7,7 +7,6 @@ import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Canvas
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -72,6 +71,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 saveBitmapFile(result)
                 val intent = Intent(this@DetailFarmlandActivity, DetailDiseaseActivity::class.java)
+                intent.putExtra(FarmlandFragment.EXTRA_FARMLAND_ID, farmlandDetail.id)
                 startActivity(intent)
             }
         }
@@ -99,7 +99,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
             detailFarmlandViewModel.getAllFarmlandByOwner(farmlandId, MainActivity.userModel?.token!!)
             detailFarmlandViewModel.farmland.observe(this) {
                 farmlandDetail = it
-                plan = it.plantType!!
+                plant = it.plantType!!
                 binding?.result = it
                 val hexColorToInt = Color.parseColor(it.markColor)
                 binding?.ivFarmlandColor?.setColorFilter(hexColorToInt)
@@ -331,8 +331,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
     companion object{
         const val CODE_CAMERA = 1
         var uriString = ""
-        var plan = ""
-
+        var plant = ""
     }
 
 }

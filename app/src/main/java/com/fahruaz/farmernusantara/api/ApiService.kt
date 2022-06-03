@@ -4,6 +4,7 @@ import com.fahruaz.farmernusantara.response.auth.*
 import com.fahruaz.farmernusantara.response.farmland.*
 import com.fahruaz.farmernusantara.response.file.DeleteImageFromStorageResponse
 import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
+import com.fahruaz.farmernusantara.response.plantdisease.SaveDiseasePlantResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -140,4 +141,16 @@ interface ApiService {
         @Field(value = "location") location: String,
         @Field(value = "imageUrl") imageUrl: String
     ): Call<UpdateFarmlandResponse>
+
+    @FormUrlEncoded
+    @POST("plants")
+    fun saveDiseasePlant(
+        @Header("Authorization") token: String,
+        @Field(value = "farmland_id") farmland_id: String,
+        @Field(value = "latitude") latitude: Double,
+        @Field(value = "longitude") longitude: Double,
+        @Field(value = "diseasePlant") diseasePlant: String,
+        @Field(value = "imageUrl") imageUrl: String,
+        @Field(value = "picturedBy") picturedBy: String
+    ): Call<SaveDiseasePlantResponse>
 }

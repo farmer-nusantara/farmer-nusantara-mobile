@@ -78,7 +78,8 @@
             android:name=".ui.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps"
-            android:parentActivityName=".ui.DetailFarmlandActivity" />
+            android:parentActivityName=".ui.DetailFarmlandActivity"
+            android:theme="@style/noActionBarStyle"/>
         <activity
             android:name=".ui.ImageConfirmationActivity"
             android:exported="false"

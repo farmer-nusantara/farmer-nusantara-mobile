@@ -12,6 +12,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
@@ -21,6 +22,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityMapsBinding
+import com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse
 import com.fahruaz.farmernusantara.response.plantdisease.GetAllSickPlantsResponseItem
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.viewmodels.MapActivityViewModel
@@ -40,7 +42,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private var googleApiClient: GoogleApiClient? = null
-//    private var customProgressDialog: Dialog? = null
+    private var customProgressDialog: Dialog? = null
     private lateinit var mapsViewModel: MapActivityViewModel
     private var listDiseases = ArrayList<GetAllSickPlantsResponseItem>()
 
@@ -49,6 +51,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        mapsViewModel = ViewModelProvider(this)[MapActivityViewModel::class.java]
+
+        // toolbar
+        setSupportActionBar(binding?.tbMap)
+        if(supportActionBar != null) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+        binding?.tbMap?.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
+        mapsViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
+        mapsViewModel.toast.observe(this) {
+            showToast(it)
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -60,27 +80,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-
         mapsViewModel = ViewModelProvider(this)[MapActivityViewModel::class.java]
-
         mMap = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-
-        mMap.uiSettings.isZoomControlsEnabled = true
-        mMap.uiSettings.isIndoorLevelPickerEnabled = true
-        mMap.uiSettings.isCompassEnabled = true
-        mMap.uiSettings.isMapToolbarEnabled = true
 
         val id = intent.getStringExtra(FarmlandFragment.EXTRA_FARMLAND_ID)
 
         mapsViewModel.getAllDiseases("Token ${MainActivity.userModel?.token}", id!!)
 
-        Log.e("id", id)
-        Log.e("id",MainActivity.userModel?.token.toString())
 
         mapsViewModel.listDiseases.observe(this) { disease ->
             setDiseasesData(disease)
@@ -184,16 +190,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun setDiseasesData(diseases: List<GetAllSickPlantsResponseItem>) {
+        val farmlandData =
+            intent.getParcelableExtra<ShowFarmlandDetailResponse>(DetailFarmlandActivity.EXTRA_FARMLAND)
 
         for (disease in diseases){
             val newDisease = GetAllSickPlantsResponseItem(
-                id = disease.id,
                 farmlandId = disease.farmlandId,
+                createdAt = disease.createdAt,
                 latitude = disease.latitude,
                 longitude = disease.longitude,
-                diseasePlant = disease.diseasePlant,
                 imageUrl = disease.imageUrl,
-                createdAt = disease.createdAt,
+                diseasePlant = disease.diseasePlant,
                 picturedBy = disease.picturedBy,
                 V = disease.V
             )
@@ -205,13 +212,42 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     .position(latLng)
                     .title(disease.diseasePlant)
                     .snippet("Lat: ${latLng.latitude} Long: ${latLng.longitude}")
-                    .icon(vectorToBitmap(R.drawable.virus, Color.parseColor("#3DDC84")))
+                    .icon(vectorToBitmap(R.drawable.virus, Color.parseColor(farmlandData?.markColor)))
             )
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(disease.latitude, disease.longitude), 5f))
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(disease.latitude, disease.longitude), 20f))
         }
 
-        Log.e("Lat", listDiseases.toString())
+        binding.tvTitleFarmland.text = farmlandData?.farmName
+        binding.tvTotalDisease.text = "Tanaman terdeteksi sakit: ${farmlandData?.sickPlants?.size}"
+        binding.tvPlantType.text = "Jenis tanaman: ${farmlandData?.plantType}"
+        binding.tvLocation.text = "Lokasi: ${farmlandData?.location}"
+        val farmlandColor = Color.parseColor(farmlandData?.markColor)
+        binding.ivFarmlandColor.setColorFilter(farmlandColor)
 
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading)
+            showProgressDialog()
+        else
+            cancelProgressDialog()
+    }
+
+    private fun showProgressDialog() {
+        customProgressDialog = Dialog(this)
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog() {
+        if (customProgressDialog != null) {
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
+        }
     }
 
 

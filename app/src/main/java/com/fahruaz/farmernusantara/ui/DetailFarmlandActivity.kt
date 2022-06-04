@@ -128,6 +128,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
         binding?.fabMap?.setOnClickListener {
             val intent = Intent(applicationContext, MapsActivity::class.java)
             intent.putExtra(FarmlandFragment.EXTRA_FARMLAND_ID, farmlandId)
+            intent.putExtra(EXTRA_FARMLAND, farmlandDetail)
             startActivity(intent)
         }
         binding?.fabScan?.setOnClickListener {
@@ -394,6 +395,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
         var uriString = ""
         var plant = ""
         var isSaveBtnClicked = false
+        const val EXTRA_FARMLAND = "EXTRA_FARMLAND"
     }
 
 }

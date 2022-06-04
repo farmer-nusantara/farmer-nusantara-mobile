@@ -15,39 +15,33 @@ class MapActivityViewModel: ViewModel() {
     private val _listDiseases = MutableLiveData<List<GetAllSickPlantsResponseItem>>()
     val listDiseases: LiveData<List<GetAllSickPlantsResponseItem>> = _listDiseases
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _toast = MutableLiveData<String>()
+    val toast: LiveData<String> = _toast
+
     fun getAllDiseases(token: String,  id: String) {
+        _isLoading.value = true
         val service = ApiConfig().getApiService().getAllSickPlants(token, id)
 
         service.enqueue(object : Callback<List<GetAllSickPlantsResponseItem>> {
-            //            override fun onResponse(call: Call<GetAllSickPlantsResponse>,
-//                                    response: Response<GetAllSickPlantsResponse>) {
-//                Log.e("asdewf", "sfiejfe")
-//                if (response.isSuccessful) {
-//                    val responseBody = response.body()
-//                    if (responseBody != null) {
-//                        _listDiseases.value = responseBody.getAllSickPlantsResponse as List<GetAllSickPlantsResponseItem>
-//                    }
-//                }
-//            }
-//            override fun onFailure(call: Call<GetAllSickPlantsResponse>, t: Throwable) {
-//                //DO NOTHING
-//                t.printStackTrace();
-//            }
             override fun onResponse(
                 call: Call<List<GetAllSickPlantsResponseItem>>,
                 response: Response<List<GetAllSickPlantsResponseItem>>
             ) {
-//                Log.e("asu", "hahaha")
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _listDiseases.value = responseBody
                     }
-                }
+                }else
+                    _toast.value = response.message()
             }
             override fun onFailure(call: Call<List<GetAllSickPlantsResponseItem>>, t: Throwable) {
-                Log.e("asu", t.message.toString())
-
+                _isLoading.value  = false
+                _toast.value = t.message
             }
         })
     }

@@ -4,6 +4,7 @@ import com.fahruaz.farmernusantara.response.auth.*
 import com.fahruaz.farmernusantara.response.farmland.*
 import com.fahruaz.farmernusantara.response.file.DeleteImageFromStorageResponse
 import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
+import com.fahruaz.farmernusantara.response.plantdisease.DeleteSickPlantResponse
 import com.fahruaz.farmernusantara.response.plantdisease.GetAllSickPlantsResponseItem
 import com.fahruaz.farmernusantara.response.plantdisease.GetSickPlantResponse
 import com.fahruaz.farmernusantara.response.plantdisease.SaveDiseasePlantResponse
@@ -174,5 +175,13 @@ interface ApiService {
         @Header("Authorization") authHeader: String,
         @Query("owner") owner: String
     ): Call<List<GetAllSickPlantsResponseItem>>
+
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "plants/{id}", hasBody = true)
+    fun deleteSickPlant(
+        @Header("Authorization") authHeader: String,
+        @Path("id") id: String,
+        @Field(value = "sickPlantId") sickPlantId: String
+    ): Call<DeleteSickPlantResponse>
 
 }

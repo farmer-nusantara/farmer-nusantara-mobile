@@ -1,20 +1,26 @@
 package com.fahruaz.farmernusantara.ui
 
+import android.app.AlertDialog
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityShowDetailDiseaseBinding
 import com.fahruaz.farmernusantara.databindingadapters.ShowDetailDiseaseBinding
+import com.fahruaz.farmernusantara.response.plantdisease.GetSickPlantResponse
+import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.viewmodels.ShowDetailDiseaseViewModel
+import java.lang.Exception
 
 class ShowDetailDiseaseActivity : AppCompatActivity() {
 
     private var binding: ActivityShowDetailDiseaseBinding? = null
     private lateinit var showDiseaseDetailViewModel: ShowDetailDiseaseViewModel
     private var customProgressDialog: Dialog? = null
+    private lateinit var sickPlantDetail: GetSickPlantResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +43,8 @@ class ShowDetailDiseaseActivity : AppCompatActivity() {
         }
 
         showDiseaseDetailViewModel.disease.observe(this) {
+            sickPlantDetail = it
+
             ShowDetailDiseaseBinding.setDiseaseNameDiseaseDetail(binding?.tvTitleDisease!!, it.diseasePlant!!)
             ShowDetailDiseaseBinding.setDateDiseaseDetail(binding?.tvDate!!, it.createdAt!!)
             ShowDetailDiseaseBinding.loadImageFromUrlDiseaseDetail(binding?.ivDisease!!, it.imageUrl!!)
@@ -98,13 +106,56 @@ class ShowDetailDiseaseActivity : AppCompatActivity() {
         }
 
         val diseaseId = intent.getStringExtra(DetailFarmlandActivity.DISEASE_ID_EXTRA)
+        val farmlandId = intent.getStringExtra(FarmlandFragment.EXTRA_FARMLAND_ID)
         if(diseaseId != null) {
             requestApiData(diseaseId)
+        }
+
+        showDiseaseDetailViewModel.toast.observe(this) {
+            if(it.isNotEmpty()) {
+                if(it == "Berhasil menghapus penyakit") {
+                    DetailFarmlandActivity.isSaveBtnClicked = true
+                    finish()
+                }
+            }
+        }
+
+        MainActivity.imageStorageViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
+        MainActivity.imageStorageViewModel.toast.observe(this) {
+            if(it.isNotEmpty()) {
+                showToast(it)
+                if(it == "Berhasil menghapus foto") {
+                    showDiseaseDetailViewModel.deleteSickPlant(farmlandId!!, diseaseId!!)
+                }
+            }
+        }
+
+        binding?.deleteDataBtn?.setOnClickListener {
+            showDeleteDialog()
         }
     }
 
     private fun requestApiData(diseaseId: String) {
         showDiseaseDetailViewModel.getSickPlant(diseaseId)
+    }
+
+    private fun showDeleteDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Hapus Penyakit")
+        builder.setMessage("Apakah Anda yakin ingin menghapus penyakit ini?")
+        builder.setPositiveButton("Hapus") { dialog, _ ->
+            dialog.cancel()
+            MainActivity.imageStorageViewModel.deleteImageFromStorage(sickPlantDetail.imageUrl!!)
+        }
+        builder.setNegativeButton("Tidak") { dialog, _ -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(isLoading: Boolean) {

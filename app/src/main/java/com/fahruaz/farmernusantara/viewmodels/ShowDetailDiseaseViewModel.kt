@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fahruaz.farmernusantara.api.ApiConfig
-import com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse
+import com.fahruaz.farmernusantara.response.farmland.DeleteFarmlandResponse
+import com.fahruaz.farmernusantara.response.plantdisease.DeleteSickPlantResponse
 import com.fahruaz.farmernusantara.response.plantdisease.GetSickPlantResponse
 import com.fahruaz.farmernusantara.ui.MainActivity
 import retrofit2.Call
@@ -42,6 +43,34 @@ class ShowDetailDiseaseViewModel : ViewModel() {
                 }
             }
             override fun onFailure(call: Call<GetSickPlantResponse>, t: Throwable) {
+                _isLoading.value = false
+                _toast.value = "Gagal instance Retrofit"
+                _toast.value = ""
+            }
+        })
+    }
+
+    fun deleteSickPlant(farmlandId: String, sickPlantId: String) {
+        _isLoading.value = true
+
+        val service = ApiConfig().getApiService().deleteSickPlant("Token ${MainActivity.userModel?.token}", farmlandId, sickPlantId)
+
+        service.enqueue(object : Callback<DeleteSickPlantResponse> {
+            override fun onResponse(call: Call<DeleteSickPlantResponse>, response: Response<DeleteSickPlantResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _toast.value = "Berhasil menghapus penyakit"
+                        _toast.value = ""
+                    }
+                }
+                else {
+                    _toast.value = "Gagal menghapus penyakit"
+                    _toast.value = ""
+                }
+            }
+            override fun onFailure(call: Call<DeleteSickPlantResponse>, t: Throwable) {
                 _isLoading.value = false
                 _toast.value = "Gagal instance Retrofit"
                 _toast.value = ""

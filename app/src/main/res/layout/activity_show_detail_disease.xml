@@ -142,13 +142,13 @@
             app:layout_constraintTop_toBottomOf="@id/tvRecommendationCare" />
 
         <Button
-            android:id="@+id/saveDataBtn"
+            android:id="@+id/deleteDataBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="16dp"
-            android:backgroundTint="@color/primary_color"
-            android:text="@string/saveData"
+            android:backgroundTint="@color/danger_color"
+            android:text="@string/delete_disease"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

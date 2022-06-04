@@ -162,9 +162,17 @@ interface ApiService {
         @Query("farmland_id") farmland_id: String
     ): Call<List<GetAllSickPlantsResponseItem>>
 
+
     @GET("plants/{id}")
     fun GetSickPlant(
         @Header("Authorization") authHeader: String,
         @Path("id") id: String
     ): Call<GetSickPlantResponse>
+
+    @GET("plants")
+    fun getAllSickPlantsByOwner(
+        @Header("Authorization") authHeader: String,
+        @Query("owner") owner: String
+    ): Call<List<GetAllSickPlantsResponseItem>>
+
 }

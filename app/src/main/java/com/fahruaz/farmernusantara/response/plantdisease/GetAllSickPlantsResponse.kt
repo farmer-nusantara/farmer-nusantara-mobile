@@ -8,6 +8,33 @@ data class GetAllSickPlantsResponse(
 	val getAllSickPlantsResponse: List<GetAllSickPlantsResponseItem?>? = null
 )
 
+data class FarmlandId(
+
+	@field:SerializedName("farmName")
+	val farmName: String? = null,
+
+	@field:SerializedName("owner")
+	val owner: String? = null,
+
+	@field:SerializedName("markColor")
+	val markColor: String? = null,
+
+	@field:SerializedName("imageUrl")
+	val imageUrl: String? = null,
+
+	@field:SerializedName("__v")
+	val V: Int? = null,
+
+	@field:SerializedName("location")
+	val location: String? = null,
+
+	@field:SerializedName("_id")
+	val id: String? = null,
+
+	@field:SerializedName("plantType")
+	val plantType: String? = null
+)
+
 data class GetAllSickPlantsResponseItem(
 
 	@field:SerializedName("createdAt")
@@ -23,7 +50,7 @@ data class GetAllSickPlantsResponseItem(
 	val V: Int? = null,
 
 	@field:SerializedName("farmland_id")
-	val farmlandId: String? = null,
+	val farmlandId: FarmlandId? = null,
 
 	@field:SerializedName("picturedBy")
 	val picturedBy: PicturedBy? = null,
@@ -40,6 +67,15 @@ data class GetAllSickPlantsResponseItem(
 
 data class PicturedBy(
 
+	@field:SerializedName("password")
+	val password: String? = null,
+
+	@field:SerializedName("phone")
+	val phone: String? = null,
+
+	@field:SerializedName("__v")
+	val V: Int? = null,
+
 	@field:SerializedName("name")
 	val name: String? = null,
 
@@ -47,5 +83,8 @@ data class PicturedBy(
 	val id: String? = null,
 
 	@field:SerializedName("email")
-	val email: String? = null
+	val email: String? = null,
+
+	@field:SerializedName("status")
+	val status: String? = null
 )

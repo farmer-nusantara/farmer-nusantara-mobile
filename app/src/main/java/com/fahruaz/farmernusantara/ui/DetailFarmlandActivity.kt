@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -23,13 +24,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.fahruaz.farmernusantara.R
+import com.fahruaz.farmernusantara.adapters.DiseaseAdapter
+import com.fahruaz.farmernusantara.adapters.FarmlandsAdapter
 import com.fahruaz.farmernusantara.databinding.ActivityDetailFarmlandBinding
 import com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse
+import com.fahruaz.farmernusantara.response.farmland.SickPlantsItem
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.util.RealPathUtil
 import com.fahruaz.farmernusantara.viewmodels.DetailFarmlandViewModel
+import com.fahruaz.farmernusantara.viewmodels.DiseaseHistoryViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -52,9 +58,14 @@ class DetailFarmlandActivity : AppCompatActivity() {
     private var binding: ActivityDetailFarmlandBinding? = null
     private var customProgressDialog: Dialog? = null
     private lateinit var farmlandDetail: ShowFarmlandDetailResponse
+    private var farmlandId = ""
 
     private lateinit var currentPhotoPath: String
     private var getFile: File? = null
+
+    private val diseaseAdapter by lazy { DiseaseAdapter() }
+    private lateinit var detailFarmlandViewModel: DetailFarmlandViewModel
+//    private lateinit var diseaseViewModel: DiseaseHistoryViewModel
 
     // fab expandable
     private val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim) }
@@ -93,24 +104,18 @@ class DetailFarmlandActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        val farmlandId = intent.getStringExtra(FarmlandFragment.EXTRA_FARMLAND_ID)
+        detailFarmlandViewModel = ViewModelProvider(this)[DetailFarmlandViewModel::class.java]
 
-        val detailFarmlandViewModel = ViewModelProvider(this)[DetailFarmlandViewModel::class.java]
+        binding?.lifecycleOwner = this
+        binding?.diseaseHistoryViewModel = detailFarmlandViewModel
 
-        if(farmlandId != null) {
-            detailFarmlandViewModel.getAllFarmlandByOwner(farmlandId, MainActivity.userModel?.token!!)
-            detailFarmlandViewModel.farmland.observe(this) {
-                farmlandDetail = it
-                plant = it.plantType!!
-                binding?.result = it
-                val hexColorToInt = Color.parseColor(it.markColor)
-                binding?.ivFarmlandColor?.setColorFilter(hexColorToInt)
-                Glide.with(this)
-                    .load(it.imageUrl)
-                    .placeholder(R.drawable.image_default)
-                    .into(binding?.ivFarmland!!)
-            }
-        }
+        setUpRecyclerView()
+
+        farmlandId = intent.getStringExtra(FarmlandFragment.EXTRA_FARMLAND_ID)!!
+
+        requestApiData(farmlandId)
+
+//        requestApiData(farmlandId!!)
 
         detailFarmlandViewModel.isLoading.observe(this) {
             showLoading(it)
@@ -134,6 +139,35 @@ class DetailFarmlandActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if(isSaveBtnClicked) {
+            requestApiData(farmlandId)
+            isSaveBtnClicked = false
+        }
+    }
+
+    private fun requestApiData(farmlandId: String) {
+        detailFarmlandViewModel.getAllFarmlandByOwner(farmlandId, MainActivity.userModel?.token!!)
+        detailFarmlandViewModel.farmland.observe(this) {
+            farmlandDetail = it
+            plant = it.plantType!!
+
+            binding?.tvTitleFarmland?.text = it.farmName
+            binding?.tvPlantType?.text = it.plantType
+            binding?.tvLocation?.text = it.location
+            val hexColorToInt = Color.parseColor(it.markColor)
+            binding?.ivFarmlandColor?.setColorFilter(hexColorToInt)
+            Glide.with(this)
+                .load(it.imageUrl)
+                .placeholder(R.drawable.image_default)
+                .into(binding?.ivFarmland!!)
+
+            diseaseAdapter.setData(it.sickPlants!! as List<SickPlantsItem>)
+        }
     }
 
     private fun onAddButtonCLicked() {
@@ -230,25 +264,6 @@ class DetailFarmlandActivity : AppCompatActivity() {
             .check()
     }
 
-    private fun requestCameraPermission() {
-        Dexter.withContext(this)
-            .withPermission(Manifest.permission.CAMERA)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    startTakePhoto()
-                }
-                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                    // check for permanent denial of permission
-                    if (response!!.isPermanentlyDenied) {
-                        showSettingsDialog()
-                    }
-                }
-                override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken) {
-                    token.continuePermissionRequest()
-                }
-            }).check()
-    }
-
     private fun showSettingsDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle("Butuh izin kamera dan penyimpanan")
@@ -335,6 +350,15 @@ class DetailFarmlandActivity : AppCompatActivity() {
         return result
     }
 
+//    private fun requestApiData(id: String) {
+//        diseaseViewModel.getAllSickPlants(id)
+//    }
+
+    private fun setUpRecyclerView() {
+        binding?.rvDisease?.adapter = diseaseAdapter
+        binding?.rvDisease?.layoutManager = LinearLayoutManager(this)
+    }
+
     private fun showLoading(isLoading: Boolean) {
         if (isLoading)
             showProgressDialog()
@@ -368,6 +392,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
         const val CODE_CAMERA = 1
         var uriString = ""
         var plant = ""
+        var isSaveBtnClicked = false
     }
 
 }

@@ -4,9 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Bitmap
+import android.location.LocationManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,7 +23,6 @@ import com.fahruaz.farmernusantara.ml.CassavamodelV1D2
 import com.fahruaz.farmernusantara.ml.CornmodelV1D1
 import com.fahruaz.farmernusantara.ml.PaddymodelV1D3
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
-import com.fahruaz.farmernusantara.ui.fragment.map.MapFragment
 import com.fahruaz.farmernusantara.util.reduceFileImage
 import com.fahruaz.farmernusantara.viewmodels.DetailDiseaseViewModel
 import com.google.android.gms.common.api.GoogleApiClient
@@ -29,12 +30,10 @@ import com.google.android.gms.common.api.PendingResult
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -43,7 +42,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
-import java.lang.Exception
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.text.SimpleDateFormat
@@ -265,11 +263,18 @@ class DetailDiseaseActivity : AppCompatActivity() {
             .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
             .withListener(object : PermissionListener {
                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    runBlocking {
-                        enableLoc()
-                        getMyLocation()
-                        uploadImage()
+                    if(isGpsEnabled()) {
+                        runBlocking {
+                            // enableLoc()
+                            getMyLocation()
+                            uploadImage()
+                            DetailFarmlandActivity.isSaveBtnClicked = true
+                        }
                     }
+                    else {
+                        showToEnableGPS()
+                    }
+
                 }
                 override fun onPermissionDenied(response: PermissionDeniedResponse?) {
                     // check for permanent denial of permission
@@ -281,6 +286,11 @@ class DetailDiseaseActivity : AppCompatActivity() {
                     token.continuePermissionRequest()
                 }
             }).check()
+    }
+
+    private fun isGpsEnabled(): Boolean {
+        val mLocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
     private fun getMyLocation() {
@@ -322,15 +332,14 @@ class DetailDiseaseActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun showSettingsDialogFile() {
+    private fun showToEnableGPS() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Butuh izin penyimpanan")
-        builder.setMessage("Aktifkan izin penyimpanan untuk memproses penyakit.")
-        builder.setPositiveButton("Pengaturan") { dialog, _ ->
+        builder.setTitle("GPS tidak aktif")
+        builder.setMessage("Aktifkan GPS untuk menyimpan penyakit.")
+        builder.setPositiveButton("OK") { dialog, _ ->
             dialog.cancel()
-            openSettings()
+            enableLoc()
         }
-        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 

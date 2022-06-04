@@ -172,6 +172,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
     private fun detailIntent(id: String) {
         val intent = Intent(this, ShowDetailDiseaseActivity::class.java)
         intent.putExtra(DISEASE_ID_EXTRA, id)
+        intent.putExtra(FarmlandFragment.EXTRA_FARMLAND_ID, farmlandDetail.id)
         startActivity(intent)
     }
 

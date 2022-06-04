@@ -328,7 +328,7 @@ class DetailDiseaseActivity : AppCompatActivity() {
             dialog.cancel()
             openSettings()
         }
-        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        builder.setNegativeButton("Keluar") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 

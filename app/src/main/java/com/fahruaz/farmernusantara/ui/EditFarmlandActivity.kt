@@ -39,6 +39,7 @@ class EditFarmlandActivity : AppCompatActivity() {
     private var binding: ActivityEditFarmlandBinding? = null
     private var customProgressDialog: Dialog? = null
 
+    private lateinit var farmland: ShowFarmlandDetailResponse
     private lateinit var farmlandName: String
     private lateinit var farmlandLocation: String
     private lateinit var farmlandPlantType: String
@@ -88,9 +89,9 @@ class EditFarmlandActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        val farmland = intent.getParcelableExtra<ShowFarmlandDetailResponse>(FarmlandFragment.EXTRA_FARMLAND)
+        farmland = intent.getParcelableExtra(FarmlandFragment.EXTRA_FARMLAND)!!
         binding?.result = farmland
-        hexColor = farmland?.markColor!!
+        hexColor = farmland.markColor!!
 
         val plantTypes = resources.getStringArray(R.array.plantType)
         val arrayAdapter = ArrayAdapter(this, R.layout.plant_type_dropdown_item, plantTypes)
@@ -186,13 +187,8 @@ class EditFarmlandActivity : AppCompatActivity() {
             }
         }
         binding?.btDeleteFarmland?.setOnClickListener {
-            isDeleteFarmland = true
-            if(farmland.imageUrl!! != "") {
-                MainActivity.imageStorageViewModel.deleteImageFromStorage(farmland.imageUrl)
-            }
-            else {
-                FarmlandFragment.farmlandViewModel?.deleteFarmland(farmland.id!!)
-            }
+            showDeleteDialog()
+
         }
         binding?.previewSelectedColor?.setOnClickListener {
             mDefaultColor = Color.parseColor(farmland.markColor)
@@ -209,10 +205,6 @@ class EditFarmlandActivity : AppCompatActivity() {
 
             MainActivity.imageStorageViewModel.uploadImageToStorage(MainActivity.userModel?.id!!, imageMultipart)
         }
-//        else {
-//            FarmlandFragment.farmlandViewModel?.updateFarmland(farmland.id!!, farmlandName, MainActivity.userModel?.id!!,
-//                farmland.markColor!!, farmlandPlantType, farmlandLocation, farmland.imageUrl!!)
-//        }
     }
 
     private fun requestCameraPermission() {
@@ -232,6 +224,24 @@ class EditFarmlandActivity : AppCompatActivity() {
                     token.continuePermissionRequest()
                 }
             }).check()
+    }
+
+    private fun showDeleteDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Hapus Farmland")
+        builder.setMessage("Apakah Anda yakin ingin menghapus farmland ini?")
+        builder.setPositiveButton("Hapus") { dialog, _ ->
+            dialog.cancel()
+            isDeleteFarmland = true
+            if(farmland.imageUrl!! != "") {
+                MainActivity.imageStorageViewModel.deleteImageFromStorage(farmland.imageUrl!!)
+            }
+            else {
+                FarmlandFragment.farmlandViewModel?.deleteFarmland(farmland.id!!)
+            }
+        }
+        builder.setNegativeButton("Tidak") { dialog, _ -> dialog.cancel() }
+        builder.show()
     }
 
     private fun showSettingsDialog() {

@@ -230,7 +230,7 @@ class MapFragment : Fragment() {
                     .snippet("Jenis tanaman: ${disease.farmlandId?.plantType}")
                     .icon(vectorToBitmap(R.drawable.virus, Color.parseColor(disease.farmlandId?.markColor)))
             )
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(disease.latitude, disease.longitude), 20f))
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(disease.latitude, disease.longitude), 15f))
         }
 
     }

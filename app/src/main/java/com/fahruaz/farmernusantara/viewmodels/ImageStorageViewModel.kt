@@ -25,6 +25,9 @@ class ImageStorageViewModel : ViewModel() {
     private val _imageUrl = MutableLiveData<String>()
     val imageUrl: LiveData<String> = _imageUrl
 
+    private val _imageEditUrl = MutableLiveData<String>()
+    val imageEditUrl: LiveData<String> = _imageEditUrl
+
     fun uploadImageToStorage(id: String, image: MultipartBody.Part) {
         _isLoading.value = true
         _toast.value = ""
@@ -39,6 +42,8 @@ class ImageStorageViewModel : ViewModel() {
                         _toast.value = "Berhasil mengunggah foto"
                         _toast.value = ""
                         _imageUrl.value = responseBody.imageUrl
+                        _imageEditUrl.value = responseBody.imageUrl
+                        _imageUrl.value = ""
                     }
                 }
                 else {
@@ -67,6 +72,7 @@ class ImageStorageViewModel : ViewModel() {
                         _toast.value = "Berhasil menghapus foto"
                         _toast.value = ""
                         _imageUrl.value = ""
+                        _imageEditUrl.value = ""
                     }
                 }
                 else {

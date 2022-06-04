@@ -13,8 +13,7 @@ import retrofit2.Response
 
 class DetailDiseaseViewModel: ViewModel() {
 
-    private val _toast = MutableLiveData<String>()
-    val toast: LiveData<String> = _toast
+    val toast: MutableLiveData<String> = MutableLiveData<String>()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -31,19 +30,19 @@ class DetailDiseaseViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _toast.value = "Berhasil menyimpan penyakit"
-                        _toast.value = ""
+                        toast.value = "Berhasil menyimpan penyakit"
+                        toast.value = ""
                     }
                 }
                 else {
-                    _toast.value = "Gagal menyimpan penyakit"
-                    _toast.value = ""
+                    toast.value = "Gagal menyimpan penyakit"
+                    toast.value = ""
                 }
             }
             override fun onFailure(call: Call<SaveDiseasePlantResponse>, t: Throwable) {
                 _isLoading.value = false
-                _toast.value = "Gagal instance Retrofit"
-                _toast.value = ""
+                toast.value = "Gagal instance Retrofit"
+                toast.value = ""
             }
         })
     }

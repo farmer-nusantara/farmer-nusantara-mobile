@@ -4,6 +4,7 @@ import com.fahruaz.farmernusantara.response.auth.*
 import com.fahruaz.farmernusantara.response.farmland.*
 import com.fahruaz.farmernusantara.response.file.DeleteImageFromStorageResponse
 import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
+import com.fahruaz.farmernusantara.response.plantdisease.GetAllSickPlantsResponseItem
 import com.fahruaz.farmernusantara.response.plantdisease.SaveDiseasePlantResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import okhttp3.MultipartBody
@@ -153,4 +154,10 @@ interface ApiService {
         @Field(value = "imageUrl") imageUrl: String,
         @Field(value = "picturedBy") picturedBy: String
     ): Call<SaveDiseasePlantResponse>
+
+    @GET("plants")
+    fun getAllSickPlants(
+        @Header("Authorization") authHeader: String,
+        @Query("farmland_id") farmland_id: String
+    ): Call<List<GetAllSickPlantsResponseItem>>
 }

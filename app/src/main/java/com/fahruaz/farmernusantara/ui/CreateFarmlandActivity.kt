@@ -99,7 +99,9 @@ class CreateFarmlandActivity : AppCompatActivity() {
         }
 
         MainActivity.imageStorageViewModel.imageUrl.observe(this) {
-            createFarmland(farmlandName, farmlandLocation, farmlandPlantType, it)
+            if(it.isNotEmpty()) {
+                createFarmland(farmlandName, farmlandLocation, farmlandPlantType, it)
+            }
         }
 
         FarmlandFragment.farmlandViewModel?.toastCreateFarmland?.observe(this) {

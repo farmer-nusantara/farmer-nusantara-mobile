@@ -120,6 +120,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
         }
         binding?.fabMap?.setOnClickListener {
             val intent = Intent(applicationContext, MapsActivity::class.java)
+            intent.putExtra(FarmlandFragment.EXTRA_FARMLAND_ID, farmlandId)
             startActivity(intent)
         }
         binding?.fabScan?.setOnClickListener {

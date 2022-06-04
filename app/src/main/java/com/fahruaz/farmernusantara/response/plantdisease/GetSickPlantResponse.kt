@@ -17,7 +17,7 @@ data class GetSickPlantResponse(
 	val V: Int? = null,
 
 	@field:SerializedName("farmland_id")
-	val farmlandId: FarmlandId? = null,
+	val farmlandId: FarmlandId2? = null,
 
 	@field:SerializedName("picturedBy")
 	val picturedBy: PicturedBy2? = null,
@@ -32,7 +32,7 @@ data class GetSickPlantResponse(
 	val longitude: Double? = null
 )
 
-data class FarmlandId(
+data class FarmlandId2(
 
 	@field:SerializedName("farmName")
 	val farmName: String? = null,

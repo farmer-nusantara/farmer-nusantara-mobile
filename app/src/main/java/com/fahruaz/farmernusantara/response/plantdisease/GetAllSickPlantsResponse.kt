@@ -9,7 +9,6 @@ data class GetAllSickPlantsResponse(
 )
 
 data class FarmlandId(
-
 	@field:SerializedName("farmName")
 	val farmName: String? = null,
 

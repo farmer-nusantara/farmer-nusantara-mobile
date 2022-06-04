@@ -15,7 +15,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -28,23 +27,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.adapters.DiseaseAdapter
-import com.fahruaz.farmernusantara.adapters.FarmlandsAdapter
 import com.fahruaz.farmernusantara.databinding.ActivityDetailFarmlandBinding
 import com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse
 import com.fahruaz.farmernusantara.response.farmland.SickPlantsItem
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.util.RealPathUtil
 import com.fahruaz.farmernusantara.viewmodels.DetailFarmlandViewModel
-import com.fahruaz.farmernusantara.viewmodels.DiseaseHistoryViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import com.karumi.dexter.listener.single.PermissionListener
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -63,7 +56,11 @@ class DetailFarmlandActivity : AppCompatActivity() {
     private lateinit var currentPhotoPath: String
     private var getFile: File? = null
 
-    private val diseaseAdapter by lazy { DiseaseAdapter() }
+    private val diseaseAdapter by lazy {
+        DiseaseAdapter {
+            detailIntent(it)
+        }
+    }
     private lateinit var detailFarmlandViewModel: DetailFarmlandViewModel
 //    private lateinit var diseaseViewModel: DiseaseHistoryViewModel
 
@@ -151,7 +148,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
     }
 
     private fun requestApiData(farmlandId: String) {
-        detailFarmlandViewModel.getAllFarmlandByOwner(farmlandId, MainActivity.userModel?.token!!)
+        detailFarmlandViewModel.showFarmlandDetail(farmlandId, MainActivity.userModel?.token!!)
         detailFarmlandViewModel.farmland.observe(this) {
             farmlandDetail = it
             plant = it.plantType!!
@@ -168,6 +165,12 @@ class DetailFarmlandActivity : AppCompatActivity() {
 
             diseaseAdapter.setData(it.sickPlants!! as List<SickPlantsItem>)
         }
+    }
+
+    private fun detailIntent(id: String) {
+        val intent = Intent(this, ShowDetailDiseaseActivity::class.java)
+        intent.putExtra(DISEASE_ID_EXTRA, id)
+        startActivity(intent)
     }
 
     private fun onAddButtonCLicked() {
@@ -393,6 +396,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
         var uriString = ""
         var plant = ""
         var isSaveBtnClicked = false
+        const val DISEASE_ID_EXTRA = "DISEASE_EXTRA"
     }
 
 }

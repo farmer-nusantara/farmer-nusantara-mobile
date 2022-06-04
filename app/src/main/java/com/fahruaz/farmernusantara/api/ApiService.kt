@@ -5,6 +5,7 @@ import com.fahruaz.farmernusantara.response.farmland.*
 import com.fahruaz.farmernusantara.response.file.DeleteImageFromStorageResponse
 import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
 import com.fahruaz.farmernusantara.response.plantdisease.GetAllSickPlantsResponseItem
+import com.fahruaz.farmernusantara.response.plantdisease.GetSickPlantResponse
 import com.fahruaz.farmernusantara.response.plantdisease.SaveDiseasePlantResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse
 import okhttp3.MultipartBody
@@ -160,4 +161,10 @@ interface ApiService {
         @Header("Authorization") authHeader: String,
         @Query("farmland_id") farmland_id: String
     ): Call<List<GetAllSickPlantsResponseItem>>
+
+    @GET("plants/{id}")
+    fun GetSickPlant(
+        @Header("Authorization") authHeader: String,
+        @Path("id") id: String
+    ): Call<GetSickPlantResponse>
 }

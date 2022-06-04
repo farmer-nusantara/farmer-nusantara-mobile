@@ -68,7 +68,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appBar"
             tools:listitem="@layout/farmland_item"
-            android:paddingBottom="100dp"/>
+            android:paddingBottom="120dp"/>
 
         <ProgressBar
             android:id="@+id/pbFarmland"

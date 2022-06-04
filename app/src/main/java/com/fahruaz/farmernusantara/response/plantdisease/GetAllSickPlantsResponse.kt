@@ -1,28 +1,25 @@
-package com.fahruaz.farmernusantara.response.farmland
+package com.fahruaz.farmernusantara.response.plantdisease
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
-import java.io.Serializable
 
-@Parcelize
-data class ShowFarmlandDetailResponse(
+data class GetAllSickPlantsResponse(
 
+	@field:SerializedName("GetAllSickPlantsResponse")
+	val getAllSickPlantsResponse: List<GetAllSickPlantsResponseItem?>? = null
+)
+
+data class FarmlandId(
 	@field:SerializedName("farmName")
 	val farmName: String? = null,
 
 	@field:SerializedName("owner")
-	val owner: @RawValue Owner? = null,
+	val owner: String? = null,
 
 	@field:SerializedName("markColor")
 	val markColor: String? = null,
 
 	@field:SerializedName("imageUrl")
 	val imageUrl: String? = null,
-
-	@field:SerializedName("sickPlants")
-	val sickPlants: @RawValue List<SickPlantsItem?>? = null,
 
 	@field:SerializedName("__v")
 	val V: Int? = null,
@@ -35,9 +32,9 @@ data class ShowFarmlandDetailResponse(
 
 	@field:SerializedName("plantType")
 	val plantType: String? = null
-) : Parcelable
+)
 
-data class SickPlantsItem(
+data class GetAllSickPlantsResponseItem(
 
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,
@@ -52,10 +49,10 @@ data class SickPlantsItem(
 	val V: Int? = null,
 
 	@field:SerializedName("farmland_id")
-	val farmlandId: String? = null,
+	val farmlandId: FarmlandId? = null,
 
 	@field:SerializedName("picturedBy")
-	val picturedBy: String? = null,
+	val picturedBy: PicturedBy? = null,
 
 	@field:SerializedName("_id")
 	val id: String? = null,
@@ -65,9 +62,9 @@ data class SickPlantsItem(
 
 	@field:SerializedName("longitude")
 	val longitude: Double? = null
-) : Serializable
+)
 
-data class Owner(
+data class PicturedBy(
 
 	@field:SerializedName("password")
 	val password: String? = null,
@@ -89,4 +86,4 @@ data class Owner(
 
 	@field:SerializedName("status")
 	val status: String? = null
-) : Serializable
+)

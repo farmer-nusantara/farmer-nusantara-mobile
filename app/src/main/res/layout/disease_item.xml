@@ -1,52 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/ivDiseaseImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        tools:src="@tools:sample/avatars"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/imageHistory" />
+    <data>
+        <variable
+            name="result"
+            type="com.fahruaz.farmernusantara.response.farmland.SickPlantsItem"/>
+    </data>
 
-    <TextView
-        android:id="@+id/tvDate"
-        style="@style/DateStyle"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@id/guideline"
-        app:layout_constraintStart_toEndOf="@id/ivDiseaseImage"
-        tools:text="1 April 2022 12:20"/>
-
-    <TextView
-        android:id="@+id/tvDisease"
-        style="@style/TextNormalSizeBold"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
-        app:layout_constraintStart_toEndOf="@id/ivDiseaseImage"
-        tools:text="Penyakit: Busuk Daun"/>
-
-    <View
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_divider"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/ivDiseaseImage"/>
+        android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="57dp" />
+        <ImageView
+            android:id="@+id/ivDiseaseImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            tools:src="@tools:sample/avatars"
+            loadImageFromUrl="@{result.imageUrl}"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/imageHistory" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvDate"
+            style="@style/DateStyle"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="4dp"
+            setDate="@{result.createdAt}"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
+            app:layout_constraintStart_toEndOf="@id/ivDiseaseImage"
+            tools:text="1 April 2022 12:20" />
+
+        <TextView
+            android:id="@+id/tvDisease"
+            style="@style/TextNormalSizeBold"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            setDiseaseName="@{result.diseasePlant}"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            app:layout_constraintStart_toEndOf="@id/ivDiseaseImage"
+            tools:text="Penyakit: Busuk Daun" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_divider"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/ivDiseaseImage" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="57dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

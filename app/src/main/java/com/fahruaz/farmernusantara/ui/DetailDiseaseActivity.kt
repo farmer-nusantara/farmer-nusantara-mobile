@@ -4,8 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.graphics.Bitmap
+import android.location.LocationManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +25,9 @@ import com.fahruaz.farmernusantara.ml.PaddymodelV1D3
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.util.reduceFileImage
 import com.fahruaz.farmernusantara.viewmodels.DetailDiseaseViewModel
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.PendingResult
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -49,8 +55,10 @@ class DetailDiseaseActivity : AppCompatActivity() {
     private lateinit var detailDiseaseViewModel: DetailDiseaseViewModel
 
     private var getFile: File? = null
+    private lateinit var uri: Uri
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var googleApiClient: GoogleApiClient? = null
     private var latitude = 0.0
     private var longitude = 0.0
     private var diseasePlant = ""
@@ -86,12 +94,19 @@ class DetailDiseaseActivity : AppCompatActivity() {
         }
 
         MainActivity.imageStorageViewModel.imageUrl.observe(this) {
-            saveDiseasePlant(farmlandId!!, latitude, longitude, diseasePlant, it, MainActivity.userModel?.id!!)
+            if(it.isNotEmpty()) {
+                saveDiseasePlant(farmlandId!!, latitude, longitude, diseasePlant, it, MainActivity.userModel?.id!!)
+            }
+        }
+
+        detailDiseaseViewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
         detailDiseaseViewModel.toast.observe(this) {
-            if(it.isNotEmpty())
+            if(it.isNotEmpty()) {
                 showToast(it)
+            }
             if(it == "Berhasil menyimpan penyakit") {
                 finish()
             }
@@ -100,7 +115,7 @@ class DetailDiseaseActivity : AppCompatActivity() {
         binding?.ivDisease?.setImageURI(Uri.parse(DetailFarmlandActivity.uriString))
         getFile = File(DetailFarmlandActivity.uriString)
 
-        val uri = Uri.parse("file://${DetailFarmlandActivity.uriString}")
+        uri = Uri.parse("file://${DetailFarmlandActivity.uriString}")
 
         bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
 
@@ -248,21 +263,34 @@ class DetailDiseaseActivity : AppCompatActivity() {
             .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
             .withListener(object : PermissionListener {
                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    runBlocking {
-                        getMyLocation()
-                        uploadImage()
+                    if(isGpsEnabled()) {
+                        runBlocking {
+                            // enableLoc()
+                            getMyLocation()
+                            uploadImage()
+                            DetailFarmlandActivity.isSaveBtnClicked = true
+                        }
                     }
+                    else {
+                        showToEnableGPS()
+                    }
+
                 }
                 override fun onPermissionDenied(response: PermissionDeniedResponse?) {
                     // check for permanent denial of permission
                     if (response!!.isPermanentlyDenied) {
-                        showSettingsDialog()
+                        showSettingsDialogLoc()
                     }
                 }
                 override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken) {
                     token.continuePermissionRequest()
                 }
             }).check()
+    }
+
+    private fun isGpsEnabled(): Boolean {
+        val mLocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
     private fun getMyLocation() {
@@ -292,7 +320,7 @@ class DetailDiseaseActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSettingsDialog() {
+    private fun showSettingsDialogLoc() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle("Butuh izin lokasi")
         builder.setMessage("Aktifkan lokasi untuk menyimpan penyakit.")
@@ -304,11 +332,64 @@ class DetailDiseaseActivity : AppCompatActivity() {
         builder.show()
     }
 
+    private fun showToEnableGPS() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("GPS tidak aktif")
+        builder.setMessage("Aktifkan GPS untuk menyimpan penyakit.")
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.cancel()
+            enableLoc()
+        }
+        builder.show()
+    }
+
     private fun openSettings() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri: Uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivityForResult(intent, 101)
+    }
+
+    private fun enableLoc() {
+        if (googleApiClient == null) {
+            googleApiClient = GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
+                    override fun onConnected(bundle: Bundle?) {}
+                    override fun onConnectionSuspended(i: Int) {
+                        googleApiClient?.connect()
+                    }
+                })
+                .addOnConnectionFailedListener { connectionResult ->
+                    Log.d(
+                        "Location error",
+                        "Location error " + connectionResult.errorCode
+                    )
+                }.build()
+            googleApiClient?.connect()
+            val locationRequest: LocationRequest = LocationRequest.create()
+            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            locationRequest.interval = 30 * 1000
+            locationRequest.fastestInterval = 5 * 1000
+            val builder = LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest)
+            builder.setAlwaysShow(true)
+            val result: PendingResult<LocationSettingsResult> =
+                LocationServices.SettingsApi.checkLocationSettings(googleApiClient!!, builder.build())
+            result.setResultCallback { result ->
+                val status: Status = result.status
+                when (status.statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+//                        status.startResolutionForResult(this, MapFragment.REQUEST_LOCATION)
+                        // do nothing
+                    } catch (e: IntentSender.SendIntentException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

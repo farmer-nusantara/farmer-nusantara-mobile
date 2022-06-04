@@ -4,7 +4,6 @@ import com.fahruaz.farmernusantara.response.auth.*
 import com.fahruaz.farmernusantara.response.farmland.*
 import com.fahruaz.farmernusantara.response.file.DeleteImageFromStorageResponse
 import com.fahruaz.farmernusantara.response.file.UploadImageToStorageResponse
-import com.fahruaz.farmernusantara.response.plantdisease.GetAllSickPlantsResponse
 import com.fahruaz.farmernusantara.response.plantdisease.GetAllSickPlantsResponseItem
 import com.fahruaz.farmernusantara.response.plantdisease.SaveDiseasePlantResponse
 import com.fahruaz.farmernusantara.response.profile.GetProfileResponse

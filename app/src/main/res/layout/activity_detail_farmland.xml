@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="result"
-            type="com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse"/>
+            name="diseaseHistoryViewModel"
+            type="com.fahruaz.farmernusantara.viewmodels.DetailFarmlandViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,7 +80,6 @@
                     style="@style/TitleStyle"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="@{result.farmName}"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintHorizontal_bias="0.0"
                     card_view:layout_constraintStart_toStartOf="parent"
@@ -100,7 +99,6 @@
                     android:id="@+id/tvPlantType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{result.plantType}"
                     android:layout_marginStart="3dp"
                     card_view:layout_constraintBaseline_toBaselineOf="@+id/tvPlantTypeLabel"
                     card_view:layout_constraintStart_toEndOf="@id/tvPlantTypeLabel" />
@@ -120,7 +118,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
-                    android:text="@{result.location}"
                     card_view:layout_constraintBaseline_toBaselineOf="@+id/tvLocationLabel"
                     card_view:layout_constraintStart_toEndOf="@id/tvLocationLabel" />
 
@@ -150,8 +147,9 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewHistory"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardViewDetailFarmland">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -166,12 +164,13 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Riwayat Penyakit" />
+                    android:text="@string/disease_history" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvFarmland"
+                    android:id="@+id/rvDisease"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvHistory"

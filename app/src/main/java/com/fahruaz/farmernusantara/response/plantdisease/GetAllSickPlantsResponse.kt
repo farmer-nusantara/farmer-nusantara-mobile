@@ -8,18 +8,6 @@ data class GetAllSickPlantsResponse(
 	val getAllSickPlantsResponse: List<GetAllSickPlantsResponseItem?>? = null
 )
 
-data class PicturedBy(
-
-	@field:SerializedName("name")
-	val name: String? = null,
-
-	@field:SerializedName("_id")
-	val id: String? = null,
-
-	@field:SerializedName("email")
-	val email: String? = null
-)
-
 data class GetAllSickPlantsResponseItem(
 
 	@field:SerializedName("createdAt")
@@ -48,4 +36,16 @@ data class GetAllSickPlantsResponseItem(
 
 	@field:SerializedName("longitude")
 	val longitude: Double? = null
+)
+
+data class PicturedBy(
+
+	@field:SerializedName("name")
+	val name: String? = null,
+
+	@field:SerializedName("_id")
+	val id: String? = null,
+
+	@field:SerializedName("email")
+	val email: String? = null
 )

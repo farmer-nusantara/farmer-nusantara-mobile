@@ -35,24 +35,48 @@ data class ShowFarmlandDetailResponse(
 
 	@field:SerializedName("plantType")
 	val plantType: String? = null
-): Parcelable
+) : Parcelable
 
 data class SickPlantsItem(
 
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,
 
-	@field:SerializedName("coordinate")
-	val coordinate: String? = null,
+	@field:SerializedName("latitude")
+	val latitude: Double? = null,
+
+	@field:SerializedName("imageUrl")
+	val imageUrl: String? = null,
+
+	@field:SerializedName("__v")
+	val V: Int? = null,
+
+	@field:SerializedName("farmland_id")
+	val farmlandId: String? = null,
+
+	@field:SerializedName("picturedBy")
+	val picturedBy: String? = null,
 
 	@field:SerializedName("_id")
 	val id: String? = null,
 
 	@field:SerializedName("diseasePlant")
-	val diseasePlant: String? = null
+	val diseasePlant: String? = null,
+
+	@field:SerializedName("longitude")
+	val longitude: Double? = null
 ) : Serializable
 
 data class Owner(
+
+	@field:SerializedName("password")
+	val password: String? = null,
+
+	@field:SerializedName("phone")
+	val phone: String? = null,
+
+	@field:SerializedName("__v")
+	val V: Int? = null,
 
 	@field:SerializedName("name")
 	val name: String? = null,
@@ -61,5 +85,8 @@ data class Owner(
 	val id: String? = null,
 
 	@field:SerializedName("email")
-	val email: String? = null
+	val email: String? = null,
+
+	@field:SerializedName("status")
+	val status: String? = null
 ) : Serializable

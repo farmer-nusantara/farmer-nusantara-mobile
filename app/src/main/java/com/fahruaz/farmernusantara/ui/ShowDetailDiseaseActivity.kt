@@ -98,6 +98,22 @@ class ShowDetailDiseaseActivity : AppCompatActivity() {
                     binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Tungro)
                     binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Tungro)
                 }
+                "Cassava Bacterial Blight (CBB)" -> {
+                    binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Cassava_Bacterial_Blight_CBB)
+                    binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Cassava_Bacterial_Blight_CBB)
+                }
+                "Cassava Brown Steak Disease (CBSD)" -> {
+                    binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Cassava_Brown_Steak_Disease_CBSD)
+                    binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Cassava_Brown_Steak_Disease_CBSD)
+                }
+                "Cassava Green Mite (CGM)" -> {
+                    binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Cassava_Green_Mite_CGM)
+                    binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Cassava_Green_Mite_CGM)
+                }
+                "Cassava Mosaic Disease (CMD)" -> {
+                    binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Cassava_Mosaic_Disease_CMD)
+                    binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Cassava_Mosaic_Disease_CMD)
+                }
                 else -> {
                     binding?.tvDescriptionDisease?.text = resources.getString(R.string.healthyPlant)
                     binding?.tvRecommendationCare?.text = resources.getString(R.string.empty)

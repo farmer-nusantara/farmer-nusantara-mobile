@@ -79,10 +79,12 @@ class DetailFarmlandActivity : AppCompatActivity() {
             getFile = myFile
             val result = BitmapFactory.decodeFile(myFile.path)
             lifecycleScope.launch {
+                showLoading(true)
                 saveBitmapFile(result)
                 val intent = Intent(this@DetailFarmlandActivity, DetailDiseaseActivity::class.java)
                 intent.putExtra(FarmlandFragment.EXTRA_FARMLAND_ID, farmlandDetail.id)
                 startActivity(intent)
+                showLoading(false)
             }
         }
     }

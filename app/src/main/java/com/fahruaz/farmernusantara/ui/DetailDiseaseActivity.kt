@@ -74,7 +74,7 @@ class DetailDiseaseActivity : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
         binding?.tbDetailDisease?.setNavigationOnClickListener {
-            onBackPressed()
+            backDialog()
         }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -200,6 +200,61 @@ class DetailDiseaseActivity : AppCompatActivity() {
 
             binding?.tvTitleDisease?.text = name
         }
+
+        when(binding?.tvTitleDisease?.text?.trim().toString()) {
+            "Common_Rust" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Common_Rust)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Common_Rust)
+            }
+            "Northern_Leaf_Blight" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Northern_Leaf_Blight)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Northern_Leaf_Blight)
+            }
+            "Cercospora_Leaf_Spot_Gray_Leaf_Spot" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Cercospora_Leaf_Spot_Gray_Leaf_Spot)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Cercospora_Leaf_Spot_Gray_Leaf_Spot)
+            }
+            "Bacterial Leaf Blight" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Bacterial_Leaf_Blight)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Bacterial_Leaf_Blight)
+            }
+            "Bacterial Leaf Streak" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Bacterial_Leaf_Streak)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Bacterial_Leaf_Streak)
+            }
+            "Bacterial Panicle Blight" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Bacterial_Panicle_Blight)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Bacterial_Panicle_Blight)
+            }
+            "Blast" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Blast)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Blast)
+            }
+            "Brown Spot" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Brown_Spot)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Brown_Spot)
+            }
+            "Dead Heart" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Dead_Heart)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Dead_Heart)
+            }
+            "Down Mildew" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Down_Mildew)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Down_Mildew)
+            }
+            "Hispa" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Hispa)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Hispa)
+            }
+            "Tungro" -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Tungro)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Tungro)
+            }
+            else -> {
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.healthyPlant)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.empty)
+            }
+        }
     }
 
     private fun getFileName(name: String): List<String>{
@@ -318,6 +373,18 @@ class DetailDiseaseActivity : AppCompatActivity() {
                 LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, mLocationCallback, null)
             }
         }
+    }
+
+    private fun backDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Data penyakit tidak disimpan")
+        builder.setMessage("Apakah Anda yakin untuk kembali? Jika Anda kembali, data penyakin tidak akan disimpan.")
+        builder.setPositiveButton("Kembali") { dialog, _ ->
+            dialog.cancel()
+            onBackPressed()
+        }
+        builder.setNegativeButton("Tidak") { dialog, _ -> dialog.cancel() }
+        builder.show()
     }
 
     private fun showSettingsDialogLoc() {

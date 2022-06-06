@@ -207,10 +207,56 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             this.listDiseases.add(newDisease)
             val latLng = LatLng(disease.latitude!!, disease.longitude!!)
 
+            var diseasePlant = ""
+            when(disease.diseasePlant?.trim()) {
+                "Common_Rust" -> {
+                    diseasePlant = resources.getString(R.string.Common_Rust)
+                }
+                "Northern_Leaf_Blight" -> {
+                    diseasePlant = resources.getString(R.string.Northern_Leaf_Blight)
+                }
+                "Cercospora_Leaf_Spot_Gray_Leaf_Spot" -> {
+                    diseasePlant = resources.getString(R.string.Cercospora_Leaf_Spot_Gray_Leaf_Spot)
+                }
+                "Bacterial Leaf Blight" -> {
+                    diseasePlant = resources.getString(R.string.Bacterial_Leaf_Blight)
+                }
+                "Bacterial Leaf Streak" -> {
+                    diseasePlant = resources.getString(R.string.Bacterial_Leaf_Streak)
+                }
+                "Bacterial Panicle Blight" -> {
+                    diseasePlant = resources.getString(R.string.Bacterial_Panicle_Blight)
+                }
+                "Blast" -> {
+                    diseasePlant = resources.getString(R.string.Blast)
+                }
+                "Brown Spot" -> {
+                    diseasePlant = resources.getString(R.string.Brown_Spot)
+                }
+                "Dead Heart" -> {
+                    diseasePlant = resources.getString(R.string.Dead_Heart)
+                }
+                "Down Mildew" -> {
+                    diseasePlant = resources.getString(R.string.Down_Mildew)
+                }
+                "Hispa" -> {
+                    diseasePlant = resources.getString(R.string.Hispa)
+                }
+                "Tungro" -> {
+                    diseasePlant = resources.getString(R.string.Tungro)
+                }
+                "angular_leaf_spot" -> {
+                    diseasePlant = resources.getString(R.string.angular_leaf_spot)
+                }
+                "bean_rust" -> {
+                    diseasePlant = resources.getString(R.string.bean_rust)
+                }
+            }
+
             mMap.addMarker(
                 MarkerOptions()
                     .position(latLng)
-                    .title(disease.diseasePlant)
+                    .title(diseasePlant)
                     .snippet("Lat: ${latLng.latitude} Long: ${latLng.longitude}")
                     .icon(vectorToBitmap(R.drawable.virus, Color.parseColor(farmlandData?.markColor)))
             )

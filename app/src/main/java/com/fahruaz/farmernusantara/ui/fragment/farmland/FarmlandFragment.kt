@@ -84,12 +84,7 @@ class FarmlandFragment : Fragment() {
         farmlandViewModel?.getUser()?.observe(requireActivity()) {
             userModel = it
 
-            if(hasInternetConnection()) {
-                requestApiData(userModel?.id!!, userModel?.token!!)
-            }
-            else {
-                showToast("Tidak ada internet")
-            }
+            requestApiData(userModel?.id!!, userModel?.token!!)
         }
 
     }
@@ -97,10 +92,8 @@ class FarmlandFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        if(hasInternetConnection()) {
-            if(requestApi && userModel != null) {
-                requestApiData(userModel?.id!!, userModel?.token!!)
-            }
+        if(requestApi && userModel != null) {
+            requestApiData(userModel?.id!!, userModel?.token!!)
         }
 
         requestApi = false
@@ -129,18 +122,6 @@ class FarmlandFragment : Fragment() {
         val intent = Intent(requireContext(), DetailFarmlandActivity::class.java)
         intent.putExtra(EXTRA_FARMLAND_ID, id)
         startActivity(intent)
-    }
-
-    private fun hasInternetConnection(): Boolean {
-        val connectivityManager = activity?.applicationContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = connectivityManager.activeNetwork ?: return false
-        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-        return when {
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else -> false
-        }
     }
 
     private fun setUpRecyclerView() {

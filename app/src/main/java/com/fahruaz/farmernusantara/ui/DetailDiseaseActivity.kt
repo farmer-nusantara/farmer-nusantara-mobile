@@ -162,7 +162,6 @@ class DetailDiseaseActivity : AppCompatActivity() {
             model.close()
 
             binding?.tvTitleDisease?.text = name
-
         }
         else if(DetailFarmlandActivity.plant == "Kedelai"){
             val list = getFileName("soybeanclasses_v1d2.txt")
@@ -181,7 +180,6 @@ class DetailDiseaseActivity : AppCompatActivity() {
             model.close()
 
             binding?.tvTitleDisease?.text = name
-
         }
         else if(DetailFarmlandActivity.plant == "Padi") {
             val list = getFileName("paddyclasses_v1_d1.txt")
@@ -205,70 +203,77 @@ class DetailDiseaseActivity : AppCompatActivity() {
 
         when(binding?.tvTitleDisease?.text?.trim().toString()) {
             "Common_Rust" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Common_Rust)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Common_Rust)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Common_Rust)
             }
             "Northern_Leaf_Blight" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Northern_Leaf_Blight)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Northern_Leaf_Blight)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Northern_Leaf_Blight)
             }
             "Cercospora_Leaf_Spot_Gray_Leaf_Spot" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Cercospora_Leaf_Spot_Gray_Leaf_Spot)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Cercospora_Leaf_Spot_Gray_Leaf_Spot)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Cercospora_Leaf_Spot_Gray_Leaf_Spot)
             }
             "Bacterial Leaf Blight" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Bacterial_Leaf_Blight)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Bacterial_Leaf_Blight)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Bacterial_Leaf_Blight)
             }
             "Bacterial Leaf Streak" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Bacterial_Leaf_Streak)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Bacterial_Leaf_Streak)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Bacterial_Leaf_Streak)
             }
             "Bacterial Panicle Blight" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Bacterial_Panicle_Blight)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Bacterial_Panicle_Blight)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Bacterial_Panicle_Blight)
             }
             "Blast" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Blast)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Blast)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Blast)
             }
             "Brown Spot" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Brown_Spot)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Brown_Spot)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Brown_Spot)
             }
             "Dead Heart" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Dead_Heart)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Dead_Heart)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Dead_Heart)
             }
             "Down Mildew" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Down_Mildew)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Down_Mildew)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Down_Mildew)
             }
             "Hispa" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Hispa)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Hispa)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Hispa)
             }
             "Tungro" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.Tungro)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Tungro)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Tungro)
             }
-            "Cassava Bacterial Blight (CBB)" -> {
-                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Cassava_Bacterial_Blight_CBB)
-                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Cassava_Bacterial_Blight_CBB)
+            "angular_leaf_spot" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.angular_leaf_spot)
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_angular_leaf_spot)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_angular_leaf_spot)
             }
-            "Cassava Brown Steak Disease (CBSD)" -> {
-                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Cassava_Brown_Steak_Disease_CBSD)
-                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Cassava_Brown_Steak_Disease_CBSD)
-            }
-            "Cassava Green Mite (CGM)" -> {
-                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Cassava_Green_Mite_CGM)
-                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Cassava_Green_Mite_CGM)
-            }
-            "Cassava Mosaic Disease (CMD)" -> {
-                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_Cassava_Mosaic_Disease_CMD)
-                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_Cassava_Mosaic_Disease_CMD)
+            "bean_rust" -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.bean_rust)
+                binding?.tvDescriptionDisease?.text = resources.getString(R.string.Desc_bean_rust)
+                binding?.tvRecommendationCare?.text = resources.getString(R.string.Treatment_bean_rust)
             }
             else -> {
+                binding?.tvTitleDisease?.text = resources.getString(R.string.healthy)
                 binding?.tvDescriptionDisease?.text = resources.getString(R.string.healthyPlant)
                 binding?.tvRecommendationCare?.text = resources.getString(R.string.empty)
             }

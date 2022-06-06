@@ -37,6 +37,16 @@
         android:theme="@style/Theme.FarmerNusantara"
         tools:targetApi="31">
         <activity
+            android:name=".ui.SplashScreen"
+            android:exported="true">
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.ShowDetailDiseaseActivity"
             android:exported="false"
             android:theme="@style/noActionBarStyle" />
@@ -83,7 +93,7 @@
             android:exported="false"
             android:label="@string/title_activity_maps"
             android:parentActivityName=".ui.DetailFarmlandActivity"
-            android:theme="@style/noActionBarStyle"/>
+            android:theme="@style/noActionBarStyle" />
         <activity
             android:name=".ui.ImageConfirmationActivity"
             android:exported="false"
@@ -110,11 +120,6 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.LoginActivity"

@@ -19,8 +19,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityDetailDiseaseBinding
-import com.fahruaz.farmernusantara.ml.CassavamodelV1D2
-import com.fahruaz.farmernusantara.ml.CornmodelV1D1
+import com.fahruaz.farmernusantara.ml.CornmodelV1D3
 import com.fahruaz.farmernusantara.ml.PaddymodelV1D3
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.util.reduceFileImage
@@ -146,8 +145,8 @@ class DetailDiseaseActivity : AppCompatActivity() {
 
     private fun imageProcess(){
         if (DetailFarmlandActivity.plant == "Jagung"){
-            val list = getFileName("cornclasses_v1_d1.txt")
-            val model = CornmodelV1D1.newInstance(this)
+            val list = getFileName("cornclasses_v1_d3.txt")
+            val model = CornmodelV1D3.newInstance(this)
 
             val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
             inputFeature0.loadBuffer(getImageData(150))
@@ -163,25 +162,27 @@ class DetailDiseaseActivity : AppCompatActivity() {
 
             binding?.tvTitleDisease?.text = name
 
-        }else if(DetailFarmlandActivity.plant == "Singkong"){
-            val list = getFileName("cassavaclasses_v1_d2.txt")
-            val model = CassavamodelV1D2.newInstance(this)
-
-            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
-            inputFeature0.loadBuffer(getImageData(150))
-
-            val outputs = model.process(inputFeature0)
-            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
-
-            val max = getMax(outputFeature0.floatArray, 3)
-            val name = list[max]
-            diseasePlant = name
-
-            model.close()
-
-            binding?.tvTitleDisease?.text = name
-
-        }else if(DetailFarmlandActivity.plant == "Padi") {
+        }
+//        else if(DetailFarmlandActivity.plant == "Kedelai"){
+//            val list = getFileName("cassavaclasses_v1_d2.txt")
+//            val model = CassavamodelV1D2.newInstance(this)
+//
+//            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
+//            inputFeature0.loadBuffer(getImageData(150))
+//
+//            val outputs = model.process(inputFeature0)
+//            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+//
+//            val max = getMax(outputFeature0.floatArray, 3)
+//            val name = list[max]
+//            diseasePlant = name
+//
+//            model.close()
+//
+//            binding?.tvTitleDisease?.text = name
+//
+//        }
+        else if(DetailFarmlandActivity.plant == "Padi") {
             val list = getFileName("paddyclasses_v1_d1.txt")
             val model = PaddymodelV1D3.newInstance(this)
 

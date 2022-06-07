@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fahruaz.farmernusantara.api.ApiConfig
-import com.fahruaz.farmernusantara.response.farmland.DeleteFarmlandResponse
 import com.fahruaz.farmernusantara.response.plantdisease.DeleteSickPlantResponse
 import com.fahruaz.farmernusantara.response.plantdisease.GetSickPlantResponse
 import com.fahruaz.farmernusantara.ui.MainActivity

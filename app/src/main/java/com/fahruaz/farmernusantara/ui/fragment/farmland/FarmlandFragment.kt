@@ -2,10 +2,7 @@ package com.fahruaz.farmernusantara.ui.fragment.farmland
 
 import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +21,6 @@ import com.fahruaz.farmernusantara.adapters.FarmlandsAdapter
 import com.fahruaz.farmernusantara.databinding.FragmentFarmlandBinding
 import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
-import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponseItem
 import com.fahruaz.farmernusantara.ui.CreateFarmlandActivity
 import com.fahruaz.farmernusantara.ui.DetailFarmlandActivity
 import com.fahruaz.farmernusantara.viewmodels.FarmlandViewModel
@@ -63,8 +59,10 @@ class FarmlandFragment : Fragment() {
 
         farmlandViewModel?.toastFarmland?.observe(requireActivity()) {
             try {
-                if(it == "Berhasil mengambil data farmland")
-                    showToast(it)
+                if(it.isNotEmpty()) {
+                    if(it == "Berhasil mengambil data farmland")
+                        showToast(it)
+                }
             }
             catch (e: Exception) {
                 e.printStackTrace()
@@ -84,7 +82,9 @@ class FarmlandFragment : Fragment() {
         farmlandViewModel?.getUser()?.observe(requireActivity()) {
             userModel = it
 
-            requestApiData(userModel?.id!!, userModel?.token!!)
+            if(isAdded) {
+                requestApiData(userModel?.id!!, userModel?.token!!)
+            }
         }
 
     }
@@ -99,22 +99,16 @@ class FarmlandFragment : Fragment() {
         requestApi = false
     }
 
-//    private fun setFarmland(farmlands2: List<GetAllFarmlandByOwnerResponseItem>) {
-//        for(farmland in farmlands2) {
-//
-//            val newFarmland = GetAllFarmlandByOwnerResponseItem(farmName = farmland.farmName, markColor = farmland.markColor,
-//                location = farmland.location, id = farmland.id, plantType = farmland.plantType, imageUrl = farmland.imageUrl)
-//            farmlands.add(newFarmland)
-//        }
-//
-//        binding?.rvFarmland?.layoutManager = LinearLayoutManager(requireContext())
-//        binding?.rvFarmland?.adapter = FarmlandsAdapter(farmlands)
-//    }
-
     private fun requestApiData(id: String, token: String) {
         farmlandViewModel?.getAllFarmlandByOwner(id, token)
         farmlandViewModel?.listFarmland?.observe(requireActivity()) {
-            farmlandsAdapter.setData(it)
+            if(it.isNotEmpty()) {
+                showFarmland()
+                farmlandsAdapter.setData(it)
+            }
+            else {
+                showNoFarmland()
+            }
         }
     }
 
@@ -134,16 +128,15 @@ class FarmlandFragment : Fragment() {
         return ViewModelProvider(activity, ViewModelFactory(pref, requireContext()))[FarmlandViewModel::class.java]
     }
 
-//    private fun showNoInternet(connection: Boolean) {
-//        if(!connection) {
-//            binding?.ivError?.visibility = View.VISIBLE
-//            binding?.tvError?.visibility = View.VISIBLE
-//        }
-//        else {
-//            binding?.ivError?.visibility = View.GONE
-//            binding?.tvError?.visibility = View.GONE
-//        }
-//    }
+    private fun showNoFarmland() {
+        binding?.rvFarmland?.visibility = View.GONE
+        binding?.tvNoFarmland?.visibility = View.VISIBLE
+    }
+
+    private fun showFarmland() {
+        binding?.rvFarmland?.visibility = View.VISIBLE
+        binding?.tvNoFarmland?.visibility = View.GONE
+    }
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading)
@@ -164,7 +157,6 @@ class FarmlandFragment : Fragment() {
 
     companion object {
         var farmlandViewModel: FarmlandViewModel? = null
-//        val farmlands: ArrayList<GetAllFarmlandByOwnerResponseItem> = ArrayList()
         var requestApi = true
         const val EXTRA_FARMLAND_ID = "EXTRA_FARMLAND_ID"
         const val EXTRA_FARMLAND = "EXTRA_FARMLAND"

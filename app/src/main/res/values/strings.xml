@@ -154,4 +154,6 @@
     <string name="Desc_Cercospora_Leaf_Spot_Gray_Leaf_Spot">Merupakan sebuah penyakit pada tanaman jagung yang disebabkan oleh Cercospora zeae maydis. Gejala awal dari penyakit ini dimulai dengan bitnik bintik nekrotik kecil dengan lingkaran klorosis pada daun yang meluas ke lesi persegi Panjang 1 sampai 6 cm dan lebar 2 sampai 4 mm. Saat lesi tersebut tumbuh, warna lesi tersebut dapat berubah menjadi cokelat dan akhirnya menjadi berwarna abu-abu. Keparahan pada penyakit ini memungkinkan tanaman jagung mati, cuaca berkabut atau berawan yang berkepanjangan dapat menyebabkan epidemi Cercopora yang parah.</string>
     <string name="Treatment_Cercospora_Leaf_Spot_Gray_Leaf_Spot">Pengendalian penyakit ini dapat dilakukan dengan menanam jagung hybrida yang tahan terhadap penyakit, rotasi tanaman dan pembajakan puing-puing ke dalam tanah sehingga dapat mengurangi tingkat inoculum dalam tanah.</string>
     <string name="delete_disease">Hapus Penyakit</string>
+    <string name="no_farmland">Belum ada farmland. Buat farmland dengan mengeklik ikon tambah di atas kanan.</string>
+    <string name="map_farmland">Map Farmland</string>
 </resources>

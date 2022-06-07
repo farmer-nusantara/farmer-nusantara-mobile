@@ -67,6 +67,9 @@ class DiseaseHistoryBinding {
                 "bean_rust" -> {
                     textView.text = "Penyakit Karat"
                 }
+                else -> {
+                    textView.text = "Sehat"
+                }
             }
         }
 

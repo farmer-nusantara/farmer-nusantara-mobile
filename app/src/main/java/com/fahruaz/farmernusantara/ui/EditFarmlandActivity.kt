@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -99,7 +98,9 @@ class EditFarmlandActivity : AppCompatActivity() {
 
         FarmlandFragment.farmlandViewModel?.toastDeleteFarmland?.observe(this) {
             if(it.isNotEmpty()) {
-                showToast(it)
+                if(it != "Berhasil menghapus foto") {
+                    showToast(it)
+                }
                 if(it == "Berhasil menghapus farmland") {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
@@ -134,19 +135,24 @@ class EditFarmlandActivity : AppCompatActivity() {
         }
 
         MainActivity.imageStorageViewModel.imageEditUrl.observe(this) {
-            if(it.isEmpty()) {
-                if(isDeleteFarmland) {
-                    isDeleteFarmland = false
-                    FarmlandFragment.farmlandViewModel?.deleteFarmland(farmland.id!!)
+            try {
+                if(it.isEmpty()) {
+                    if(isDeleteFarmland) {
+                        isDeleteFarmland = false
+                        FarmlandFragment.farmlandViewModel?.deleteFarmland(farmland.id!!)
+                    }
+                    if(isUpdateFarmland) {
+                        isUpdateFarmland = false
+                        uploadImage()
+                    }
                 }
-                if(isUpdateFarmland) {
-                    isUpdateFarmland = false
-                    uploadImage()
+                else {
+                    FarmlandFragment.farmlandViewModel?.updateFarmland(farmland.id!!, farmlandName, MainActivity.userModel?.id!!,
+                        hexColor, farmlandPlantType, farmlandLocation, it)
                 }
             }
-            else {
-                FarmlandFragment.farmlandViewModel?.updateFarmland(farmland.id!!, farmlandName, MainActivity.userModel?.id!!,
-                    hexColor, farmlandPlantType, farmlandLocation, it)
+            catch (e: Exception) {
+                e.printStackTrace()
             }
         }
 
@@ -252,7 +258,7 @@ class EditFarmlandActivity : AppCompatActivity() {
             dialog.cancel()
             openSettings()
         }
-        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        builder.setNegativeButton("Keluar") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 

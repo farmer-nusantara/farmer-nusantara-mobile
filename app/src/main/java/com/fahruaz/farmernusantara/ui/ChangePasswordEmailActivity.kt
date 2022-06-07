@@ -46,10 +46,12 @@ class ChangePasswordEmailActivity : AppCompatActivity() {
         }
 
         changePasswordViewModel.toast.observe(this) {
-            showToast(it)
-            if(it == "Kode OTP berhasil dikirim") {
-                val intent = Intent(this, ChangePasswordOtpActivity::class.java)
-                startActivity(intent)
+            if(it.isNotEmpty()) {
+                showToast(it)
+                if(it == "Kode OTP berhasil dikirim") {
+                    val intent = Intent(this, ChangePasswordOtpActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
 

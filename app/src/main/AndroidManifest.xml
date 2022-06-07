@@ -55,10 +55,6 @@
             android:exported="false"
             android:theme="@style/noActionBarStyle" />
         <activity
-            android:name=".ui.CameraActivity"
-            android:exported="false"
-            android:theme="@style/noActionBarStyle" />
-        <activity
             android:name=".ui.ChangePasswordActivity"
             android:exported="false"
             android:theme="@style/noActionBarStyle2" />
@@ -93,10 +89,6 @@
             android:exported="false"
             android:label="@string/title_activity_maps"
             android:parentActivityName=".ui.DetailFarmlandActivity"
-            android:theme="@style/noActionBarStyle" />
-        <activity
-            android:name=".ui.ImageConfirmationActivity"
-            android:exported="false"
             android:theme="@style/noActionBarStyle" />
         <activity
             android:name=".ui.EditProfileActivity"

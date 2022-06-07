@@ -18,7 +18,7 @@ class ApiConfig {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://prod-dot-farmer-nusantara-development.et.r.appspot.com/api/")
+            .baseUrl("https://farmer-nusantara-development.et.r.appspot.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

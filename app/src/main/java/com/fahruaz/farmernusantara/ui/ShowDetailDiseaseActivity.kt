@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.R
@@ -13,7 +12,6 @@ import com.fahruaz.farmernusantara.databindingadapters.ShowDetailDiseaseBinding
 import com.fahruaz.farmernusantara.response.plantdisease.GetSickPlantResponse
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.viewmodels.ShowDetailDiseaseViewModel
-import java.lang.Exception
 
 class ShowDetailDiseaseActivity : AppCompatActivity() {
 
@@ -137,6 +135,7 @@ class ShowDetailDiseaseActivity : AppCompatActivity() {
         showDiseaseDetailViewModel.toast.observe(this) {
             if(it.isNotEmpty()) {
                 if(it == "Berhasil menghapus penyakit") {
+                    showToast(it)
                     DetailFarmlandActivity.isSaveBtnClicked = true
                     finish()
                 }
@@ -149,7 +148,9 @@ class ShowDetailDiseaseActivity : AppCompatActivity() {
 
         MainActivity.imageStorageViewModel.toast.observe(this) {
             if(it.isNotEmpty()) {
-                showToast(it)
+                if(it != "Berhasil menghapus foto") {
+                    showToast(it)
+                }
                 if(it == "Berhasil menghapus foto") {
                     showDiseaseDetailViewModel.deleteSickPlant(farmlandId!!, diseaseId!!)
                 }

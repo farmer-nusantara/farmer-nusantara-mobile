@@ -62,7 +62,6 @@ class DetailFarmlandActivity : AppCompatActivity() {
         }
     }
     private lateinit var detailFarmlandViewModel: DetailFarmlandViewModel
-//    private lateinit var diseaseViewModel: DiseaseHistoryViewModel
 
     // fab expandable
     private val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim) }
@@ -114,8 +113,6 @@ class DetailFarmlandActivity : AppCompatActivity() {
 
         requestApiData(farmlandId)
 
-//        requestApiData(farmlandId!!)
-
         detailFarmlandViewModel.isLoading.observe(this) {
             showLoading(it)
         }
@@ -131,7 +128,6 @@ class DetailFarmlandActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding?.fabScan?.setOnClickListener {
-//            startActivityForResult(Intent(this, CameraActivity::class.java), CODE_CAMERA)
             requestStorageAndCameraPermission()
         }
         binding?.fabEdit?.setOnClickListener {
@@ -167,7 +163,14 @@ class DetailFarmlandActivity : AppCompatActivity() {
                 .placeholder(R.drawable.image_default)
                 .into(binding?.ivFarmland!!)
 
-            diseaseAdapter.setData(it.sickPlants!! as List<SickPlantsItem>)
+            if(it.sickPlants?.isNotEmpty()!!) {
+                showDisease()
+                diseaseAdapter.setData(it.sickPlants as List<SickPlantsItem>)
+            }
+            else {
+                showNoDisease()
+            }
+
         }
     }
 
@@ -251,7 +254,6 @@ class DetailFarmlandActivity : AppCompatActivity() {
                     if (report!!.areAllPermissionsGranted()) {
                         startTakePhoto()
                     }
-
                     // check for permanent denial of any permission
                     if (report.isAnyPermissionPermanentlyDenied) {
                         // show alert dialog navigating to Settings
@@ -280,7 +282,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
             dialog.cancel()
             openSettings()
         }
-        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        builder.setNegativeButton("Kelaur") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 
@@ -342,9 +344,9 @@ class DetailFarmlandActivity : AppCompatActivity() {
                     runOnUiThread {
                         cancelProgressDialog()
                         if(result.isNotEmpty())
-                            Toast.makeText(this@DetailFarmlandActivity, "File saved succesfully: $uriString", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@DetailFarmlandActivity, "Foto berhasil disimpan: $uriString", Toast.LENGTH_LONG).show()
                         else
-                            Toast.makeText(this@DetailFarmlandActivity, "Something went wrong while saving", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@DetailFarmlandActivity, "Terjadi kesalahan saat menyimpan foto", Toast.LENGTH_LONG).show()
                     }
 
                 }
@@ -358,13 +360,19 @@ class DetailFarmlandActivity : AppCompatActivity() {
         return result
     }
 
-//    private fun requestApiData(id: String) {
-//        diseaseViewModel.getAllSickPlants(id)
-//    }
-
     private fun setUpRecyclerView() {
         binding?.rvDisease?.adapter = diseaseAdapter
         binding?.rvDisease?.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun showNoDisease() {
+        binding?.rvDisease?.visibility = View.GONE
+        binding?.tvNoDisease?.visibility = View.VISIBLE
+    }
+
+    private fun showDisease() {
+        binding?.rvDisease?.visibility = View.VISIBLE
+        binding?.tvNoDisease?.visibility = View.GONE
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -397,7 +405,6 @@ class DetailFarmlandActivity : AppCompatActivity() {
     }
 
     companion object{
-        const val CODE_CAMERA = 1
         var uriString = ""
         var plant = ""
         var isSaveBtnClicked = false

@@ -1,7 +1,6 @@
 package com.fahruaz.farmernusantara.adapters
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +12,6 @@ import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerRespon
 import com.fahruaz.farmernusantara.util.FarmlandsDiffUtil
 
 class FarmlandsAdapter(
-//    private var farmlands: List<GetAllFarmlandByOwnerResponseItem>
     private val detailListener: (id: String) -> Unit
 ): RecyclerView.Adapter<FarmlandsAdapter.MyViewHolder>() {
 

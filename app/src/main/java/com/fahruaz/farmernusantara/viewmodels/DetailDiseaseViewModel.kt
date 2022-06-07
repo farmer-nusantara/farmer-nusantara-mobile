@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fahruaz.farmernusantara.api.ApiConfig
-import com.fahruaz.farmernusantara.response.farmland.CreateFarmlandResponse
 import com.fahruaz.farmernusantara.response.plantdisease.SaveDiseasePlantResponse
 import com.fahruaz.farmernusantara.ui.MainActivity
 import retrofit2.Call

@@ -34,17 +34,21 @@ class RegisterViewModel(private val pref: UserPreferences): ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null && responseBody.message == "Successfully") {
-                       _toast.value = "Akun berhasil dibuat"
+                        _toast.value = "Akun berhasil dibuat"
+                        _toast.value = ""
                         user.id = responseBody.data?.userId
                         setUser(user)
                     }
                 }
-                else
+                else {
                     _toast.value = response.message()
+                    _toast.value = ""
+                }
             }
             override fun onFailure(call: Call<RegisterMessageResponse>, t: Throwable) {
                 _isLoading.value = false
                 _toast.value = "Gagal instance Retrofit"
+                _toast.value = ""
             }
         })
     }

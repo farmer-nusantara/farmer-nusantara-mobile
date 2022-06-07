@@ -1,9 +1,5 @@
 package com.fahruaz.farmernusantara.viewmodels
 
-import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -55,8 +51,10 @@ class FarmlandViewModel(private val pref: UserPreferences) : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _toastFarmland.value = "Berhasil mengambil data farmland"
-                        _toastFarmland.value = ""
+                        if(responseBody.isNotEmpty()) {
+                            _toastFarmland.value = "Berhasil mengambil data farmland"
+                            _toastFarmland.value = ""
+                        }
                         _listFarmland.value = responseBody.asReversed()
                     }
                 }

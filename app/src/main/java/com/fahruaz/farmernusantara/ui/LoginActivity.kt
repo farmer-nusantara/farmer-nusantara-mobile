@@ -7,7 +7,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
-import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -42,7 +41,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel.toast.observe(this) {
-            showToast(it)
+            if(it.isNotEmpty()) {
+                showToast(it)
+                if (it == "Berhasil masuk") {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    finish()
+                }
+            }
         }
 
         binding.forgotPassword.setOnClickListener {
@@ -104,35 +111,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else -> {
                     val user = UserModel(email = email, password = password)
-
-//                     loginViewModel.name.observe(this) {
-//                         user.name = it
-//                     }
-//                     loginViewModel.token.observe(this) {
-//                         user.token = it
-//                         token = it
-//                     }
-//                     loginViewModel.phone.observe(this) {
-//                         user.phone = it
-//                     }
-//                     loginViewModel.status.observe(this) {
-//                         user.status = it
-//                     }
-//                     loginViewModel.id.observe(this) {
-//                         user.id = it
-//                     }
-
                     loginViewModel.loginUser(user)
-
-                    loginViewModel.toast.observe(this) {
-                        if (it == "Login successfully") {
-                            val intent = Intent(this, MainActivity::class.java)
-                            intent.flags =
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                            finish()
-                        }
-                    }
                 }
             }
         }

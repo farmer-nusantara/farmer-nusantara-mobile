@@ -1,7 +1,6 @@
 package com.fahruaz.farmernusantara.ui.fragment.profile
 
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -49,7 +48,6 @@ class ProfileFragment : Fragment() {
                 setPositiveButton(resources.getString(R.string.ya)) { _, _ ->
                     MainActivity.mainViewModel?.logout()
                     FarmlandFragment.requestApi = true
-//                    FarmlandFragment.farmlands.clear()
                 }
                 setNegativeButton(resources.getString(R.string.back)) { _, _ ->}
                 create()
@@ -70,7 +68,10 @@ class ProfileFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        getUser(MainActivity.userModel?.id!!)
+        if(isEditBtnClicked) {
+            getUser(MainActivity.userModel?.id!!)
+            isEditBtnClicked = false
+        }
     }
 
     private fun getUser(id: String) {
@@ -106,6 +107,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
+        Log.e("isloading", isLoading.toString())
         if (isLoading)
             showProgressDialog()
         else
@@ -127,6 +129,7 @@ class ProfileFragment : Fragment() {
 
     companion object {
         private const val TAG = "DetailUser"
+        var isEditBtnClicked = false
     }
 
 }

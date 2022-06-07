@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
-import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -21,7 +20,6 @@ import com.fahruaz.farmernusantara.ViewModelFactory
 import com.fahruaz.farmernusantara.databinding.ActivityRegisterBinding
 import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
-import com.fahruaz.farmernusantara.viewmodels.LoginViewModel
 import com.fahruaz.farmernusantara.viewmodels.RegisterViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -30,7 +28,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var registerViewModel: RegisterViewModel
-//    private lateinit var loginViewModel: LoginViewModel
     private lateinit var userModel: UserModel
     private var customProgressDialog: Dialog? = null
 
@@ -40,16 +37,23 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupRegisterViewModel()
-//        setupLoginViewModel()
 
         registerViewModel.isLoading.observe(this) {
             showLoading(it)
         }
 
         registerViewModel.toast.observe(this) {
-            if(it !== "Berhasil masuk") {
+            if(it.isNotEmpty()) {
                 showToast(it)
                 if(it == "Akun berhasil dibuat") {
+                    LoginActivity.loginViewModel.loginUser(userModel)
+                }
+            }
+        }
+
+        LoginActivity.loginViewModel.toast.observe(this) {
+            if(it.isNotEmpty()) {
+                if(it == "Berhasil masuk") {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -67,13 +71,6 @@ class RegisterActivity : AppCompatActivity() {
             ViewModelFactory(UserPreferences.getInstance(dataStore), this)
         )[RegisterViewModel::class.java]
     }
-
-//    private fun setupLoginViewModel() {
-//        loginViewModel = ViewModelProvider(
-//            this,
-//            ViewModelFactory(UserPreferences.getInstance(dataStore), this)
-//        )[LoginViewModel::class.java]
-//    }
 
     private fun setupView() {
         @Suppress("DEPRECATION")
@@ -134,15 +131,6 @@ class RegisterActivity : AppCompatActivity() {
                     userModel = UserModel(email = email, name = name, phone = phone,
                         password = password, passwordConfirm = passwordConfirm)
                     registerViewModel.registerUser(userModel)
-
-//                    LoginActivity.loginViewModel.token.observe(this) { token ->
-//                        userModel.token = token
-//                        LoginActivity.token = token
-//                    }
-//                    LoginActivity.loginViewModel.status.observe(this) {
-//                        userModel.status = it
-//                    }
-                    LoginActivity.loginViewModel.loginUser(userModel)
                 }
             }
 

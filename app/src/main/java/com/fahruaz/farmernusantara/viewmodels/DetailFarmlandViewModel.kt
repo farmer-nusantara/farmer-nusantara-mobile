@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fahruaz.farmernusantara.api.ApiConfig
-import com.fahruaz.farmernusantara.response.farmland.GetAllFarmlandByOwnerResponseItem
 import com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse
 import retrofit2.Call
 import retrofit2.Callback

@@ -27,12 +27,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.FragmentMapBinding
-import com.fahruaz.farmernusantara.response.farmland.ShowFarmlandDetailResponse
 import com.fahruaz.farmernusantara.response.plantdisease.GetAllSickPlantsResponseItem
-import com.fahruaz.farmernusantara.ui.DetailFarmlandActivity
 import com.fahruaz.farmernusantara.ui.MainActivity
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
-import com.fahruaz.farmernusantara.viewmodels.MapActivityViewModel
 import com.fahruaz.farmernusantara.viewmodels.OwnerMapViewModel
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult

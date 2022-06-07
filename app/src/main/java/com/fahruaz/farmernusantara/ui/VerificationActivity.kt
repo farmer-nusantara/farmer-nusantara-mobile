@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -17,7 +16,6 @@ import com.fahruaz.farmernusantara.databinding.ActivityVerificationBinding
 import com.fahruaz.farmernusantara.preferences.UserPreferences
 import com.fahruaz.farmernusantara.ui.customviews.GenericKeyEvent
 import com.fahruaz.farmernusantara.ui.customviews.GenericTextWatcher
-import com.fahruaz.farmernusantara.viewmodels.LoginViewModel
 import com.fahruaz.farmernusantara.viewmodels.VerificationViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")

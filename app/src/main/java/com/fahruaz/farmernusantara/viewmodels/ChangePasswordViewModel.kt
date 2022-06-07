@@ -1,9 +1,7 @@
 package com.fahruaz.farmernusantara.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.fahruaz.farmernusantara.api.ApiConfig
-import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
 import com.fahruaz.farmernusantara.response.auth.*
 import kotlinx.coroutines.launch
@@ -30,14 +28,18 @@ class ChangePasswordViewModel(private val pref: UserPreferences): ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null && responseBody.message == "Send Token reset Successfully") {
                         _toast.value = "Kode OTP berhasil dikirim"
+                        _toast.value = ""
                     }
                 }
-                else
+                else {
                     _toast.value = response.message()
+                    _toast.value = ""
+                }
             }
             override fun onFailure(call: Call<TokenResetPasswordResponse>, t: Throwable) {
                 _isLoading.value = false
                 _toast.value = "Gagal instance Retrofit"
+                _toast.value = ""
             }
         })
     }
@@ -54,14 +56,18 @@ class ChangePasswordViewModel(private val pref: UserPreferences): ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null && responseBody.message == "Successfully") {
                         _toast.value = "Kode OTP benar"
+                        _toast.value = ""
                     }
                 }
-                else
+                else {
                     _toast.value = response.message()
+                    _toast.value = ""
+                }
             }
             override fun onFailure(call: Call<CheckTokenResetMessageResponse>, t: Throwable) {
                 _isLoading.value = false
                 _toast.value = "Gagal instance Retrofit"
+                _toast.value = ""
             }
         })
     }
@@ -77,15 +83,19 @@ class ChangePasswordViewModel(private val pref: UserPreferences): ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null && responseBody.message == "Changed password is successfully") {
                         _toast.value = "Berhasil mengganti kata sandi"
+                        _toast.value = ""
                         changePassword(newPassword)
                     }
                 }
-                else
+                else {
                     _toast.value = response.message()
+                    _toast.value = ""
+                }
             }
             override fun onFailure(call: Call<ChangePasswordMessageResponse>, t: Throwable) {
                 _isLoading.value = false
                 _toast.value = "Gagal instance Retrofit"
+                _toast.value = ""
             }
         })
     }
@@ -93,6 +103,7 @@ class ChangePasswordViewModel(private val pref: UserPreferences): ViewModel() {
     private fun changePassword(newPassword: String) {
         viewModelScope.launch {
             pref.changePassword(newPassword)
+            pref.logout()
         }
     }
 

@@ -39,8 +39,6 @@ class ImageStorageViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _toast.value = "Berhasil mengunggah foto"
-                        _toast.value = ""
                         _imageUrl.value = responseBody.imageUrl
                         _imageEditUrl.value = responseBody.imageUrl
                         _imageUrl.value = ""
@@ -82,7 +80,6 @@ class ImageStorageViewModel : ViewModel() {
             }
             override fun onFailure(call: Call<DeleteImageFromStorageResponse>, t: Throwable) {
                 _isLoading.value = false
-                _toast.value = "Gagal instance Retrofit"
                 _toast.value = "Gagal menghapus foto"
                 _toast.value = ""
             }

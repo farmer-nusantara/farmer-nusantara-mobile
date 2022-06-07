@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.load
 import com.fahruaz.farmernusantara.R

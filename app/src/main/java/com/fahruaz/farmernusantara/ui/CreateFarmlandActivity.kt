@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -37,7 +36,6 @@ class CreateFarmlandActivity : AppCompatActivity() {
 
     private var binding: ActivityCreateFarmlandBinding? = null
     private var customProgressDialog: Dialog? = null
-    //    private lateinit var farmlandViewModel: FarmlandViewModel
     private var mDefaultColor = Color.parseColor("#E35B30")
     private var hexColor = "#E35B30"
     private lateinit var currentPhotoPath: String
@@ -81,8 +79,6 @@ class CreateFarmlandActivity : AppCompatActivity() {
         binding?.tbCreateFarmland?.setNavigationOnClickListener {
             onBackPressed()
         }
-
-//        farmlandViewModel = ViewModelProvider(this)[FarmlandViewModel::class.java]
 
         FarmlandFragment.farmlandViewModel?.isLoading?.observe(this) {
             showLoading(it)

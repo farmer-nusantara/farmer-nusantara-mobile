@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
@@ -17,6 +16,7 @@ import com.fahruaz.farmernusantara.ViewModelFactory
 import com.fahruaz.farmernusantara.databinding.ActivityEditProfileBinding
 import com.fahruaz.farmernusantara.models.UserModel
 import com.fahruaz.farmernusantara.preferences.UserPreferences
+import com.fahruaz.farmernusantara.ui.fragment.profile.ProfileFragment
 import com.fahruaz.farmernusantara.viewmodels.EditProfileViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -47,16 +47,17 @@ class EditProfileActivity : AppCompatActivity() {
             showLoading(it)
         }
 
-        editProfileViewModel.toast.observe(this) {
-            showToast(it)
-        }
-
         binding?.nameEditText?.setText(MainActivity.userModel?.name!!)
         binding?.emailEditText?.setText(MainActivity.userModel?.email!!)
         binding?.phoneEditText?.setText(MainActivity.userModel?.phone!!)
 
         binding?.btSaveProfile?.setOnClickListener{
             editUser()
+        }
+
+        binding?.gantiKataSandi?.setOnClickListener {
+            val intent = Intent(this, ChangePasswordEmailActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -80,13 +81,12 @@ class EditProfileActivity : AppCompatActivity() {
         editProfileViewModel.editUserData(user)
 
         editProfileViewModel.toast.observe(this){
+            ProfileFragment.isEditBtnClicked = true
             if (it == "Berhasil edit profil"){
                 AlertDialog.Builder(this@EditProfileActivity).apply {
                     setTitle(resources.getString(R.string.success))
                     setMessage(resources.getString(R.string.user_data_was_edited))
                     setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
-//                        val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
-//                        startActivity(intent)
                         dialog.dismiss()
                         finish()
                     }

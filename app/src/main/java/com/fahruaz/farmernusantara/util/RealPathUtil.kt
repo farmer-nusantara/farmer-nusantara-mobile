@@ -8,45 +8,12 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import androidx.loader.content.CursorLoader
 
 object RealPathUtil {
     fun getRealPath(context: Context, fileUri: Uri): String? {
         val realPath: String?
         realPath = getRealPathFromURI_API19(context, fileUri)
         return realPath
-    }
-
-    @SuppressLint("NewApi")
-    fun getRealPathFromURI_API11to18(context: Context?, contentUri: Uri?): String? {
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        var result: String? = null
-        val cursorLoader = CursorLoader(
-            context!!, contentUri!!, proj, null, null, null
-        )
-        val cursor = cursorLoader.loadInBackground()
-        if (cursor != null) {
-            val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            cursor.moveToFirst()
-            result = cursor.getString(column_index)
-            cursor.close()
-        }
-        return result
-    }
-
-    fun getRealPathFromURI_BelowAPI11(context: Context, contentUri: Uri?): String {
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = context.contentResolver.query(contentUri!!, proj, null, null, null)
-        var column_index = 0
-        var result = ""
-        if (cursor != null) {
-            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            cursor.moveToFirst()
-            result = cursor.getString(column_index)
-            cursor.close()
-            return result
-        }
-        return result
     }
 
     /**

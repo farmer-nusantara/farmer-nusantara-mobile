@@ -54,11 +54,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapsViewModel = ViewModelProvider(this)[MapActivityViewModel::class.java]
 
         // toolbar
-        setSupportActionBar(binding?.tbMap)
+        setSupportActionBar(binding.tbMap)
         if(supportActionBar != null) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        binding?.tbMap?.setNavigationOnClickListener {
+        binding.tbMap.setNavigationOnClickListener {
             onBackPressed()
         }
 

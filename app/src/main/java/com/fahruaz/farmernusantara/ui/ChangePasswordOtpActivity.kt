@@ -4,8 +4,6 @@ import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityChangePasswordOtpBinding
@@ -36,10 +34,12 @@ class ChangePasswordOtpActivity : AppCompatActivity() {
         }
 
         ChangePasswordEmailActivity.changePasswordViewModel.toast.observe(this) {
-            showToast(it)
-            if(it == "Kode OTP benar") {
-                val intent = Intent(this, ChangePasswordActivity::class.java)
-                startActivity(intent)
+            if(it.isNotEmpty()) {
+                showToast(it)
+                if(it == "Kode OTP benar") {
+                    val intent = Intent(this, ChangePasswordActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
 
@@ -57,10 +57,13 @@ class ChangePasswordOtpActivity : AppCompatActivity() {
         binding?.otpET4?.setOnKeyListener(GenericKeyEvent(binding?.otpET4!!, binding?.otpET3!!))
         binding?.otpET5?.setOnKeyListener(GenericKeyEvent(binding?.otpET5!!, binding?.otpET4!!))
 
+        binding?.verificationResend?.setOnClickListener {
+            ChangePasswordEmailActivity.changePasswordViewModel.sendCode(ChangePasswordEmailActivity.emailForResetPassword)
+        }
+
         binding?.btVerifyCode?.setOnClickListener {
             val otp = "${binding?.otpET1?.text.toString()}${binding?.otpET2?.text.toString()}${binding?.otpET3?.text.toString()}" +
                     "${binding?.otpET4?.text.toString()}${binding?.otpET5?.text.toString()}"
-            Log.e("OTP", otp)
             ChangePasswordEmailActivity.changePasswordViewModel.checkingTokenResetPassword(otp.toInt())
         }
     }

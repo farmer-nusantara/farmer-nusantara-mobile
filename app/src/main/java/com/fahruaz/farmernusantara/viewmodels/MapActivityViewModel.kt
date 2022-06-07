@@ -1,11 +1,9 @@
 package com.fahruaz.farmernusantara.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fahruaz.farmernusantara.api.ApiConfig
-import com.fahruaz.farmernusantara.response.plantdisease.GetAllSickPlantsResponse
 import com.fahruaz.farmernusantara.response.plantdisease.GetAllSickPlantsResponseItem
 import retrofit2.Call
 import retrofit2.Callback

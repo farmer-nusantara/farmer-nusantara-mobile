@@ -1,6 +1,5 @@
 package com.fahruaz.farmernusantara.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.fahruaz.farmernusantara.api.ApiConfig
 import com.fahruaz.farmernusantara.models.UserModel

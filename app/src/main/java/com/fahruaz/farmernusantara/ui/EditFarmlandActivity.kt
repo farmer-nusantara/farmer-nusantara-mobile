@@ -98,9 +98,7 @@ class EditFarmlandActivity : AppCompatActivity() {
 
         FarmlandFragment.farmlandViewModel?.toastDeleteFarmland?.observe(this) {
             if(it.isNotEmpty()) {
-                if(it != "Berhasil menghapus foto") {
-                    showToast(it)
-                }
+                showToast(it)
                 if(it == "Berhasil menghapus farmland") {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
@@ -126,7 +124,9 @@ class EditFarmlandActivity : AppCompatActivity() {
 
         MainActivity.imageStorageViewModel.toast.observe(this) {
             if(it.isNotEmpty()) {
-                showToast(it)
+                if(it != "Berhasil menghapus foto") {
+                    showToast(it)
+                }
             }
         }
 

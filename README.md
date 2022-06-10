@@ -46,5 +46,15 @@ This is repository for Farmer Nusantara Android App Development.
         width="200" />
 </p>
 
+## Run on Your Computer: 
+Prerequisites for running the app:
+- [Git installed](https://git-scm.com/downloads)
+- [Android Studio minimal version Chipmunk 2021.2.1](https://developer.android.com/studio/archive?hl=en)
+
+How to clone to your computer:
+- Open Git Bash terminal
+- Type 'git clone git@github.com:farmer-nusantara/farmer-nusantara-mobile.git' or 'git clone https://github.com/farmer-nusantara/farmer-nusantara-mobile.git'
+- It will clone this repository to your local computer, after cloning process is finished you can open it using Android Studio
+
 ## Install on Android: 
 https://drive.google.com/file/d/1Xa3A0ef6abYc6oC-oxZXT8TL3fPrtrEs/view?usp=sharing

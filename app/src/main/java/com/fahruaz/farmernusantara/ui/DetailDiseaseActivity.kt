@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.fahruaz.farmernusantara.R
 import com.fahruaz.farmernusantara.databinding.ActivityDetailDiseaseBinding
 import com.fahruaz.farmernusantara.ml.CornmodelV1D3
-import com.fahruaz.farmernusantara.ml.PaddymodelV1D3
+import com.fahruaz.farmernusantara.ml.PaddymodelV1D4
 import com.fahruaz.farmernusantara.ml.SoybeanmodelV1d2
 import com.fahruaz.farmernusantara.ui.fragment.farmland.FarmlandFragment
 import com.fahruaz.farmernusantara.util.reduceFileImage
@@ -157,8 +157,8 @@ class DetailDiseaseActivity : AppCompatActivity() {
             val list = getFileName("soybeanclasses_v1d2.txt")
             val model = SoybeanmodelV1d2.newInstance(this)
 
-            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 200, 200, 3), DataType.FLOAT32)
-            inputFeature0.loadBuffer(getImageData(200))
+            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
+            inputFeature0.loadBuffer(getImageData(150))
 
             val outputs = model.process(inputFeature0)
             val outputFeature0 = outputs.outputFeature0AsTensorBuffer
@@ -173,7 +173,7 @@ class DetailDiseaseActivity : AppCompatActivity() {
         }
         else if(DetailFarmlandActivity.plant == "Padi") {
             val list = getFileName("paddyclasses_v1_d1.txt")
-            val model = PaddymodelV1D3.newInstance(this)
+            val model = PaddymodelV1D4.newInstance(this)
 
             val inputFeature0 =
                 TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)

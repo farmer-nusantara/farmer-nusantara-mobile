@@ -57,4 +57,4 @@ How to clone to your computer:
 - It will clone this repository to your local computer, after cloning process is finished you can open it using Android Studio
 
 ## Install on Android: 
-https://drive.google.com/file/d/1LhqY8LYg8_N4Hn-d56SRi_ri4xJoze8p/view?usp=sharing
+[Download](https://drive.google.com/file/d/1Bi98noGdy2Et9HTqKeBELs-_3yVbz-cX/view?usp=sharing)

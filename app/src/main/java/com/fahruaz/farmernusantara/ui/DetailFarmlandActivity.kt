@@ -385,6 +385,7 @@ class DetailFarmlandActivity : AppCompatActivity() {
     private fun showProgressDialog() {
         customProgressDialog = Dialog(this)
         customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.setCancelable(false)
         customProgressDialog?.show()
     }
 

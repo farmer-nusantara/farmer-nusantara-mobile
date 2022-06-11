@@ -62,9 +62,13 @@ class ChangePasswordOtpActivity : AppCompatActivity() {
         }
 
         binding?.btVerifyCode?.setOnClickListener {
-            val otp = "${binding?.otpET1?.text.toString()}${binding?.otpET2?.text.toString()}${binding?.otpET3?.text.toString()}" +
-                    "${binding?.otpET4?.text.toString()}${binding?.otpET5?.text.toString()}"
-            ChangePasswordEmailActivity.changePasswordViewModel.checkingTokenResetPassword(otp.toInt())
+            if(binding?.otpET1?.text.toString().isNotEmpty() && binding?.otpET2?.text.toString().isNotEmpty() &&
+                binding?.otpET3?.text.toString().isNotEmpty() && binding?.otpET4?.text.toString().isNotEmpty()
+                && binding?.otpET5?.text.toString().isNotEmpty()) {
+                val otp = "${binding?.otpET1?.text.toString()}${binding?.otpET2?.text.toString()}${binding?.otpET3?.text.toString()}" +
+                        "${binding?.otpET4?.text.toString()}${binding?.otpET5?.text.toString()}"
+                ChangePasswordEmailActivity.changePasswordViewModel.checkingTokenResetPassword(otp.toInt())
+            }
         }
     }
 
@@ -78,6 +82,7 @@ class ChangePasswordOtpActivity : AppCompatActivity() {
     private fun showProgressDialog() {
         customProgressDialog = Dialog(this)
         customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.setCancelable(false)
         customProgressDialog?.show()
     }
 

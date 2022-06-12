@@ -50,11 +50,20 @@ This is repository for Farmer Nusantara Android App Development.
 Prerequisites for running the app:
 - [Git installed](https://git-scm.com/downloads)
 - [Android Studio minimal version Chipmunk 2021.2.1](https://developer.android.com/studio/archive?hl=en)
+- Have a Google Cloud Platform account
 
 How to clone to your computer:
 - Open Git Bash terminal
 - Type 'git clone git@github.com:farmer-nusantara/farmer-nusantara-mobile.git' or 'git clone https://github.com/farmer-nusantara/farmer-nusantara-mobile.git'
 - It will clone this repository to your local computer, after cloning process is finished you can open it using Android Studio
+- [Generate Google Maps API Key](https://developers.google.com/maps/get-started)
+- Copy your API key to AndroidManifest.xml in meta-data tag
+<p>
+    <img src="assets/api_key.png"
+        alt="Map Disease Demo"    
+        style="margin-right: 10px;"    
+        width="400" />
+</p>
 
 ## Install on Android: 
-[Download](https://drive.google.com/file/d/1Bi98noGdy2Et9HTqKeBELs-_3yVbz-cX/view?usp=sharing)
+[Download](https://drive.google.com/file/d/1N0C4iRcGkXy2cVX2eCLO0TPDgfAzhBe-/view?usp=sharing)

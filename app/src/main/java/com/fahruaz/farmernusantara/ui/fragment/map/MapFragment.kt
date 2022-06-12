@@ -292,6 +292,7 @@ class MapFragment : Fragment() {
     private fun showProgressDialog() {
         customProgressDialog = Dialog(this.requireContext())
         customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.setCancelable(false)
         customProgressDialog?.show()
     }
 

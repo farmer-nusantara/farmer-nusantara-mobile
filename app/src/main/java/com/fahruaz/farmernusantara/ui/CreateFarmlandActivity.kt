@@ -136,6 +136,7 @@ class CreateFarmlandActivity : AppCompatActivity() {
                     binding?.farmlandLocationEditTextLayout?.error = resources.getString(R.string.empty_location)
                 }
                 else -> {
+                    binding?.btCreateFarmland?.isClickable = false
                     FarmlandFragment.requestApi = true
                     uploadImage()
                 }
@@ -244,6 +245,7 @@ class CreateFarmlandActivity : AppCompatActivity() {
     private fun showProgressDialog() {
         customProgressDialog = Dialog(this)
         customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.setCancelable(false)
         customProgressDialog?.show()
     }
 

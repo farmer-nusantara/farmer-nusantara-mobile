@@ -117,6 +117,7 @@ class ProfileFragment : Fragment() {
     private fun showProgressDialog() {
         customProgressDialog = Dialog(requireContext())
         customProgressDialog?.setContentView(R.layout.dialog_custom_progressbar)
+        customProgressDialog?.setCancelable(false)
         customProgressDialog?.show()
     }
 
